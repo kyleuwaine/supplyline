@@ -7,7 +7,7 @@ class SLTile:
         return full_screen_mask
 
     def __init__(self, top_left_corner, full_screen_mask):
-        self.sprite = "supply_line\Images\grass_05.png"
+        self.sprite = "Images\grass_05.png"
         self.occupant = None
         self.top_left_corner = top_left_corner
         self.pygame_surface = pygame.image.load(self.sprite)
