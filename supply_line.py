@@ -3,12 +3,14 @@ from sys import exit
 from SLTile import SLTile
 
 def prepare_map(full_screen_mask_input):
+    hex_sprite_width = 120
+    hex_sprite_height = 140
     tile_grid_width = 1
     tile_grid_height = 1
     global tile_grid
     tile_grid = [[0 for x in range(tile_grid_width)] for y in range(tile_grid_height)]
     #tile_grid[0][0] = SLTile((0, 0))
-    tile_grid[0][0] = SLTile((340, 130), full_screen_mask_input)
+    tile_grid[0][0] = SLTile(( (screen_width // 2) - (hex_sprite_width // 2) , (screen_height // 2) - (hex_sprite_height // 2) ), full_screen_mask_input)
     for i in tile_grid:
         for j in i:
             screen.blit(j.pygame_surface, j.top_left_corner)
