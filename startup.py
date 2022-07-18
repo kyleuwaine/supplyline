@@ -1,5 +1,4 @@
 import pygame
-from copy import deepcopy
 from SLTile import SLTile
 
 def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, grid_width, grid_height):
@@ -7,10 +6,10 @@ def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_heigh
     assert grid_height % 2 != 0, "expected even grid height"
     assert grid_height == grid_width, "expected grid height and grid width to be equal"
     x = (screen_width // 2) - (hex_sprite_width // 2)
-    y = (screen_height // 2) - (hex_sprite_height // 2) 
-    top = x - (hex_sprite_width * (grid_width // 2)), y - (105 * (grid_height // 2))  
+    y = (screen_height // 2) - (hex_sprite_height // 2)
+    top = x - (hex_sprite_width * (grid_width // 2)), y - (105 * (grid_height // 2))
     return top
-    
+
 
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width = 120
@@ -24,19 +23,19 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     is_offset = False
     offset = hex_sprite_width // 2
     for i in range(tile_grid_width):
-        current_x = x                                                 
+        current_x = x
         for j in range(tile_grid_height):
             if (is_offset):
-                tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input)
-            else: 
-                tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input)
+                tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy())
+            else:
+                tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy())
 
             current_x += hex_sprite_width
             screen.blit(tile_grid[i][j].pygame_surface, tile_grid[i][j].top_left_corner)
 
         if (is_offset):
             is_offset = False
-        else: 
+        else:
             is_offset = True
 
         y += 105
