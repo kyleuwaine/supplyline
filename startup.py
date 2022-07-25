@@ -14,17 +14,26 @@ def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_heigh
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width = 120
     hex_sprite_height = 140
+    hex_sprite_width += 1  # Create a black border between the tiles
     tile_grid_width = 3
     tile_grid_height = 3
     x, y = find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height)
     tile_grid = [[0 for x in range(tile_grid_width)] for y in range(tile_grid_height)]
     #tile_grid[0][0] = SLTile((0, 0))
     #tile_grid[0][0] = SLTile(( (screen_width // 2) - (hex_sprite_width // 2) , (screen_height // 2) - (hex_sprite_height // 2) ), full_screen_mask_input)
-    is_offset = False
+    is_offset = True
+    is_skip_last_hex = True
     offset = hex_sprite_width // 2
     for i in range(tile_grid_width):
         current_x = x
         for j in range(tile_grid_height):
+            if (j == (tile_grid_height - 1)):
+                if (is_skip_last_hex == True):
+                    tile_grid[i] = tile_grid[i][:-1]
+                    is_skip_last_hex = False
+                    break
+                else:
+                    is_skip_last_hex = True
             if (is_offset):
                 tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy())
             else:
