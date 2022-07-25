@@ -15,8 +15,8 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width = 120
     hex_sprite_height = 140
     hex_sprite_width += 1  # Create a black border between the tiles
-    tile_grid_width = 3
-    tile_grid_height = 3
+    tile_grid_width = 5
+    tile_grid_height = 5
     x, y = find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height)
     tile_grid = [[0 for x in range(tile_grid_width)] for y in range(tile_grid_height)]
     #tile_grid[0][0] = SLTile((0, 0))
@@ -35,9 +35,19 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
                 else:
                     is_skip_last_hex = True
             if (is_offset):
-                tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy())
+                if ((j == 0) or (j == tile_grid_width - 2)):
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                elif ((i == 0) or (i == tile_grid_height - 1)):
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                else:
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD)
             else:
-                tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy())
+                if ((j == 0) or (j == tile_grid_width - 1)):
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                elif ((i == 0) or (i == tile_grid_height - 1)):
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                else:
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD)
 
             current_x += hex_sprite_width
             screen.blit(tile_grid[i][j].pygame_surface, tile_grid[i][j].top_left_corner)
@@ -53,8 +63,8 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
 
 
 def startup():
-    screen_width = 800
-    screen_height = 400
+    screen_width = 1200
+    screen_height = 600
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Supply Line")
     clock = pygame.time.Clock()
