@@ -18,10 +18,11 @@ while True:
                         try:
                             if j.pygame_mask.get_at(event.pos) == 1:
                                 print("pog")
+                                print(j.type)
                             else:
                                 print("Not poggers")
                         except IndexError:
-                            pass 
+                            pass
 
 
     #screen.blit(test_surface, (200, 100))
