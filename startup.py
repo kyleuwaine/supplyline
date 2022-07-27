@@ -17,14 +17,15 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width += 1  # Create a black border between the tiles
     tile_grid_width = 5
     tile_grid_height = 5
+    tile_grid_size = 5
     x, y = find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height)
     tile_grid = [[0 for x in range(tile_grid_width)] for y in range(tile_grid_height)]
     #tile_grid[0][0] = SLTile((0, 0))
     #tile_grid[0][0] = SLTile(( (screen_width // 2) - (hex_sprite_width // 2) , (screen_height // 2) - (hex_sprite_height // 2) ), full_screen_mask_input)
-    is_offset = True
+    is_offset = True # Need offset on every other row to properly create a hex map 
     is_skip_last_hex = True
     offset = hex_sprite_width // 2
-    for i in range(tile_grid_width):
+    for i in range(tile_grid_width): # Loop to fill out tile_grid and render all tiles onto screen
         current_x = x
         for j in range(tile_grid_height):
             if (j == (tile_grid_height - 1)):
@@ -34,7 +35,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
                     break
                 else:
                     is_skip_last_hex = True
-            if (is_offset):
+            if (is_offset): 
                 if ((j == 0) or (j == tile_grid_width - 2)):
                     tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
                 elif ((i == 0) or (i == tile_grid_height - 1)):
@@ -59,7 +60,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
 
         y += 105
 
-    return tile_grid
+    return tile_grid, tile_grid_size
 
 
 def startup():
@@ -72,6 +73,6 @@ def startup():
     full_screen_surface = pygame.Surface((screen_width, screen_height))
     full_screen_mask = pygame.mask.from_surface(full_screen_surface)
     full_screen_mask.invert()
-    tile_grid = prepare_map(screen, screen_width, screen_height, full_screen_mask)
+    tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask)
 
-    return clock, framerate, screen, tile_grid
+    return clock, framerate, screen, tile_grid, tile_grid_size
