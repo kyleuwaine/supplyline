@@ -10,6 +10,7 @@ selected_tile = None
 x = 0
 y = 0
 tile_grid[1][1].occupant = SLBrigade("Tank", None)
+screen.blit(tile_grid[1][1].occupant.pygame_surface, tile_grid[1][1].top_left_corner)
 
 while True:
     for event in pygame.event.get():
@@ -31,8 +32,10 @@ while True:
                                 else:
                                     if (tile_grid[i][j] == selected_tile):
                                         screen.blit(tile_grid[i][j].pygame_surface, tile_grid[i][j].top_left_corner)
+                                        if (tile_grid[i][j].occupant != None):
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
                                         selected_tile = None
-                                    if (y % 2 == 0):
+                                    elif (y % 2 == 0):
                                         if (i == y and j == x + 1):
                                             print("PogU")
                                         elif (i == y and j == x - 1):
