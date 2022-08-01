@@ -4,17 +4,17 @@ from SLBrigade import SLBrigade
 from SLTile import SLTile
 
 def create_init_brigades(faction_list: list, tile_grid: list, screen):
-    tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0])
+    tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1])
     faction_list[0].brigade_list.append(tile_grid[1][1].occupant)
     screen.blit(tile_grid[1][1].occupant.pygame_surface, tile_grid[1][1].top_left_corner)
-    tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1])
+    tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2])
     faction_list[1].brigade_list.append(tile_grid[2][2].occupant)
     screen.blit(tile_grid[2][2].occupant.pygame_surface, tile_grid[2][2].top_left_corner)
 
 def create_factions(num_of_factions: int):
     faction_list = []
     for i in range(num_of_factions):
-        faction_list.append(SLFaction(None, i, None, [])
+        faction_list.append(SLFaction(None, i, None, []))
     return faction_list
 
 def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, grid_width, grid_height):
