@@ -3,10 +3,25 @@ from enum import Enum
 import SLFaction
 
 class SLBrigade:
+"""
+Represents a unit that can be moved between hexes and do battle with other
+units and buildings.
+"""
+
     class BrigadeType(Enum):
+        """
+        Represents the archetype of the unit. Different archetypes have
+        different attack, defense, and movement values.
+        """
         TANK = 0
 
     def __init__(self, brigade_type: str, faction):
+        """
+        Creates a new brigade.
+        Parameters: brigade_type - String, will be used to assign the
+                    correct enum for the brigade type
+                    faction - 
+        """
         match brigade_type:
             case "Tank":
                 self.type = SLBrigade.BrigadeType.TANK
