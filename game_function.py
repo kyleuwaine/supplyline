@@ -13,6 +13,20 @@ def move_occupant(origin: SLTile, dest: SLTile, screen):
     origin.occupant = None
     screen.blit(dest.occupant.pygame_surface, dest.top_left_corner)
 
+def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
+    # Swaps occupants between two tiles
+    # Parameters: tile1 - SLTile, the active tile
+    #             tile2 - SLTile, the selected tile
+    #             screen - the game screen
+
+    screen.blit(tile1.pygame_surface, tile1.top_left_corner)
+    screen.blit(tile2.pygame_surface, tile2.top_left_corner)
+    temp = tile2.occupant
+    tile2.occupant = tile1.occupant
+    tile1.occupant = temp
+    screen.blit(tile1.occupant.pygame_surface, tile1.top_left_corner)
+    screen.blit(tile2.occupant.pygame_surface, tile2.top_left_corner)
+
 def advance_turn(faction_turn: int, num_of_players: int):
     faction_turn += 1
     faction_turn = faction_turn % num_of_players

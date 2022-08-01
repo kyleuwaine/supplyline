@@ -37,54 +37,150 @@ while True:
                                     elif (tile_grid[i][j].type != SLTile.Type.BORDER and tile_grid[y][x].occupant != None):
                                         if (y % 2 == 0):
                                             if (i == y and j == x + 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y and j == x - 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y - 1 and j == x):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y - 1 and j == x + 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y + 1 and j == x):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y + 1 and j == x + 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                         else:
                                             if (i == y and j == x + 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y and j == x - 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y - 1 and j == x):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y - 1 and j == x - 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y + 1 and j == x):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                                             elif (i == y + 1 and j == x - 1):
-                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
-                                                faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
-                                                selected_tile = None
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == tile_grid[y][x].occupant.faction):
+                                                        game_function.swap_occupants(tile_grid[y][x], tile_grid[i][j], screen)
+                                                        faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                        selected_tile = None
+                                                    else: 
+                                                        pass # battle
+                                                else:
+                                                    game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                    faction_turn = game_function.advance_turn(faction_turn, num_of_factions)
+                                                    selected_tile = None
                             else:
                                 pass
                         except IndexError:
