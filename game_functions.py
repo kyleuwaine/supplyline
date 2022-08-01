@@ -33,9 +33,10 @@ def advance_turn(faction_turn: int, num_of_players: int):
     return faction_turn
 
 def find_neighbors(origin: SLTile, grid):
-    # Finds and returns a list of all valid neighbor tiles around the tile passed in
+    # Finds and returns a list of all valid neighbor tiles (not borders) around the tile passed in
     # Parameters: origin - SLTile, the tile which is being searched
     #             grid - the grid which contains the tiles
+
     neighbors = []
     y, x = origin.location
 
