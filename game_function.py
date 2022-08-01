@@ -12,3 +12,8 @@ def move_occupant(origin: SLTile, dest: SLTile, screen):
     dest.occupant = origin.occupant
     origin.occupant = None
     screen.blit(dest.occupant.pygame_surface, dest.top_left_corner)
+
+def advance_turn(faction_turn: int, num_of_players: int):
+    faction_turn += 1
+    faction_turn = faction_turn % num_of_players
+    return faction_turn
