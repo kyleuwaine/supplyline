@@ -1,6 +1,7 @@
 import pygame
 from enum import Enum
 import SLFaction
+import SLTile
 
 class SLBrigade:
 # Represents a unit that can be moved between hexes and do battle with other
@@ -14,7 +15,7 @@ class SLBrigade:
 
         TANK = 0
 
-    def __init__(self, brigade_type: str, faction):
+    def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile):
         # Creates a new brigade.
         # Parameters: brigade_type - String, will be used to assign the
         #             correct enum for the brigade type
@@ -29,4 +30,5 @@ class SLBrigade:
                 assert 0 == 1, "Invalid Brigade Type"
         self.health = 100
         self.faction = faction
+        self.location = location
         self.pygame_surface = pygame.image.load(self.sprite)
