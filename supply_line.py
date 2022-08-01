@@ -3,6 +3,7 @@ from sys import exit
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from startup import startup
+import game_function
 
 pygame.init()
 clock, framerate, screen, tile_grid, tile_grid_size = startup()
@@ -42,81 +43,45 @@ while True:
                                         if (tile_grid[i][j].occupant != None):
                                             screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
                                         selected_tile = None
-                                    elif (y % 2 == 0):
-                                        if (True):
+                                    elif (tile_grid[i][j].type != SLTile.Type.BORDER and tile_grid[y][x].occupant != None):
+                                        if (y % 2 == 0):
                                             if (i == y and j == x + 1):
-                                                screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                                tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                                tile_grid[y][x].occupant = None
-                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
                                                 selected_tile = None
                                             elif (i == y and j == x - 1):
-                                                screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                                tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                                tile_grid[y][x].occupant = None
-                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
                                                 selected_tile = None
                                             elif (i == y - 1 and j == x):
-                                                screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                                tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                                tile_grid[y][x].occupant = None
-                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
                                                 selected_tile = None
                                             elif (i == y - 1 and j == x + 1):
-                                                screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                                tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                                tile_grid[y][x].occupant = None
-                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
                                                 selected_tile = None
                                             elif (i == y + 1 and j == x):
-                                                screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                                tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                                tile_grid[y][x].occupant = None
-                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
                                                 selected_tile = None
                                             elif (i == y + 1 and j == x + 1):
-                                                screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                                tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                                tile_grid[y][x].occupant = None
-                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
                                                 selected_tile = None
-                                    else:
-                                        if (i == y and j == x + 1):
-                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                            tile_grid[y][x].occupant = None
-                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                            selected_tile = None
-                                        elif (i == y and j == x - 1):
-                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                            tile_grid[y][x].occupant = None
-                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                            selected_tile = None
-                                        elif (i == y - 1 and j == x):
-                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                            tile_grid[y][x].occupant = None
-                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                            selected_tile = None
-                                        elif (i == y - 1 and j == x - 1):
-                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                            tile_grid[y][x].occupant = None
-                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                            selected_tile = None
-                                        elif (i == y + 1 and j == x):
-                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                            tile_grid[y][x].occupant = None
-                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                            selected_tile = None
-                                        elif (i == y + 1 and j == x - 1):
-                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
-                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
-                                            tile_grid[y][x].occupant = None
-                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                            selected_tile = None
+                                        else:
+                                            if (i == y and j == x + 1):
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                selected_tile = None
+                                            elif (i == y and j == x - 1):
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                selected_tile = None
+                                            elif (i == y - 1 and j == x):
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                selected_tile = None
+                                            elif (i == y - 1 and j == x - 1):
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                selected_tile = None
+                                            elif (i == y + 1 and j == x):
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                selected_tile = None
+                                            elif (i == y + 1 and j == x - 1):
+                                                game_function.move_occupant(tile_grid[y][x], tile_grid[i][j], screen)
+                                                selected_tile = None
                             else:
                                 pass
                         except IndexError:
