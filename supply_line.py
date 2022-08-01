@@ -37,30 +37,78 @@ while True:
                                         selected_tile = None
                                     elif (y % 2 == 0):
                                         if (i == y and j == x + 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y and j == x - 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y - 1 and j == x):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y - 1 and j == x + 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y + 1 and j == x):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y + 1 and j == x + 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                     else:
                                         if (i == y and j == x + 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y and j == x - 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y - 1 and j == x):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y - 1 and j == x - 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y + 1 and j == x):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                                         elif (i == y + 1 and j == x - 1):
-                                            print("PogU")
+                                            screen.blit(tile_grid[y][x].pygame_surface, tile_grid[y][x].top_left_corner)
+                                            tile_grid[i][j].occupant = tile_grid[y][x].occupant
+                                            tile_grid[y][x].occupant = None
+                                            screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                            selected_tile = None
                             else:
                                 pass
                         except IndexError:
