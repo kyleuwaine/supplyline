@@ -52,18 +52,18 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
                     is_skip_last_hex = True
             if (is_offset):
                 if ((j == 0) or (j == tile_grid_width - 2)):
-                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
                 elif ((i == 0) or (i == tile_grid_height - 1)):
-                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
                 else:
-                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD)
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD, (i, j))
             else:
                 if ((j == 0) or (j == tile_grid_width - 1)):
-                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
                 elif ((i == 0) or (i == tile_grid_height - 1)):
-                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER)
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
                 else:
-                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD)
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD, (i, j))
 
             current_x += hex_sprite_width
             screen.blit(tile_grid[i][j].pygame_surface, tile_grid[i][j].top_left_corner)
