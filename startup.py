@@ -2,6 +2,7 @@ import pygame
 from SLFaction import SLFaction
 from SLBrigade import SLBrigade
 from SLTile import SLTile
+from SLAI import SLAI
 
 def create_init_brigades(faction_list: list, tile_grid: list, screen):
     tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1])
@@ -94,5 +95,6 @@ def startup():
     faction_list = create_factions(num_of_factions)
     tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask)
     create_init_brigades(faction_list, tile_grid, screen)
+    opponent = SLAI(faction_list[1], tile_grid, screen)
 
-    return clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions
+    return clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent

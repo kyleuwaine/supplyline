@@ -11,6 +11,7 @@ def move_occupant(origin: SLTile, dest: SLTile, screen):
     screen.blit(origin.pygame_surface, origin.top_left_corner)
     dest.occupant = origin.occupant
     origin.occupant = None
+    dest.occupant.location = dest
     screen.blit(dest.occupant.pygame_surface, dest.top_left_corner)
 
 def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
@@ -24,6 +25,8 @@ def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
     temp = tile2.occupant
     tile2.occupant = tile1.occupant
     tile1.occupant = temp
+    tile1.occupant.location = tile1
+    tile2.occupant.location = tile2
     screen.blit(tile1.occupant.pygame_surface, tile1.top_left_corner)
     screen.blit(tile2.occupant.pygame_surface, tile2.top_left_corner)
 
@@ -68,3 +71,17 @@ def find_neighbors(origin: SLTile, grid):
             neighbors.append(grid[y + 1][x - 1])
 
     return neighbors
+
+def find_empty_neighbors(origin: SLTile, grid):
+    # Finds and returns a list of all valid empty neighbor tiles (not borders) around the tile passed in
+    # Parameters: origin - SLTile, the tile which is being searched
+    #             grid - the grid which contains the tiles
+
+    # Could do this in-place with one list, but prioritizing performance over memory here
+    processing_list = find_neighbors(origin, grid)
+    output_list = []
+
+    for tile_index in range(len(processing_list)):
+        if (processing_list[tile_index].occupant == None):
+            output_list.append(processing_list[tile_index])
+    return output_list
