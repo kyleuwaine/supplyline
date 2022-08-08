@@ -32,7 +32,7 @@ def compute_endturn_button_mask(top_left_corner, full_screen_mask):
     pygame_surface = pygame.image.load(sprite)
     button_mask = pygame.mask.from_surface(pygame_surface)
     full_screen_mask.draw(button_mask, top_left_corner)
-    return button_mask, pygame_surface
+    return full_screen_mask, pygame_surface
 
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width = 120
