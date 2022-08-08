@@ -29,17 +29,24 @@ while True:
                                     if tile_grid[i][j].pygame_mask.get_at(event.pos) == 1:
                                         if (highlighted_tile == None):
                                             if (tile_grid[i][j].type != SLTile.Type.BORDER):
-                                                highlighted_tile = tile_grid[i][j]
-                                                screen.blit(pygame.image.load("Images\yellow_hex.png"), tile_grid[i][j].top_left_corner)
-                                                x = j
-                                                y = i
+                                                if (tile_grid[i][j].occupant != None):
+                                                    if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
+                                                        highlighted_tile = tile_grid[i][j]
+                                                        screen.blit(pygame.image.load("Images\yellow_hex.png"), tile_grid[i][j].top_left_corner)
+                                                        x = j
+                                                        y = i
+                                                else: 
+                                                    highlighted_tile = tile_grid[i][j]
+                                                    screen.blit(pygame.image.load("Images\yellow_hex.png"), tile_grid[i][j].top_left_corner)
+                                                    x = j
+                                                    y = i
                                         else:
                                             if (tile_grid[i][j] == highlighted_tile):
                                                 screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                                 if (highlighted_tile.occupant != None):
                                                     screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
                                                 highlighted_tile = None
-                                            else:
+                                            elif (highlighted_tile.occupant != None):
                                                 neighbors = game_functions.find_neighbors(highlighted_tile, tile_grid)
                                                 for tile in neighbors:
                                                     if (tile_grid[i][j] == tile):
