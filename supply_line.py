@@ -3,11 +3,12 @@ from sys import exit
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from startup import startup
+from SLButton import SLButton
 import game_functions
 import combat
 
 pygame.init()
-clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_mask = startup()
+clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button = startup()
 highlighted_tile = None
 x = 0
 y = 0
@@ -24,7 +25,7 @@ while True:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if (faction_turn == 0):
-                        if (endturn_mask.get_at(event.pos) == 1):
+                        if (endturn_button.pygame_mask.get_at(event.pos) == 1):
                             faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
                         else:
                             for i in range(tile_grid_size):
