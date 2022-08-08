@@ -4,6 +4,7 @@ from SLTile import SLTile
 from SLBrigade import SLBrigade
 from startup import startup
 import game_functions
+import combat
 
 pygame.init()
 clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_mask = startup()
@@ -56,13 +57,11 @@ while True:
                                                             if (tile.occupant != None):
                                                                 if (tile.occupant.faction == highlighted_tile.occupant.faction):
                                                                     game_functions.swap_occupants(highlighted_tile, tile, screen)
-                                                                    faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
                                                                     highlighted_tile = None
                                                                 else:
-                                                                    pass # Battle
+                                                                    combat.battle(highlighted_tile.occupant, tile.occupant, screen)
                                                             else:
                                                                 game_functions.move_occupant(highlighted_tile, tile, screen)
-                                                                faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
                                                                 highlighted_tile = None
                                                             break
                                         else:
