@@ -30,5 +30,6 @@ class SLBrigade:
                 assert 0 == 1, "Invalid Brigade Type"
         self.health = 100
         self.faction = faction
+        # location is the tile it is currently on
         self.location = location
         self.pygame_surface = pygame.image.load(self.sprite)
