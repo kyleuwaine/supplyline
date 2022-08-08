@@ -27,6 +27,12 @@ def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_heigh
     top = x - (hex_sprite_width * (grid_width // 2)), y - (105 * (grid_height // 2))
     return top
 
+def compute_endturn_button_mask(top_left_corner, full_screen_mask):
+    sprite = "Images\grass_05.png"
+    pygame_surface = pygame.image.load(sprite)
+    button_mask = pygame.mask.from_surface(pygame_surface)
+    full_screen_mask.draw(button_mask, top_left_corner)
+    return button_mask, pygame_surface
 
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width = 120
@@ -96,5 +102,7 @@ def startup():
     tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask)
     create_init_brigades(faction_list, tile_grid, screen)
     opponent = SLAI(faction_list[1], tile_grid, screen)
+    endturn_mask, endturn_surface = compute_endturn_button_mask([20, 20], full_screen_mask)
+    screen.blit(endturn_surface, [20, 20])
 
-    return clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent
+    return clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_mask
