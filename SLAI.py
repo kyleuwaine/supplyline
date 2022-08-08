@@ -1,5 +1,6 @@
 import game_functions
 import SLFaction
+import combat
 from random import randrange
 
 class SLAI:
@@ -16,5 +17,12 @@ class SLAI:
     def AI_turn(self):
         # Performs the AI turn by moving all of its brigades to random empty neighboring tiles
         for brigade in self.faction.brigade_list:
-            possible_dests = game_functions.find_empty_neighbors(brigade.location, self.map)
-            game_functions.move_occupant(brigade.location, possible_dests[randrange(0, len(possible_dests))], self.screen)
+            possible_dests = game_functions.find_neighbors(brigade.location, self.map)
+            selected_dest = possible_dests[randrange(0, len(possible_dests))]
+            if (selected_dest.occupant == None):
+                game_functions.move_occupant(brigade.location, selected_dest, self.screen)
+            else:
+                if (selected_dest.occupant.faction == self.faction):
+                    game_functions.swap_occupants(brigade.location, selected_dest, self.screen)
+                else:
+                    combat.battle(brigade, selected_dest.occupant, self.screen)
