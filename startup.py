@@ -80,7 +80,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     return tile_grid, tile_grid_size
 
 
-def startup():
+def startup(clock, framerate, screen):
     screen_width = 1200
     screen_height = 600
     screen = pygame.display.set_mode((screen_width, screen_height))
@@ -96,7 +96,7 @@ def startup():
     tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask)
     create_init_brigades(faction_list, tile_grid, screen)
     opponent = SLAI(faction_list[1], tile_grid, screen)
-    endturn_button = SLButton([20, 20], full_screen_mask, "Images\grass_05.png")
+    endturn_button = SLButton([20, 20], full_screen_mask, "Images\endturn.png")
     screen.blit(endturn_button.pygame_surface, endturn_button.top_left_corner)
 
-    return clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button
+    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button

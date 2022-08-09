@@ -11,3 +11,11 @@ class SLButton:
         self.top_left_corner = top_left_corner
         self.pygame_surface = pygame.image.load(sprite)
         self.pygame_mask = self.compute_mask(full_screen_mask)
+
+    # Might do this later, but even though rectangular buttons would probably be
+    # slightly more performant, they're also uglier than with rounded corners
+    #def __init__(self, top_left_corner, full_screen_mask, rect_details, text):
+    #    self.top_left_corner = top_left_corner
+    #    self.pygame_surface =
+    #    self.pygame_surface = pygame.image.load(sprite)
+    #    self.pygame_mask = self.compute_mask(full_screen_mask)

@@ -8,7 +8,41 @@ import game_functions
 import combat
 
 pygame.init()
-clock, framerate, screen, tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button = startup()
+screen_width = 1200
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Supply Line")
+clock = pygame.time.Clock()
+framerate = 10
+full_screen_surface = pygame.Surface((screen_width, screen_height))
+full_screen_mask = pygame.mask.from_surface(full_screen_surface)
+full_screen_mask.invert()
+
+pygame.draw.rect(screen, "darkolivegreen4", pygame.Rect(0, 0, screen_width, screen_height))
+start_button = SLButton([20, 20], full_screen_mask, "Images\endturn.png")
+screen.blit(start_button.pygame_surface, start_button.top_left_corner)
+
+
+while True:
+    start_game = False
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if (start_button.pygame_mask.get_at(event.pos) == 1):
+                    start_button.pygame_mask.clear()
+                    start_game = True
+
+    pygame.display.update()
+    clock.tick(framerate)
+    if(start_game == True):
+        break
+
+pygame.draw.rect(screen, "black", pygame.Rect(0, 0, screen_width, screen_height))
+
+tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button = startup(clock, framerate, screen)
 highlighted_tile = None
 x = 0
 y = 0
