@@ -10,6 +10,7 @@ def battle(attacker: SLBrigade, defender: SLBrigade, screen):
     # Parameters: attacker - SLBrigade, the attacking brigade
     #             defender - SLBrigade, the defending brigade
     #             screen - the screen of the game
+    # Returns True if attacker succeeds
 
     attacker_alive = True
     defender_alive = True
@@ -27,3 +28,6 @@ def battle(attacker: SLBrigade, defender: SLBrigade, screen):
         defender_alive = False
     if (attacker_alive and not defender_alive):
         movement.move_occupant(attacker.location, defender.location, screen)
+        return True
+    else:
+        return False
