@@ -6,6 +6,7 @@ from startup import startup
 from SLButton import SLButton
 import game_functions
 import combat
+import movement
 
 pygame.init()
 screen_width = 1200
@@ -91,12 +92,12 @@ while True:
                                                         if (tile_grid[i][j] == tile):
                                                             if (tile.occupant != None):
                                                                 if (tile.occupant.faction == highlighted_tile.occupant.faction):
-                                                                    game_functions.swap_occupants(highlighted_tile, tile, screen)
+                                                                    movement.swap_occupants(highlighted_tile, tile, screen)
                                                                     highlighted_tile = None
                                                                 else:
                                                                     combat.battle(highlighted_tile.occupant, tile.occupant, screen)
                                                             else:
-                                                                game_functions.move_occupant(highlighted_tile, tile, screen)
+                                                                movement.move_occupant(highlighted_tile, tile, screen)
                                                                 highlighted_tile = None
                                                             break
                                         else:

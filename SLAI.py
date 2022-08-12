@@ -1,6 +1,7 @@
 import game_functions
 import SLFaction
 import combat
+import movement
 from random import randrange
 
 class SLAI:
@@ -20,9 +21,9 @@ class SLAI:
             possible_dests = game_functions.find_neighbors(brigade.location, self.map)
             selected_dest = possible_dests[randrange(0, len(possible_dests))]
             if (selected_dest.occupant == None):
-                game_functions.move_occupant(brigade.location, selected_dest, self.screen)
+                movement.move_occupant(brigade.location, selected_dest, self.screen)
             else:
                 if (selected_dest.occupant.faction == self.faction):
-                    game_functions.swap_occupants(brigade.location, selected_dest, self.screen)
+                    movement.swap_occupants(brigade.location, selected_dest, self.screen)
                 else:
                     combat.battle(brigade, selected_dest.occupant, self.screen)

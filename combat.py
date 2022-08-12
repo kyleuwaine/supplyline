@@ -3,13 +3,14 @@ from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLFaction import SLFaction
 import game_functions
+import movement
 
 def battle(attacker: SLBrigade, defender: SLBrigade, screen):
     # Will commence a battle between two brigades on the map
     # Parameters: attacker - SLBrigade, the attacking brigade
     #             defender - SLBrigade, the defending brigade
     #             screen - the screen of the game
-    
+
     attacker_alive = True
     defender_alive = True
     attacker.health = attacker.health - 15
@@ -25,5 +26,4 @@ def battle(attacker: SLBrigade, defender: SLBrigade, screen):
         defender.faction.brigade_list.clear()
         defender_alive = False
     if (attacker_alive and not defender_alive):
-        game_functions.move_occupant(attacker.location, defender.location)
-    
+        movement.move_occupant(attacker.location, defender.location, screen)
