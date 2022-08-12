@@ -22,8 +22,11 @@ class SLAI:
             selected_dest = possible_dests[randrange(0, len(possible_dests))]
             if (selected_dest.occupant == None):
                 movement.move_occupant(brigade.location, selected_dest, self.screen)
+                movement.attempt_claim(selected_dest, self.faction, self.map)
             else:
                 if (selected_dest.occupant.faction == self.faction):
                     movement.swap_occupants(brigade.location, selected_dest, self.screen)
                 else:
-                    combat.battle(brigade, selected_dest.occupant, self.screen)
+                    success = combat.battle(brigade, selected_dest.occupant, self.screen)
+                    if (success):
+                        movement.attempt_claim(selected_dest, self.faction, self.map)
