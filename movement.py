@@ -2,6 +2,7 @@ import pygame
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLFaction import SLFaction
+import game_functions
 
 # Contains all game functions related to movement of units
 
@@ -33,5 +34,17 @@ def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
     screen.blit(tile1.occupant.pygame_surface, tile1.top_left_corner)
     screen.blit(tile2.occupant.pygame_surface, tile2.top_left_corner)
 
-def claim_tile(claimed: SLTile, grid):
-    # 
+def attempt_claim(claimed: SLTile, faction: SLFaction, grid):
+    # Attempts to claim a tile and any unclaimed tile which also borders it.
+    # Parameters: claimed - SLTile, the tile being claimed
+    #             grid - the grid which contains the tiles
+    #             faction - SLFaction, the faction attempting to claim the tile
+
+    if (claimed.owner == faction):
+        return
+    else: 
+        claimed.owner = faction
+        surrounding = game_functions.find_empty_neighbors(claimed, grid)
+        for tile in surrounding:
+            if (tile.owner == None):
+                tile.owner = faction

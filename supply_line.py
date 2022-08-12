@@ -95,9 +95,12 @@ while True:
                                                                     movement.swap_occupants(highlighted_tile, tile, screen)
                                                                     highlighted_tile = None
                                                                 else:
-                                                                    combat.battle(highlighted_tile.occupant, tile.occupant, screen)
+                                                                    success = combat.battle(highlighted_tile.occupant, tile.occupant, screen)
+                                                                    if (success):
+                                                                        movement.attempt_claim(tile, highlighted_tile.owner, tile_grid)
                                                             else:
                                                                 movement.move_occupant(highlighted_tile, tile, screen)
+                                                                movement.attempt_claim(tile, faction_list[faction_turn])
                                                                 highlighted_tile = None
                                                             break
                                         else:

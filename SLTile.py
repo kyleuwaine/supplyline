@@ -22,3 +22,4 @@ class SLTile:
         self.pygame_surface = pygame.image.load(self.sprite)
         self.pygame_mask = self.compute_mask(full_screen_mask)
         self.location = location
+        self.owner = None
