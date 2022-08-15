@@ -17,15 +17,14 @@ class SLAI:
 
     def AI_turn(self):
         # Performs the AI turn by moving all of its brigades to random empty neighboring tiles
-        for brigade in self.faction.brigade_list:
+        for id in self.faction.brigade_dict:
+            brigade = self.faction.brigade_dict[id]
             original_location = brigade.location
             possible_dests = game_functions.find_neighbors(original_location, self.map)
             selected_dest = possible_dests[randrange(0, len(possible_dests))]
             if (selected_dest.occupant == None):
                 movement.move_occupant(brigade.location, selected_dest, self.screen, self.map)
                 for tile in (game_functions.find_neighbors(brigade.location, self.map) + [brigade.location]):
-                    print(tile.top_left_corner)
-                    print(tile.owner)
                     game_functions.blit_borders(tile, tile.owner.color, self.screen)
                 #movement.attempt_claim(selected_dest, self.faction, self.map)
             else:

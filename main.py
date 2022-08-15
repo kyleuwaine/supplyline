@@ -83,12 +83,10 @@ while True:
                                             else:
                                                 if (tile_grid[i][j] == highlighted_tile):
                                                     screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
-                                                    for tile in (game_functions.find_neighbors(tile, tile_grid) + [tile]):
-                                                        game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                    game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                     if (highlighted_tile.occupant != None):
                                                         screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                                        for tile in (game_functions.find_neighbors(tile, tile_grid) + [tile]):
-                                                            game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                        game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                     highlighted_tile = None
                                                 elif (highlighted_tile.occupant != None):
                                                     neighbors = game_functions.find_neighbors(highlighted_tile, tile_grid)
