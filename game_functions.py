@@ -2,6 +2,17 @@ import pygame
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 
+def blit_borders(tile, color, screen):
+    #c_red = pygame.Color("red")
+    #c_blue = pygame.Color("blue")
+    if (color == pygame.Color("red")):
+        border_image = "Images\ed_hex_borders.png"
+    elif (color == pygame.Color("blue")):
+        border_image = "Images\eblue_hex_borders.png"
+    screen.blit(pygame.image.load(border_image), tile.top_left_corner)
+
+
+
 def advance_turn(faction_turn: int, num_of_players: int):
     faction_turn += 1
     faction_turn = faction_turn % num_of_players

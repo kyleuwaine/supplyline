@@ -97,10 +97,11 @@ while True:
                                                                 else:
                                                                     success = combat.battle(highlighted_tile.occupant, tile.occupant, screen)
                                                                     if (success):
-                                                                        movement.attempt_claim(tile, highlighted_tile.owner, tile_grid)
+                                                                        pass
+                                                                        #movement.attempt_claim(tile, highlighted_tile.owner, tile_grid)
                                                             else:
-                                                                movement.move_occupant(highlighted_tile, tile, screen)
-                                                                movement.attempt_claim(tile, faction_list[faction_turn])
+                                                                movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
+                                                                #movement.attempt_claim(tile, faction_list[faction_turn])
                                                                 highlighted_tile = None
                                                             break
                                         else:
