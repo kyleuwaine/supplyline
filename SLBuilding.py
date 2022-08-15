@@ -20,6 +20,7 @@ class SLBuilding:
         #             building_type - the type of building
         #             faction - SLFaction, the faction the building belongs to
         #             location - SLTile, the tile where the building is located
+        #             id - the key used to access the created building in the faction dictionary
 
         match building_type:
             case SLBuilding.Type.CAPITAL:

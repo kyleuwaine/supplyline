@@ -21,6 +21,8 @@ class SLBrigade:
         #             correct enum for the brigade type
         #             faction - SLFaction, used to check if the current
         #             player can give orders to the brigade
+        #             location - SLTile, the tile where the brigade is placed
+        #             id = the key used to access the brigade in the faction dictionary
 
         match brigade_type:
             case "Tank":
