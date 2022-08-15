@@ -42,10 +42,8 @@ def attempt_claim(claimed: SLTile, faction: SLFaction, screen, grid):
     #             faction - SLFaction, the faction attempting to claim the tile
 
     claimed.owner = faction
-    game_functions.blit_borders(claimed, claimed.owner.color, screen)
 
     surrounding = game_functions.find_empty_neighbors(claimed, grid)
     for tile in surrounding:
         if (tile.owner == None):
             tile.owner = faction
-        game_functions.blit_borders(tile, tile.owner.color, screen)
