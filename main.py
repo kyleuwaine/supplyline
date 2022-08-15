@@ -83,9 +83,9 @@ while True:
                                             else:
                                                 if (tile_grid[i][j] == highlighted_tile):
                                                     screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
-                                                    game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                     if (highlighted_tile.occupant != None):
                                                         screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
+                                                    if (highlighted_tile.owner != None):
                                                         game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                     highlighted_tile = None
                                                 elif (highlighted_tile.occupant != None):
