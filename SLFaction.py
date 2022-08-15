@@ -6,3 +6,5 @@ class SLFaction:
         self.id = new_id
         self.color = new_color
         self.brigade_list = new_brigade_list
+        self.brigade_counter = 0
+        self.building_counter = 0

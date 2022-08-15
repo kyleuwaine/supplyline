@@ -10,10 +10,11 @@ class SLBuilding:
     class Type(Enum):
         # Represents the type of building. Different types have different abilities.
 
-        CAPITOL = 0
+        CAPITAL = 0
         BARRACKS = 1
+        MINE = 2
     
-    def __init__(self, building_type, faction: SLFaction, location: SLTile):
+    def __init__(self, building_type, faction: SLFaction, location: SLTile, id):
         # Creates a new building
         # Parameters: self - the building object
         #             building_type - the type of building
@@ -21,10 +22,16 @@ class SLBuilding:
         #             location - SLTile, the tile where the building is located
 
         match building_type:
-            case SLBuilding.Type.CAPITOL:
-                pass
+            case SLBuilding.Type.CAPITAL:
+                self.health = 500
+                self.force_limit = 5
             case SLBuilding.Type.BARRACKS:
-                pass
+                self.health = 100
+                self.force_limit = 3
+            case SLBuilding.Type.MINE:
+                self.health = 100
+                self.force_limit = 0
 
         self.faction = faction
         self.location = location
+        self.id = id

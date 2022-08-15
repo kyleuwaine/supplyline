@@ -7,12 +7,14 @@ from SLAI import SLAI
 from SLButton import SLButton
 
 def create_init_brigades(faction_list: list, tile_grid: list, screen):
-    tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1])
+    tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1], faction_list[0].brigade_counter)
+    faction_list[0].brigade_counter += 1
     tile_grid[1][1].owner = faction_list[0]
     game_functions.blit_borders(tile_grid[1][1], tile_grid[1][1].owner.color, screen)
     faction_list[0].brigade_list.append(tile_grid[1][1].occupant)
     screen.blit(tile_grid[1][1].occupant.pygame_surface, tile_grid[1][1].top_left_corner)
-    tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2])
+    tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2], faction_list[1].brigade_counter)
+    faction_list[1].brigade_counter += 1
     tile_grid[2][2].owner = faction_list[1]
     game_functions.blit_borders(tile_grid[2][2], tile_grid[2][2].owner.color, screen)
     faction_list[1].brigade_list.append(tile_grid[2][2].occupant)

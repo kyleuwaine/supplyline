@@ -15,7 +15,7 @@ class SLBrigade:
 
         TANK = 0
 
-    def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile):
+    def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile, id):
         # Creates a new brigade.
         # Parameters: brigade_type - String, will be used to assign the
         #             correct enum for the brigade type
@@ -30,6 +30,7 @@ class SLBrigade:
                 assert 0 == 1, "Invalid Brigade Type"
         self.health = 100
         self.faction = faction
+        self.id = id
         # location is the tile it is currently on
         self.location = location
         self.pygame_surface = pygame.image.load(self.sprite)
