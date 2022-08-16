@@ -135,7 +135,7 @@ while True:
                                                                         game_functions.blit_borders(tile, tile.owner.color, screen)
                                                                     highlighted_tile = None
                                                                 else:
-                                                                    combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid)
+                                                                    combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid, screen)
                                                             else:
                                                                 movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
                                                                 for tile in (game_functions.find_neighbors(tile, tile_grid) + [tile]):
