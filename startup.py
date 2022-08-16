@@ -26,13 +26,13 @@ def create_factions(num_of_factions: int, faction_color_list):
         faction_list.append(SLFaction(None, i, faction_color_list[i], {}))
     return faction_list
 
-def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, grid_width, grid_height):
+def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, grid_width, grid_height, vertical_offset):
     assert grid_width % 2 != 0, "expected odd grid width"
     assert grid_height % 2 != 0, "expected even grid height"
     assert grid_height == grid_width, "expected grid height and grid width to be equal"
     x = (screen_width // 2) - (hex_sprite_width // 2)
     y = (screen_height // 2) - (hex_sprite_height // 2)
-    top = x - (hex_sprite_width * (grid_width // 2)), y - (105 * (grid_height // 2))
+    top = x - (hex_sprite_width * (grid_width // 2)), y - (vertical_offset * (grid_height // 2))
     return top
 
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
@@ -41,14 +41,20 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     if (screen.get_size() == (1200, 600)):
         hex_sprite_width = 120
         hex_sprite_height = 140
+        tile_grid_width = 5
+        tile_grid_height = 5
+        tile_grid_size = 5
+        vertical_offset = 105
     if (screen.get_size() == (1800, 900)):
         hex_sprite_width = 85
         hex_sprite_height = 99
+        tile_grid_width = 13
+        tile_grid_height = 13
+        tile_grid_size = 13
+        vertical_offset = 73
     #hex_sprite_width += 1  # Create a black border between the tiles
-    tile_grid_width = 5
-    tile_grid_height = 5
-    tile_grid_size = 5
-    x, y = find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height)
+
+    x, y = find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height, vertical_offset)
     tile_grid = [[0 for x in range(tile_grid_width)] for y in range(tile_grid_height)]
     #tile_grid[0][0] = SLTile((0, 0))
     #tile_grid[0][0] = SLTile(( (screen_width // 2) - (hex_sprite_width // 2) , (screen_height // 2) - (hex_sprite_height // 2) ), full_screen_mask_input)
@@ -88,7 +94,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
         else:
             is_offset = True
 
-        y += 105
+        y += vertical_offset
 
     return tile_grid, tile_grid_size
 
