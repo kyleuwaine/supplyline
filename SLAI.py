@@ -31,7 +31,6 @@ class SLAI:
                 if (selected_dest.occupant.faction == self.faction):
                     movement.swap_occupants(brigade.location, selected_dest, self.screen)
                 else:
-                    success = combat.battle(brigade, selected_dest.occupant, self.map, self.screen)
-                    if (success):
-                        #movement.attempt_claim(selected_dest, self.faction, self.map)
-                        pass
+                    combat.battle(brigade, selected_dest.occupant, self.map, self.screen)
+                    if (len(self.faction.brigade_dict) == 0):
+                        break
