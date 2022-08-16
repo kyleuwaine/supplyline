@@ -21,6 +21,13 @@ def create_init_brigades(faction_list: list, tile_grid: list, screen):
     faction_list[1].brigade_counter += 1
     screen.blit(tile_grid[2][2].occupant.pygame_surface, tile_grid[2][2].top_left_corner)
     game_functions.blit_health(tile_grid[2][2].occupant, screen)
+    tile_grid[1][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[1][2], faction_list[1].brigade_counter, screen.get_size())
+    tile_grid[1][2].owner = faction_list[1]
+    game_functions.blit_borders(tile_grid[1][2], tile_grid[1][2].owner.color, screen)
+    faction_list[1].brigade_dict.update({1: tile_grid[1][2].occupant})
+    faction_list[1].brigade_counter += 1
+    screen.blit(tile_grid[1][2].occupant.pygame_surface, tile_grid[1][2].top_left_corner)
+    game_functions.blit_health(tile_grid[1][2].occupant, screen)
 
 def create_factions(num_of_factions: int, faction_color_list):
     faction_list = []
