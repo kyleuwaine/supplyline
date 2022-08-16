@@ -1,16 +1,29 @@
 import pygame
+import base_game_functions
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 
-def blit_borders(tile, color, screen):
+#def get_selective_image_str(base_image_str):
+#    if (screen.get_size() == (1200, 600)):
+#        return base_image_str
+#    if (screen.get_size() == (1800, 900)):
+#        return base_image_str[:-4] + "_half.png"
+
+#def selective_blit(screen, base_image_str, top_left_corner):
+#    if (screen.get_size() == (1200, 600)):
+#        screen.blit(pygame.image.load(base_image_str), top_left_corner)
+#    if (screen.get_size() == (1800, 900)):
+#        real_image_str = base_image_str[:-4] + "_half.png"
+#        screen.blit(pygame.image.load(real_image_str), top_left_corner)
+
+def blit_borders(tile: SLTile, color, screen):
     #c_red = pygame.Color("red")
     #c_blue = pygame.Color("blue")
     if (color == pygame.Color("red")):
-        border_image = "Images\ed_hex_borders.png"
+        border_image = base_game_functions.get_selective_image_str("Images\ed_hex_borders.png", screen.get_size())
     elif (color == pygame.Color("blue")):
-        border_image = "Images\eblue_hex_borders.png"
+        border_image = base_game_functions.get_selective_image_str("Images\eblue_hex_borders.png", screen.get_size())
     screen.blit(pygame.image.load(border_image), tile.top_left_corner)
-
 
 
 def advance_turn(faction_turn: int, num_of_players: int):

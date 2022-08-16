@@ -7,13 +7,13 @@ from SLAI import SLAI
 from SLButton import SLButton
 
 def create_init_brigades(faction_list: list, tile_grid: list, screen):
-    tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1], faction_list[0].brigade_counter)
+    tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1], faction_list[0].brigade_counter, screen.get_size())
     tile_grid[1][1].owner = faction_list[0]
     game_functions.blit_borders(tile_grid[1][1], tile_grid[1][1].owner.color, screen)
     faction_list[0].brigade_dict.update({0: tile_grid[1][1].occupant})
     faction_list[0].brigade_counter += 1
     screen.blit(tile_grid[1][1].occupant.pygame_surface, tile_grid[1][1].top_left_corner)
-    tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2], faction_list[1].brigade_counter)
+    tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2], faction_list[1].brigade_counter, screen.get_size())
     tile_grid[2][2].owner = faction_list[1]
     game_functions.blit_borders(tile_grid[2][2], tile_grid[2][2].owner.color, screen)
     faction_list[1].brigade_dict.update({0: tile_grid[2][2].occupant})
@@ -38,7 +38,13 @@ def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_heigh
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     hex_sprite_width = 120
     hex_sprite_height = 140
-    hex_sprite_width += 1  # Create a black border between the tiles
+    if (screen.get_size() == (1200, 600)):
+        hex_sprite_width = 120
+        hex_sprite_height = 140
+    if (screen.get_size() == (1800, 900)):
+        hex_sprite_width = 85
+        hex_sprite_height = 99
+    #hex_sprite_width += 1  # Create a black border between the tiles
     tile_grid_width = 5
     tile_grid_height = 5
     tile_grid_size = 5
@@ -61,18 +67,18 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
                     is_skip_last_hex = True
             if (is_offset):
                 if ((j == 0) or (j == tile_grid_width - 2)):
-                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j), (hex_sprite_width, hex_sprite_height))
                 elif ((i == 0) or (i == tile_grid_height - 1)):
-                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j), (hex_sprite_width, hex_sprite_height))
                 else:
-                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD, (i, j))
+                    tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD, (i, j), (hex_sprite_width, hex_sprite_height))
             else:
                 if ((j == 0) or (j == tile_grid_width - 1)):
-                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j), (hex_sprite_width, hex_sprite_height))
                 elif ((i == 0) or (i == tile_grid_height - 1)):
-                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j))
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j), (hex_sprite_width, hex_sprite_height))
                 else:
-                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD, (i, j))
+                    tile_grid[i][j] = SLTile((current_x, y), full_screen_mask_input.copy(), SLTile.Type.STANDARD, (i, j), (hex_sprite_width, hex_sprite_height))
 
             current_x += hex_sprite_width
             screen.blit(tile_grid[i][j].pygame_surface, tile_grid[i][j].top_left_corner)
@@ -87,9 +93,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input):
     return tile_grid, tile_grid_size
 
 
-def startup(clock, framerate, screen):
-    screen_width = 1200
-    screen_height = 600
+def startup(clock, framerate, screen, screen_width, screen_height):
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Supply Line")
     clock = pygame.time.Clock()
@@ -107,4 +111,4 @@ def startup(clock, framerate, screen):
     endturn_button = SLButton([20, 20], full_screen_mask, "Images\endturn.png")
     screen.blit(endturn_button.pygame_surface, endturn_button.top_left_corner)
 
-    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button
+    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, screen
