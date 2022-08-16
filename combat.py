@@ -15,6 +15,14 @@ def battle(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     defender_alive = True
     attacker.health = attacker.health - 15
     defender.health = defender.health - 10
+    screen.blit(attacker.location.pygame_surface, attacker.location.top_left_corner)
+    screen.blit(attacker.pygame_surface, attacker.location.top_left_corner)
+    game_functions.blit_borders(attacker.location, attacker.location.owner.color, screen)
+    game_functions.blit_health(attacker, screen)
+    screen.blit(defender.location.pygame_surface, defender.location.top_left_corner)
+    screen.blit(defender.pygame_surface, defender.location.top_left_corner)
+    game_functions.blit_borders(defender.location, defender.location.owner.color, screen)
+    game_functions.blit_health(defender, screen)
     if (attacker.health <= 0):
         screen.blit(attacker.location.pygame_surface, attacker.location.top_left_corner)
         attacker.location.occupant = None
