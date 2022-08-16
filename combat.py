@@ -18,12 +18,12 @@ def battle(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     if (attacker.health <= 0):
         screen.blit(attacker.location.pygame_surface, attacker.location.top_left_corner)
         attacker.location.occupant = None
-        attacker.faction.brigade_list.clear()
+        attacker.faction.brigade_dict.pop(attacker.id)
         attacker_alive = False
     if (defender.health <= 0):
         screen.blit(defender.location.pygame_surface, defender.location.top_left_corner)
         defender.location.occupant = None
-        defender.faction.brigade_list.clear()
+        defender.faction.brigade_dict.pop(defender.id)
         defender_alive = False
     if (attacker_alive and not defender_alive):
         movement.move_occupant(attacker.location, defender.location, screen, grid)
