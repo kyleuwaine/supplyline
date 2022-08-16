@@ -5,7 +5,7 @@ from SLFaction import SLFaction
 import game_functions
 import movement
 
-def battle(attacker: SLBrigade, defender: SLBrigade, grid):
+def battle(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     # Will commence a battle between two brigades on the map
     # Parameters: attacker - SLBrigade, the attacking brigade
     #             defender - SLBrigade, the defending brigade
