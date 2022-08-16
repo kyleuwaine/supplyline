@@ -10,7 +10,6 @@ def battle(attacker: SLBrigade, defender: SLBrigade, grid):
     # Parameters: attacker - SLBrigade, the attacking brigade
     #             defender - SLBrigade, the defending brigade
     #             screen - the screen of the game
-    # Returns True if attacker succeeds
 
     attacker_alive = True
     defender_alive = True
@@ -31,6 +30,3 @@ def battle(attacker: SLBrigade, defender: SLBrigade, grid):
         game_functions.blit_borders(defender.location, defender.location.owner.color, screen)
         for tile in (game_functions.find_neighbors(defender.location, grid) + defender.location):
             game_functions.blit_borders(tile, tile.owner.color, screen)
-        return True
-    else:
-        return False

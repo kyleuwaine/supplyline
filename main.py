@@ -99,15 +99,11 @@ while True:
                                                                         game_functions.blit_borders(tile, tile.owner.color, screen)
                                                                     highlighted_tile = None
                                                                 else:
-                                                                    success = combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid)
-                                                                    if (success):
-                                                                        pass
-                                                                        #movement.attempt_claim(tile, highlighted_tile.owner, tile_grid)
+                                                                    combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid)
                                                             else:
                                                                 movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
                                                                 for tile in (game_functions.find_neighbors(tile, tile_grid) + [tile]):
                                                                     game_functions.blit_borders(tile, tile.owner.color, screen)
-                                                                #movement.attempt_claim(tile, faction_list[faction_turn])
                                                                 highlighted_tile = None
                                                             break
                                         else:
