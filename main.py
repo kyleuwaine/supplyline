@@ -52,28 +52,7 @@ other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images\endtur
 screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
 
 screen_width, screen_height = menu_screen_loop(start_button, other_start_button)
-#screen = pygame.display.set_mode((1800, 900))
-
-#while True:
-#    start_game = False
-#    for event in pygame.event.get():
-#        if event.type == pygame.QUIT:
-#            pygame.quit()
-#            exit()
-#        if event.type == pygame.MOUSEBUTTONDOWN:
-#            if event.button == 1:
-#                if (start_button.pygame_mask.get_at(event.pos) == 1):
-#                    start_button.pygame_mask.clear()
-#                    start_game = True
-#
-#    pygame.display.update()
-#    clock.tick(framerate)
-#    if(start_game == True):
-#        break
-
-#pygame.draw.rect(screen, "black", pygame.Rect(0, 0, screen_width, screen_height))
 tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, screen = startup(clock, framerate, screen, screen_width, screen_height)
-#pygame.draw.rect(screen, "black", pygame.Rect(0, 0, screen_width, screen_height))
 highlighted_tile = None
 x = 0
 y = 0
@@ -102,18 +81,14 @@ while True:
                                                     if (tile_grid[i][j].occupant != None):
                                                         if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
                                                             highlighted_tile = tile_grid[i][j]
-                                                            base_game_functions.selective_blit(screen, "Images\yellow_hex.png", tile_grid[i][j].top_left_corner)
-                                                            #screen.blit(pygame.image.load("Images\yellow_hex.png"), tile_grid[i][j].top_left_corner)
-                                                            #if (screen.get_window_size() == (1200, 600)):
-                                                            #    screen.blit(pygame.image.load("Images\yellow_hex.png"), tile_grid[i][j].top_left_corner)
-                                                            #if (screen.get_window_size() == (1800, 900)):
-                                                            #    screen.blit(pygame.image.load("Images\yellow_hex_half.png"), tile_grid[i][j].top_left_corner)
+                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", screen.get_size())), tile_grid[i][j].top_left_corner)
+                                                            #base_game_functions.selective_blit(screen, "Images\yellow_hex.png", tile_grid[i][j].top_left_corner)
                                                             x = j
                                                             y = i
                                                     else:
                                                         highlighted_tile = tile_grid[i][j]
-                                                        base_game_functions.selective_blit(screen, "Images\yellow_hex.png", tile_grid[i][j].top_left_corner)
-                                                        #screen.blit(pygame.image.load("Images\yellow_hex.png"), tile_grid[i][j].top_left_corner)
+                                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", screen.get_size())), tile_grid[i][j].top_left_corner)
+                                                        #base_game_functions.selective_blit(screen, "Images\yellow_hex.png", tile_grid[i][j].top_left_corner)
                                                         x = j
                                                         y = i
                                             else:

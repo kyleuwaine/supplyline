@@ -12,17 +12,11 @@ class SLTile:
         full_screen_mask.draw(hex_mask, self.top_left_corner)
         return full_screen_mask
 
-    def __init__(self, top_left_corner, full_screen_mask, tile_type, location, dims):
+    def __init__(self, top_left_corner, full_screen_mask, tile_type, location, screen_dims):
         if (tile_type == SLTile.Type.STANDARD):
-            if (dims == (120, 140)):
-                self.sprite = "Images\grass_05.png"
-            if (dims == (85, 99)):
-                self.sprite = "Images\grass_05_half.png"
+            self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", screen_dims)
         elif (tile_type == SLTile.Type.BORDER):
-            if (dims == (120, 140)):
-                self.sprite = "Images\dirt_06.png"
-            if (dims == (85, 99)):
-                self.sprite = "Images\dirt_06_half.png"
+            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", screen_dims)
         self.type = tile_type
         self.occupant = None
         self.top_left_corner = top_left_corner
@@ -30,4 +24,4 @@ class SLTile:
         self.pygame_mask = self.compute_mask(full_screen_mask)
         self.location = location
         self.owner = None
-        self.dims = dims
+        self.screen_dims = screen_dims
