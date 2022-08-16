@@ -99,7 +99,7 @@ while True:
                                                                         game_functions.blit_borders(tile, tile.owner.color, screen)
                                                                     highlighted_tile = None
                                                                 else:
-                                                                    success = combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid, battle)
+                                                                    success = combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid)
                                                                     if (success):
                                                                         pass
                                                                         #movement.attempt_claim(tile, highlighted_tile.owner, tile_grid)
