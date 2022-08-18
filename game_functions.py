@@ -2,6 +2,8 @@ import pygame
 import base_game_functions
 from SLTile import SLTile
 from SLBrigade import SLBrigade
+from SLBuilding import SLBuilding
+from SLFaction import SLFaction
 
 def blit_borders(tile: SLTile, color, screen):
     #c_red = pygame.Color("red")
@@ -86,3 +88,12 @@ def blit_health(brigade: SLBrigade, screen):
         y += 10
     health_surface = font.render(str(brigade.health), None, brigade.faction.color)
     screen.blit(health_surface, (x, y))
+
+def remove_entity(entity):
+    # Removes an entity from any lists it is present in
+    # Parameters: entity - the entity being removed
+
+    if (type(entity) == SLBrigade):
+        entity.faction.brigade_dict.pop(entity.id)
+    elif (type(entity) == SLBuilding):
+        entity.faction.building_dict.pop(entity.id)
