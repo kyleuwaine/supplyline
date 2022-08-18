@@ -123,7 +123,7 @@ while True:
                                                                         game_functions.remove_entity(defender)
                                                             else:
                                                                 movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
-                                                                for tile in (game_functions.find_neighbors(tile, tile_grid) + [tile]):
+                                                                for tile in (game_functions.find_empty_neighbors(tile, tile_grid) + [tile]):
                                                                     game_functions.blit_borders(tile, tile.owner.color, screen)
                                                                 highlighted_tile = None
                                                             break
