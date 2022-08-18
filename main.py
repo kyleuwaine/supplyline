@@ -111,7 +111,16 @@ while True:
                                                                         game_functions.blit_borders(tile, tile.owner.color, screen)
                                                                     highlighted_tile = None
                                                                 else:
-                                                                    combat.battle(highlighted_tile.occupant, tile.occupant, tile_grid, screen)
+                                                                    attacker = highlighted_tile.occupant
+                                                                    defender = tile.occupant
+                                                                    result = combat.battle(attacker, defender, tile_grid, screen)
+                                                                    if (result == 1):
+                                                                        game_functions.remove_entity(defender)
+                                                                    elif (result == 2):
+                                                                        game_functions.remove_entity(attacker)
+                                                                    elif (result == 3):
+                                                                        game_functions.remove_entity(attacker)
+                                                                        game_functions.remove_entity(defender)
                                                             else:
                                                                 movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
                                                                 for tile in (game_functions.find_neighbors(tile, tile_grid) + [tile]):
