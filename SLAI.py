@@ -17,6 +17,9 @@ class SLAI:
 
     def AI_turn(self):
         # Performs the AI turn by moving all of its brigades to random empty neighboring tiles
+
+        eliminated_brigades = []
+
         for id in self.faction.brigade_dict:
             brigade = self.faction.brigade_dict[id]
             original_location = brigade.location
@@ -31,6 +34,16 @@ class SLAI:
                 if (selected_dest.occupant.faction == self.faction):
                     movement.swap_occupants(brigade.location, selected_dest, self.screen)
                 else:
-                    combat.battle(brigade, selected_dest.occupant, self.map, self.screen)
-                    if (len(self.faction.brigade_dict) == 0):
-                        break
+                    defender = selected_dest.occupant
+                    result = combat.battle(brigade, defender, self.map, self.screen)
+                    if (result == 1):
+                        eliminated_brigades.append(defender)
+                    elif (result == 2):
+                        eliminated_brigades.append(brigade)
+                    elif (result == 3):
+                        eliminated_brigades.append(defender)
+                        eliminated_brigades.append(brigade)
+        
+        for brigade in eliminated_brigades:
+            game_functions.remove_entity(brigade)
+                    
