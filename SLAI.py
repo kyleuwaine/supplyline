@@ -28,7 +28,8 @@ class SLAI:
             if (selected_dest.occupant == None):
                 movement.move_occupant(brigade.location, selected_dest, self.screen, self.map)
                 for tile in (game_functions.find_empty_neighbors(brigade.location, self.map) + [brigade.location]):
-                    game_functions.blit_borders(tile, tile.owner.color, self.screen)
+                    if (tile.owner == self.faction):
+                        game_functions.blit_borders(tile, tile.owner.color, self.screen)
                 #movement.attempt_claim(selected_dest, self.faction, self.map)
             else:
                 if (selected_dest.occupant.faction == self.faction):
