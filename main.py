@@ -61,7 +61,10 @@ def main():
     clock = pygame.time.Clock()
     framerate = 10
     full_screen_surface = pygame.Surface((screen_width, screen_height))
+    # Creates a new mask where every bit on the screen is on
     full_screen_mask = pygame.mask.from_surface(full_screen_surface)
+    # Now turn all of them off (because we're going to impose a different mask)
+    # onto this, and we want only those imposed bits to be on
     full_screen_mask.invert()
 
     pygame.draw.rect(screen, "darkolivegreen4", pygame.Rect(0, 0, screen_width, screen_height))
@@ -73,10 +76,10 @@ def main():
     screen_width, screen_height = menu_screen_loop(start_button, other_start_button, clock, framerate)
     tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, screen = startup(clock, framerate, screen, screen_width, screen_height)
     highlighted_tile = None
-    x = 0
-    y = 0
 
     while True:
+        # For now, faction_turn == 0 is the player's turn, faction_turn == 1 is
+        # the AI turn
         if (faction_turn != 0):
             opponent.AI_turn()
             faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
@@ -101,15 +104,9 @@ def main():
                                                             if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
                                                                 highlighted_tile = tile_grid[i][j]
                                                                 screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", screen.get_size())), tile_grid[i][j].top_left_corner)
-                                                                #base_game_functions.selective_blit(screen, "Images\yellow_hex.png", tile_grid[i][j].top_left_corner)
-                                                                x = j
-                                                                y = i
                                                         else:
                                                             highlighted_tile = tile_grid[i][j]
                                                             screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", screen.get_size())), tile_grid[i][j].top_left_corner)
-                                                            #base_game_functions.selective_blit(screen, "Images\yellow_hex.png", tile_grid[i][j].top_left_corner)
-                                                            x = j
-                                                            y = i
                                                 else:
                                                     if (tile_grid[i][j] == highlighted_tile):
                                                         screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
@@ -133,10 +130,13 @@ def main():
                                                                         attacker = highlighted_tile.occupant
                                                                         defender = tile.occupant
                                                                         result = combat.battle(attacker, defender, tile_grid, screen)
+                                                                        # defender died
                                                                         if (result == 1):
                                                                             game_functions.remove_entity(defender)
+                                                                        # attacker died
                                                                         elif (result == 2):
                                                                             game_functions.remove_entity(attacker)
+                                                                        # both died
                                                                         elif (result == 3):
                                                                             game_functions.remove_entity(attacker)
                                                                             game_functions.remove_entity(defender)
