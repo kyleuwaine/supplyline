@@ -33,7 +33,10 @@ class SLAI:
                 #movement.attempt_claim(selected_dest, self.faction, self.map)
             else:
                 if (selected_dest.occupant.faction == self.faction):
+                    origin = brigade.location
                     movement.swap_occupants(brigade.location, selected_dest, self.screen)
+                    game_functions.blit_borders(origin, origin.owner.color, self.screen)
+                    game_functions.blit_borders(selected_dest, selected_dest.owner.color, self.screen)
                 else:
                     defender = selected_dest.occupant
                     result = combat.battle(brigade, defender, self.map, self.screen)
@@ -44,7 +47,6 @@ class SLAI:
                     elif (result == 3):
                         eliminated_brigades.append(defender)
                         eliminated_brigades.append(brigade)
-        
+
         for brigade in eliminated_brigades:
             game_functions.remove_entity(brigade)
-                    

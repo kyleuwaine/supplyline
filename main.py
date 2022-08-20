@@ -126,6 +126,8 @@ def main():
                                                                 if (tile.occupant != None):
                                                                     if (tile.occupant.faction == highlighted_tile.occupant.faction):
                                                                         movement.swap_occupants(highlighted_tile, tile, screen)
+                                                                        game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                                        game_functions.blit_borders(highlighted_tile, tile.owner.color, screen)
                                                                         highlighted_tile = None
                                                                     else:
                                                                         attacker = highlighted_tile.occupant
@@ -142,7 +144,7 @@ def main():
                                                                     movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
                                                                     for claimed in (game_functions.find_empty_neighbors(tile, tile_grid) + [tile]):
                                                                         if (claimed.owner == faction_list[faction_turn]):
-                                                                            game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                                            game_functions.blit_borders(claimed, claimed.owner.color, screen)
                                                                     highlighted_tile = None
                                                                 break
                                             else:
