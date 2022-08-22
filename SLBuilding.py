@@ -3,6 +3,7 @@ import pygame
 from enum import Enum
 import SLFaction
 import SLTile
+import base_game_functions
 
 class SLBuilding:
     # Represents a building which can be placed by players or start on the map.
@@ -13,7 +14,7 @@ class SLBuilding:
         CAPITAL = 0
         BARRACKS = 1
         MINE = 2
-    
+
     def __init__(self, building_type, faction: SLFaction, location: SLTile, id):
         # Creates a new building
         # Parameters: self - the building object
@@ -26,12 +27,15 @@ class SLBuilding:
             case SLBuilding.Type.CAPITAL:
                 self.health = 500
                 self.force_limit = 5
+                self.sprite = base_game_functions.get_selective_image_str("Images\capital.png", location.map_setting_str)
             case SLBuilding.Type.BARRACKS:
                 self.health = 100
                 self.force_limit = 3
+                self.sprite = base_game_functions.get_selective_image_str("Images\barracks.png", location.map_setting_str)
             case SLBuilding.Type.MINE:
                 self.health = 100
                 self.force_limit = 0
+                self.sprite = base_game_functions.get_selective_image_str("Images\mine.png", location.map_setting_str)
 
         self.faction = faction
         self.location = location
