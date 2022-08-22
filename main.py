@@ -22,7 +22,7 @@ Date: 8/20/2022
 """
 
 
-def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton, clock, framerate):
+def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton, clock, framerate: int):
     """
     Is the event loop for the launcher.
     """
@@ -37,12 +37,12 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
                     if (small_screen_button.pygame_mask.get_at(event.pos) == 1):
                         small_screen_button.pygame_mask.clear()
                         big_screen_button.pygame_mask.clear()
-                        return 1200, 600
+                        return 1200, 600, "big_tiles_debug_map"
                         #start_game = True
                     if (big_screen_button.pygame_mask.get_at(event.pos) == 1):
                         small_screen_button.pygame_mask.clear()
                         big_screen_button.pygame_mask.clear()
-                        return 1800, 900
+                        return 1800, 900, "small_tiles_std_map"
 
         pygame.display.update()
         clock.tick(framerate)
@@ -73,8 +73,8 @@ def main():
     other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
 
-    screen_width, screen_height = menu_screen_loop(start_button, other_start_button, clock, framerate)
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, screen = startup(clock, framerate, screen, screen_width, screen_height)
+    screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, clock, framerate)
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
     highlighted_tile = None
 
     while True:
@@ -103,10 +103,10 @@ def main():
                                                         if (tile_grid[i][j].occupant != None):
                                                             if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
                                                                 highlighted_tile = tile_grid[i][j]
-                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", screen.get_size())), tile_grid[i][j].top_left_corner)
+                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
                                                         else:
                                                             highlighted_tile = tile_grid[i][j]
-                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", screen.get_size())), tile_grid[i][j].top_left_corner)
+                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
                                                 else:
                                                     if (tile_grid[i][j] == highlighted_tile):
                                                         screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)

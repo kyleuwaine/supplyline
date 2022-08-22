@@ -9,9 +9,9 @@ def blit_borders(tile: SLTile, color, screen):
     #c_red = pygame.Color("red")
     #c_blue = pygame.Color("blue")
     if (color == pygame.Color("red")):
-        border_image = base_game_functions.get_selective_image_str("Images\ed_hex_borders.png", screen.get_size())
+        border_image = base_game_functions.get_selective_image_str("Images\ed_hex_borders.png", tile.map_setting_str)
     elif (color == pygame.Color("blue")):
-        border_image = base_game_functions.get_selective_image_str("Images\eblue_hex_borders.png", screen.get_size())
+        border_image = base_game_functions.get_selective_image_str("Images\eblue_hex_borders.png", tile.map_setting_str)
     screen.blit(pygame.image.load(border_image), tile.top_left_corner)
 
 
@@ -75,7 +75,7 @@ def blit_health(brigade: SLBrigade, screen):
     # Blits the health of a brigade onto the tile
     # Parameters: brigade - SLBrigade, the brigade whose health is being blitted
     #             screen - the screen of the game
-    
+
     if (screen.get_size() == (1200, 600)):
         font = pygame.font.SysFont("arial", 30)
         x, y = brigade.location.top_left_corner

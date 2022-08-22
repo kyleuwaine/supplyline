@@ -14,11 +14,11 @@ class SLTile:
         full_screen_mask.draw(hex_mask, self.top_left_corner)
         return full_screen_mask
 
-    def __init__(self, top_left_corner, full_screen_mask, tile_type, location, screen_dims):
+    def __init__(self, top_left_corner, full_screen_mask, tile_type, location, map_setting_str):
         if (tile_type == SLTile.Type.STANDARD):
-            self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", screen_dims)
+            self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
         elif (tile_type == SLTile.Type.BORDER):
-            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", screen_dims)
+            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", map_setting_str)
         self.type = tile_type
         self.occupant = None
         self.top_left_corner = top_left_corner
@@ -26,12 +26,12 @@ class SLTile:
         self.pygame_mask = self.compute_mask(full_screen_mask)
         self.location = location
         self.owner = None
-        self.screen_dims = screen_dims
+        self.map_setting_str = map_setting_str
 
     def change_type(self, new_type, screen_dims):
         # Changes the tile type of a tile
         # Parameters: self - the tile being changed
-        #             new_type - the new tile type 
+        #             new_type - the new tile type
         #             screen_dims = the dimensions of the screen of the game
 
         self.type = new_type
