@@ -4,6 +4,7 @@ from enum import Enum
 import SLFaction
 import SLTile
 import base_game_functions
+import game_functions
 
 class SLBuilding:
     # Represents a building which can be placed by players or start on the map.
@@ -27,7 +28,7 @@ class SLBuilding:
         match building_type:
             case SLBuilding.Type.CAPITAL:
                 self.health = 500
-                self.force_limit = 5
+                self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images\capital.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 30
@@ -54,3 +55,19 @@ class SLBuilding:
         self.faction = faction
         self.location = location
         self.id = id
+
+    
+    def find_valid_rec_locs(self, grid):
+        # Finds all valid locations for recruitment from this building
+        # Parameters: grid - the grid containing the tiles on the map
+        # Returns the valid locations in a list
+
+        valid_locs = []
+
+        for tile in game_functions.find_empty_neighbors(self.location, grid):
+            if (tile.owner == self.faction):
+                valid_locs.append(tile)
+        
+        return valid_locs
+
+
