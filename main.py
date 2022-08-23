@@ -141,25 +141,19 @@ def main():
                                                         if (tile_grid[i][j].type != SLTile.Type.BORDER):
                                                             if (tile_grid[i][j].occupant != None):
                                                                 if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
-                                                                    print("aaa")
                                                                     if (tile_grid[i][j].occupant.is_building == False):
-                                                                        print(type(tile_grid[i][j].occupant))
                                                                         highlighted_tile = tile_grid[i][j]
                                                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
                                                                     elif (tile_grid[i][j].occupant.is_building == True):
-                                                                        print("scream")
                                                                         if (tile_grid[i][j].occupant.type == SLBuilding.Type.CAPITAL or tile_grid[i][j].occupant.type == SLBuilding.Type.BARRACKS):
-                                                                            print("scrom")
                                                                             below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
                                                                             if (below_cap and (can_build_infantry or can_build_tank)):
-                                                                                print("scram")
                                                                                 highlighted_tile = tile_grid[i][j]
                                                                                 screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), highlighted_tile.top_left_corner)
                                                                                 if (can_build_infantry):
                                                                                     buildunit_button.active = True
                                                                                     screen.blit(buildunit_button.alt_pygame_surface, buildunit_button.top_left_corner)
                                                                                 if (can_build_tank):
-                                                                                    print("scrm")
                                                                                     buildunit_button.active = True
                                                                                     screen.blit(buildunit_button.alt_pygame_surface, buildunit_button.top_left_corner)
                                                                         else:
