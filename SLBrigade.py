@@ -15,6 +15,7 @@ class SLBrigade:
         # different attack, defense, and movement values.
 
         TANK = 0
+        INFANTRY = 1
 
     def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile, id):
         # Creates a new brigade.
@@ -29,6 +30,13 @@ class SLBrigade:
             case "Tank":
                 self.type = SLBrigade.BrigadeType.TANK
                 self.sprite = base_game_functions.get_selective_image_str("Images\ight_arrow.png", location.map_setting_str)
+                self.off_dmg = 20
+                self.def_dmg = 15
+            case "Infantry":
+                self.type = SLBrigade.BrigadeType.INFANTRY
+                self.sprite = base_game_functions.get_selective_image_str("Images\ight_arrow.png", location.map_setting_str)
+                self.off_dmg = 10
+                self.def_dmg = 15
             case _:
                 assert 0 == 1, "Invalid Brigade Type"
         self.health = 100

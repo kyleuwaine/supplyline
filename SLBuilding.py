@@ -14,6 +14,7 @@ class SLBuilding:
         CAPITAL = 0
         BARRACKS = 1
         MINE = 2
+        FORT = 3
 
     def __init__(self, building_type, faction: SLFaction, location: SLTile, id):
         # Creates a new building
@@ -28,14 +29,26 @@ class SLBuilding:
                 self.health = 500
                 self.force_limit = 5
                 self.sprite = base_game_functions.get_selective_image_str("Images\capital.png", location.map_setting_str)
+                self.off_dmg = 0
+                self.def_dmg = 30
             case SLBuilding.Type.BARRACKS:
                 self.health = 100
                 self.force_limit = 3
                 self.sprite = base_game_functions.get_selective_image_str("Images\barracks.png", location.map_setting_str)
+                self.off_dmg = 0
+                self.def_dmg = 0
             case SLBuilding.Type.MINE:
                 self.health = 100
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images\mine.png", location.map_setting_str)
+                self.off_dmg = 0
+                self.def_dmg = 0
+            case SLBuilding.Type.FORT:
+                self.health = 300
+                self.force_limit = 0
+                self.sprite = base_game_functions.get_selective_image_str("Images\mine.png", location.map_setting_str)
+                self.off_dmg = 0
+                self.def_dmg = 20
 
         self.faction = faction
         self.location = location
