@@ -4,6 +4,7 @@ from SLTile import SLTile
 from SLBrigade import SLBrigade
 from startup import startup
 from SLButton import SLButton
+from SLBuilding import SLBuilding
 import game_functions
 import base_game_functions
 import combat
@@ -99,14 +100,40 @@ def main():
                                         try:
                                             if tile_grid[i][j].pygame_mask.get_at(event.pos) == 1:
                                                 if (highlighted_tile == None):
-                                                    if (tile_grid[i][j].type != SLTile.Type.BORDER):
-                                                        if (tile_grid[i][j].occupant != None):
-                                                            if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
+                                                    if (recruiting == None):
+                                                        if (tile_grid[i][j].type != SLTile.Type.BORDER):
+                                                            if (tile_grid[i][j].occupant != None):
+                                                                if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
+                                                                    if (type(tile_grid[i][j].occupant == SLBrigade)):
+                                                                        highlighted_tile = tile_grid[i][j]
+                                                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                                    elif (type(tile_grid[i][j].occupant) == SLBuilding):
+                                                                        if (tile_grid[i][j].occupant.type == SLBuilding.Type.CAPITAL or tile_grid[i][j].occupant.type == SLBuilding.Type.BARRACKS):
+                                                                            below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
+                                                                            if (below_cap and (can_build_infantry or can_build_tank)):
+                                                                                valid_rec_locs = tile_grid[i][j].occupant.find_valid_rec_locs(tile_grid)
+                                                                                for tile in valid_rec_locs:
+                                                                                    screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile.top_left_corner)
+                                                                                if (can_build_infantry):
+                                                                                    # activate build infantry button
+                                                                                    pass
+                                                                                if (can_build_tank):
+                                                                                    # activate build tank button
+                                                                                    pass
+                                                                        else:
+                                                                            highlighted_tile = tile_grid[i][j]
+                                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                            else:
                                                                 highlighted_tile = tile_grid[i][j]
                                                                 screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
-                                                        else:
-                                                            highlighted_tile = tile_grid[i][j]
-                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                    else:
+                                                        if (recruiting == "Tank"):
+                                                            #recruit tank
+                                                            pass
+                                                        elif (recruting == "Infantry"):
+                                                            #recruit infantry 
+                                                            pass
+
                                                 else:
                                                     if (tile_grid[i][j] == highlighted_tile):
                                                         screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
@@ -118,41 +145,44 @@ def main():
                                                         highlighted_tile = None
                                                     elif (highlighted_tile.occupant != None):
                                                     # checks if there is an occupant on the highlighted tile
-                                                        neighbors = game_functions.find_neighbors(highlighted_tile, tile_grid)
-                                                        for tile in neighbors:
-                                                            if (tile_grid[i][j] == tile):
-                                                            # checks if the clicked tile is in the surrounding tiles of the highlighted tile
-                                                                if (tile.occupant != None):
-                                                                # checks if there is an occupant on the selected tile
-                                                                    if (tile.occupant.faction == highlighted_tile.occupant.faction):
-                                                                    # if the selected tile's occupant is of the same faction as the player, it will swap the two occupants
-                                                                        movement.swap_occupants(highlighted_tile, tile, screen)
-                                                                        game_functions.blit_borders(tile, tile.owner.color, screen)
-                                                                        game_functions.blit_borders(highlighted_tile, tile.owner.color, screen)
-                                                                        highlighted_tile = None
+                                                        if (type(highlighted_tile.occupant) == SLBrigade):
+                                                            neighbors = game_functions.find_neighbors(highlighted_tile, tile_grid)
+                                                            for tile in neighbors:
+                                                                if (tile_grid[i][j] == tile):
+                                                                # checks if the clicked tile is in the surrounding tiles of the highlighted tile
+                                                                    if (tile.occupant != None):
+                                                                    # checks if there is an occupant on the selected tile
+                                                                        if (tile.occupant.faction == highlighted_tile.occupant.faction):
+                                                                        # if the selected tile's occupant is of the same faction as the player, it will swap the two occupants
+                                                                            movement.swap_occupants(highlighted_tile, tile, screen)
+                                                                            game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                                            game_functions.blit_borders(highlighted_tile, tile.owner.color, screen)
+                                                                            highlighted_tile = None
+                                                                        else:
+                                                                        # if the selected tile's occupant is of a different faction, a battle will ensue
+                                                                            attacker = highlighted_tile.occupant
+                                                                            defender = tile.occupant
+                                                                            result = combat.battle(attacker, defender, tile_grid, screen)
+                                                                            if (result == 1):
+                                                                            # defender died
+                                                                                game_functions.remove_entity(defender)
+                                                                            elif (result == 2):
+                                                                            # attacker died
+                                                                                game_functions.remove_entity(attacker)
+                                                                            elif (result == 3):
+                                                                            # both died
+                                                                                game_functions.remove_entity(attacker)
+                                                                                game_functions.remove_entity(defender)
                                                                     else:
-                                                                    # if the selected tile's occupant is of a different faction, a battle will ensue
-                                                                        attacker = highlighted_tile.occupant
-                                                                        defender = tile.occupant
-                                                                        result = combat.battle(attacker, defender, tile_grid, screen)
-                                                                        if (result == 1):
-                                                                        # defender died
-                                                                            game_functions.remove_entity(defender)
-                                                                        elif (result == 2):
-                                                                        # attacker died
-                                                                            game_functions.remove_entity(attacker)
-                                                                        elif (result == 3):
-                                                                        # both died
-                                                                            game_functions.remove_entity(attacker)
-                                                                            game_functions.remove_entity(defender)
-                                                                else:
-                                                                # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
-                                                                    movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
-                                                                    for claimed in (game_functions.find_empty_neighbors(tile, tile_grid) + [tile]):
-                                                                        if (claimed.owner == faction_list[faction_turn]):
-                                                                            game_functions.blit_borders(claimed, claimed.owner.color, screen)
-                                                                    highlighted_tile = None
-                                                                break
+                                                                    # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
+                                                                        movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
+                                                                        for claimed in (game_functions.find_empty_neighbors(tile, tile_grid) + [tile]):
+                                                                            if (claimed.owner == faction_list[faction_turn]):
+                                                                                game_functions.blit_borders(claimed, claimed.owner.color, screen)
+                                                                        highlighted_tile = None
+                                                                    break
+                                                        elif (type(highlighted_tile.occupant) == SLBuilding):
+                                                            pass
                                             else:
                                                 pass
                                         except IndexError:
