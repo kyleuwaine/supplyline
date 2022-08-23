@@ -37,12 +37,12 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
                     if (small_screen_button.pygame_mask.get_at(event.pos) == 1):
                         small_screen_button.pygame_mask.clear()
                         big_screen_button.pygame_mask.clear()
-                        return 1200, 600, "big_tiles_debug_map"
+                        return 1366, 768, "big_tiles_debug_map"
                         #start_game = True
                     if (big_screen_button.pygame_mask.get_at(event.pos) == 1):
                         small_screen_button.pygame_mask.clear()
                         big_screen_button.pygame_mask.clear()
-                        return 1800, 900, "small_tiles_std_map"
+                        return 1920, 1080, "small_tiles_std_map"
 
         pygame.display.update()
         clock.tick(framerate)
@@ -112,7 +112,7 @@ def main():
                                                         screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                                         if (highlighted_tile.occupant != None):
                                                             screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                                            game_functions.blit_health(highlighted_tile.occupant, screen)
+                                                            game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
                                                         if (highlighted_tile.owner != None):
                                                             game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                         highlighted_tile = None
