@@ -50,6 +50,7 @@ class SLBuilding:
                 self.off_dmg = 0
                 self.def_dmg = 20
 
+        self.type = building_type
         self.faction = faction
         self.location = location
         self.id = id
