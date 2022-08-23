@@ -48,13 +48,13 @@ def battle_brigade(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     def_sup = 0 # the amount of damage that the defender will do from support
     for tile in game_functions.find_neighbors(defender.location, grid):
     # Searching neighbors of defender to find brigades which support the attacker
-        if (tile.occupant.faction == attacker.faction and tile.occupant != attacker):
-            if (type(tile.occupant) == SLBrigade):
+        if (tile.occupant != None and tile.occupant != attacker):
+            if (type(tile.occupant) == SLBrigade and tile.owner == attacker.faction):
                 att_sup += 5
     for tile in game_functions.find_neighbors(attacker.location, grid):
     # Searching neighbors of attacker to find brigades which support the defender
-        if (tile.occupant.faction == defender.faction and tile.occupant != defender):
-            if (type(tile.occupant) == SLBrigade):
+        if (tile.occupant != None and tile.occupant != defender):
+            if (type(tile.occupant) == SLBrigade and tile.owner == defender.faction):
                 def_sup += 5
 
     # Calculating total damage attacker does
