@@ -29,45 +29,32 @@ class SLBuilding:
             case SLBuilding.Type.CAPITAL:
                 self.health = 500
                 self.force_limit = 0
-                self.sprite = base_game_functions.get_selective_image_str("Images\capital.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_capital.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 30
             case SLBuilding.Type.BARRACKS:
                 self.health = 100
                 self.force_limit = 3
-                self.sprite = base_game_functions.get_selective_image_str("Images\barracks.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_barracks.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
             case SLBuilding.Type.MINE:
                 self.health = 100
                 self.force_limit = 0
-                self.sprite = base_game_functions.get_selective_image_str("Images\mine.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
             case SLBuilding.Type.FORT:
                 self.health = 300
                 self.force_limit = 0
-                self.sprite = base_game_functions.get_selective_image_str("Images\mine.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 20
 
         self.type = building_type
+        # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...
+        self.is_building = True
         self.faction = faction
         self.location = location
         self.id = id
-
-    
-    def find_valid_rec_locs(self, grid):
-        # Finds all valid locations for recruitment from this building
-        # Parameters: grid - the grid containing the tiles on the map
-        # Returns the valid locations in a list
-
-        valid_locs = []
-
-        for tile in game_functions.find_empty_neighbors(self.location, grid):
-            if (tile.owner == self.faction):
-                valid_locs.append(tile)
-        
-        return valid_locs
-
-
+        self.pygame_surface = pygame.image.load(self.sprite)

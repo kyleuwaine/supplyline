@@ -34,8 +34,10 @@ def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
     tile1.occupant.location = tile1
     tile2.occupant.location = tile2
     screen.blit(tile1.occupant.pygame_surface, tile1.top_left_corner)
+    game_functions.blit_borders(tile1, tile1.owner.color, screen)
     game_functions.blit_health(tile1.occupant, screen, tile1.map_setting_str)
     screen.blit(tile2.occupant.pygame_surface, tile2.top_left_corner)
+    game_functions.blit_borders(tile2, tile2.owner.color, screen)
     game_functions.blit_health(tile2.occupant, screen, tile1.map_setting_str)
 
 def attempt_claim(claimed: SLTile, faction: SLFaction, screen, grid):

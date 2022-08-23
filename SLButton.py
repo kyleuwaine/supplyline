@@ -10,7 +10,10 @@ class SLButton:
     def __init__(self, top_left_corner, full_screen_mask, sprite, alt_sprite=None):
         self.top_left_corner = top_left_corner
         self.pygame_surface = pygame.image.load(sprite)
-        self.alt_pygame_surface = alt_sprite
+        if (alt_sprite == None):
+            self.alt_pygame_surface = None
+        else:
+            self.alt_pygame_surface = pygame.image.load(alt_sprite)
         self.pygame_mask = self.compute_mask(full_screen_mask)
         self.active = False
 

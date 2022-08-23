@@ -45,3 +45,5 @@ class SLBrigade:
         # location is the tile it is currently on
         self.location = location
         self.pygame_surface = pygame.image.load(self.sprite)
+        # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...
+        self.is_building = False

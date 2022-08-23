@@ -75,8 +75,10 @@ def main():
     screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
 
     screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, clock, framerate)
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
     highlighted_tile = None
+    recruiting = None
+    build_loc_tiles = []
 
     while True:
         # For now, faction_turn == 0 is the player's turn, faction_turn == 1 is
@@ -94,6 +96,35 @@ def main():
                         if (faction_turn == 0):
                             if (endturn_button.pygame_mask.get_at(event.pos) == 1):
                                 faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
+                            if ((buildbuilding_button.pygame_mask.get_at(event.pos) == 1) and (buildbuilding_button.active == True)):
+                                highlighted_tile.occupant = SLBuilding(SLBuilding.Type.BARRACKS, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
+                                faction_list[0].building_id_counter += 1
+                                #faction_list[0].brigade_dict.update({faction_list[0].brigade_counter: tile_grid[1][1].occupant})
+                                screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
+                                screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
+                                screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
+                                game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
+                                game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                highlighted_tile = None
+                                buildbuilding_button.active = False
+                                screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
+                            if ((buildunit_button.pygame_mask.get_at(event.pos) == 1) and (buildunit_button.active == True)):
+                                recruiting = "Tank"
+                                valid_rec_locs = game_functions.find_valid_rec_locs(highlighted_tile, tile_grid)
+                                if (valid_rec_locs != []):
+                                    build_loc_tiles = valid_rec_locs
+                                    for tile in build_loc_tiles:
+                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
+                                buildunit_button.active = False
+                                screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
+
+                                # there should really be an unhighlight tile function....
+                                screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
+                                screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
+                                game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                #if (highlighted_tile.owner != None):
+                                game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
+                                highlighted_tile = None
                             else:
                                 for i in range(tile_grid_size):
                                     for j in range(tile_grid_size):
@@ -101,25 +132,36 @@ def main():
                                             if tile_grid[i][j].pygame_mask.get_at(event.pos) == 1:
                                                 if (highlighted_tile == None):
                                                     if (recruiting == None):
+                                                        if (buildunit_button.active == True):
+                                                            buildunit_button.active = False
+                                                            screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
+                                                            for tile in build_loc_tiles:
+                                                                    screen.blit(tile.pygame_surface, tile.top_left_corner)
+                                                                    game_functions.blit_borders(tile, tile.owner.color, screen)
                                                         if (tile_grid[i][j].type != SLTile.Type.BORDER):
                                                             if (tile_grid[i][j].occupant != None):
                                                                 if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
-                                                                    if (type(tile_grid[i][j].occupant == SLBrigade)):
+                                                                    print("aaa")
+                                                                    if (tile_grid[i][j].occupant.is_building == False):
+                                                                        print(type(tile_grid[i][j].occupant))
                                                                         highlighted_tile = tile_grid[i][j]
                                                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
-                                                                    elif (type(tile_grid[i][j].occupant) == SLBuilding):
+                                                                    elif (tile_grid[i][j].occupant.is_building == True):
+                                                                        print("scream")
                                                                         if (tile_grid[i][j].occupant.type == SLBuilding.Type.CAPITAL or tile_grid[i][j].occupant.type == SLBuilding.Type.BARRACKS):
+                                                                            print("scrom")
                                                                             below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
                                                                             if (below_cap and (can_build_infantry or can_build_tank)):
-                                                                                valid_rec_locs = tile_grid[i][j].occupant.find_valid_rec_locs(tile_grid)
-                                                                                for tile in valid_rec_locs:
-                                                                                    screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile.top_left_corner)
+                                                                                print("scram")
+                                                                                highlighted_tile = tile_grid[i][j]
+                                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), highlighted_tile.top_left_corner)
                                                                                 if (can_build_infantry):
-                                                                                    # activate build infantry button
-                                                                                    pass
+                                                                                    buildunit_button.active = True
+                                                                                    screen.blit(buildunit_button.alt_pygame_surface, buildunit_button.top_left_corner)
                                                                                 if (can_build_tank):
-                                                                                    # activate build tank button
-                                                                                    pass
+                                                                                    print("scrm")
+                                                                                    buildunit_button.active = True
+                                                                                    screen.blit(buildunit_button.alt_pygame_surface, buildunit_button.top_left_corner)
                                                                         else:
                                                                             highlighted_tile = tile_grid[i][j]
                                                                             screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
@@ -128,16 +170,41 @@ def main():
                                                                 screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
                                                                 if (highlighted_tile.owner == faction_list[faction_turn]):
                                                                     # activate build building button
+                                                                    buildbuilding_button.active = True
+                                                                    screen.blit(buildbuilding_button.alt_pygame_surface, buildbuilding_button.top_left_corner)
                                                                     pass
                                                     else:
-                                                        if (recruiting == "Tank"):
-                                                            #recruit tank
-                                                            pass
-                                                        elif (recruting == "Infantry"):
-                                                            #recruit infantry 
-                                                            pass
+                                                        if (tile_grid[i][j] in build_loc_tiles):
+                                                            #build_loc_tiles.remove(tile_grid[i][j])
+                                                            for tile in build_loc_tiles:
+                                                                    screen.blit(tile.pygame_surface, tile.top_left_corner)
+                                                                    game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                            build_loc_tiles = []
+                                                            if (recruiting == "Tank"):
+                                                                tile_grid[i][j].occupant = SLBrigade("Tank", faction_list[0], tile_grid[i][j], faction_list[0].brigade_counter)
+                                                                tile_grid[i][j].owner = faction_list[0]
+                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_counter: tile_grid[1][1].occupant})
+                                                                faction_list[0].brigade_counter += 1
+                                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
+                                                                game_functions.blit_health(tile_grid[i][j].occupant, screen, map_setting_str)
+                                                            elif (recruiting == "Infantry"):
+                                                                #recruit infantry
+                                                                #todo
+                                                                pass
+                                                            recruiting = None
 
                                                 else:
+                                                    if (buildbuilding_button.active == True):
+                                                        # Should be deactivate button function
+                                                        buildbuilding_button.active = False
+                                                        screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
+                                                    if (buildunit_button.active == True):
+                                                        buildunit_button.active = False
+                                                        screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
+                                                        for tile in build_loc_tiles:
+                                                                screen.blit(tile.pygame_surface, tile.top_left_corner)
+                                                                game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                        build_loc_tiles = []
                                                     if (tile_grid[i][j] == highlighted_tile):
                                                         screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                                         if (highlighted_tile.occupant != None):
@@ -158,8 +225,8 @@ def main():
                                                                         if (tile.occupant.faction == highlighted_tile.occupant.faction):
                                                                         # if the selected tile's occupant is of the same faction as the player, it will swap the two occupants
                                                                             movement.swap_occupants(highlighted_tile, tile, screen)
-                                                                            game_functions.blit_borders(tile, tile.owner.color, screen)
-                                                                            game_functions.blit_borders(highlighted_tile, tile.owner.color, screen)
+                                                                            #game_functions.blit_borders(tile, tile.owner.color, screen)
+                                                                            #game_functions.blit_borders(highlighted_tile, tile.owner.color, screen)
                                                                             highlighted_tile = None
                                                                         else:
                                                                         # if the selected tile's occupant is of a different faction, a battle will ensue
@@ -184,8 +251,14 @@ def main():
                                                                                 game_functions.blit_borders(claimed, claimed.owner.color, screen)
                                                                         highlighted_tile = None
                                                                     break
-                                                        elif (type(highlighted_tile.occupant) == SLBuilding):
-                                                            pass
+                                                        elif (highlighted_tile.occupant.is_building == True):
+                                                            # there should really, REALLY be an unhighlight tile function....
+                                                            screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
+                                                            screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
+                                                            game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                                            if (highlighted_tile.owner != None):
+                                                                game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
+                                                            highlighted_tile = None
                                             else:
                                                 pass
                                         except IndexError:

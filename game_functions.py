@@ -5,6 +5,19 @@ from SLBrigade import SLBrigade
 from SLBuilding import SLBuilding
 from SLFaction import SLFaction
 
+def find_valid_rec_locs(this_tile, grid):
+    # Finds all valid locations for recruitment from this building
+    # Parameters: grid - the grid containing the tiles on the map
+    # Returns the valid locations in a list
+
+    valid_locs = []
+
+    for tile in find_empty_neighbors(this_tile, grid):
+        if (tile.owner == this_tile.owner):
+            valid_locs.append(tile)
+
+    return valid_locs
+
 def blit_borders(tile: SLTile, color, screen):
     #c_red = pygame.Color("red")
     #c_blue = pygame.Color("blue")

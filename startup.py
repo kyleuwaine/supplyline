@@ -123,9 +123,9 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     opponent = SLAI(faction_list[1], tile_grid, screen)
     endturn_button = SLButton([20, 20], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(endturn_button.pygame_surface, endturn_button.top_left_corner)
-    buildbuilding_button = SLButton([screen_width - 140, 20], full_screen_mask.copy(), "Images\_buildbuilding_grey.png")
+    buildbuilding_button = SLButton([screen_width - 140, 20], full_screen_mask.copy(), "Images\_buildbuilding_grey.png", "Images\_buildbuilding_green.png")
     screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
-    buildunit_button = SLButton([screen_width - 280, 20], full_screen_mask.copy(), "Images\_buildunit_grey.png")
+    buildunit_button = SLButton([screen_width - 280, 20], full_screen_mask.copy(), "Images\_buildunit_grey.png", "Images\_buildunit_green.png")
     screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
 
     return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, screen
