@@ -126,6 +126,9 @@ def main():
                                                             else:
                                                                 highlighted_tile = tile_grid[i][j]
                                                                 screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                                if (highlighted_tile.owner == faction_list[faction_turn]):
+                                                                    # activate build building button
+                                                                    pass
                                                     else:
                                                         if (recruiting == "Tank"):
                                                             #recruit tank
