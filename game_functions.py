@@ -71,17 +71,17 @@ def find_empty_neighbors(origin: SLTile, grid):
             output_list.append(processing_list[tile_index])
     return output_list
 
-def blit_health(brigade: SLBrigade, screen):
+def blit_health(brigade: SLBrigade, screen, map_setting_str):
     # Blits the health of a brigade onto the tile
     # Parameters: brigade - SLBrigade, the brigade whose health is being blitted
     #             screen - the screen of the game
 
-    if (screen.get_size() == (1200, 600)):
+    if (map_setting_str == "big_tiles_debug_map"):
         font = pygame.font.SysFont("arial", 30)
         x, y = brigade.location.top_left_corner
         x += 35
         y += 12
-    if (screen.get_size() == (1800, 900)):
+    if (map_setting_str == "small_tiles_std_map"):
         font = pygame.font.SysFont("arial", 20)
         x, y = brigade.location.top_left_corner
         x += 25

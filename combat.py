@@ -23,11 +23,11 @@ def battle(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     screen.blit(attacker.location.pygame_surface, attacker.location.top_left_corner)
     screen.blit(attacker.pygame_surface, attacker.location.top_left_corner)
     game_functions.blit_borders(attacker.location, attacker.location.owner.color, screen)
-    game_functions.blit_health(attacker, screen)
+    game_functions.blit_health(attacker, screen, attacker.location.map_setting_str)
     screen.blit(defender.location.pygame_surface, defender.location.top_left_corner)
     screen.blit(defender.pygame_surface, defender.location.top_left_corner)
     game_functions.blit_borders(defender.location, defender.location.owner.color, screen)
-    game_functions.blit_health(defender, screen)
+    game_functions.blit_health(defender, screen, defender.location.map_setting_str)
 
     if (attacker.health <= 0):
         screen.blit(attacker.location.pygame_surface, attacker.location.top_left_corner)

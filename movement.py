@@ -17,7 +17,7 @@ def move_occupant(origin: SLTile, dest: SLTile, screen, grid):
     origin.occupant = None
     dest.occupant.location = dest
     screen.blit(dest.occupant.pygame_surface, dest.top_left_corner)
-    game_functions.blit_health(dest.occupant, screen)
+    game_functions.blit_health(dest.occupant, screen, origin.map_setting_str)
     attempt_claim(dest, origin.owner, screen, grid)
 
 def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
@@ -34,9 +34,9 @@ def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
     tile1.occupant.location = tile1
     tile2.occupant.location = tile2
     screen.blit(tile1.occupant.pygame_surface, tile1.top_left_corner)
-    game_functions.blit_health(tile1.occupant, screen)
+    game_functions.blit_health(tile1.occupant, screen, tile1.map_setting_str)
     screen.blit(tile2.occupant.pygame_surface, tile2.top_left_corner)
-    game_functions.blit_health(tile2.occupant, screen)
+    game_functions.blit_health(tile2.occupant, screen, tile1.map_setting_str)
 
 def attempt_claim(claimed: SLTile, faction: SLFaction, screen, grid):
     # Attempts to claim a tile and any unclaimed tile which also borders it.
