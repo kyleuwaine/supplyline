@@ -6,5 +6,22 @@ class SLFaction:
         self.id = new_id
         self.color = new_color
         self.brigade_dict = new_brigade_dict
-        self.brigade_counter = 0
-        self.building_counter = 0
+        self.brigade_id_counter = 0
+        self.building_id_counter = 0
+        self.brigade_cap = 3
+        self.brigade_counter = 1
+
+    def rec_capability(self):
+        # Calculates the recruitment capability of this faction
+        # Returns: below_cap - True if amount of brigades currently owned is below the brigade cap
+        #          can_recruit_infantry - True if faction has enough resources to recruit infantry
+        #          can_recruit_tank - True if faction has enough resources to recruit tanks
+
+        below_cap = False
+        can_recruit_infantry = True
+        can_recruit_tank = True
+
+        if (self.brigade_cap > self.brigade_counter):
+            below_cap = True
+        
+        return below_cap, can_recruit_infantry, can_recruit_tank 
