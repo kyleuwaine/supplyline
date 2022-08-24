@@ -84,23 +84,23 @@ def find_empty_neighbors(origin: SLTile, grid):
             output_list.append(processing_list[tile_index])
     return output_list
 
-def blit_health(brigade: SLBrigade, screen):
-    # Blits the health of a brigade onto the tile
-    # Parameters: brigade - SLBrigade, the brigade whose health is being blitted
+def blit_health(entity, screen):
+    # Blits the health of an entity onto the tile
+    # Parameters: brigade - the entity whose health is being blitted
     #             screen - the screen of the game
 
-    map_setting_str = brigade.location.map_setting_str
+    map_setting_str = entity.location.map_setting_str
     if (map_setting_str == "big_tiles_debug_map"):
         font = pygame.font.SysFont("arial", 30)
-        x, y = brigade.location.top_left_corner
+        x, y = entity.location.top_left_corner
         x += 35
         y += 12
     if (map_setting_str == "small_tiles_std_map"):
         font = pygame.font.SysFont("arial", 20)
-        x, y = brigade.location.top_left_corner
+        x, y = entity.location.top_left_corner
         x += 25
         y += 10
-    health_surface = font.render(str(brigade.health), None, brigade.faction.color)
+    health_surface = font.render(str(entity.health), None, entity.faction.color)
     screen.blit(health_surface, (x, y))
 
 def remove_entity(entity):
@@ -111,3 +111,17 @@ def remove_entity(entity):
         entity.faction.brigade_dict.pop(entity.id)
     elif (type(entity) == SLBuilding):
         entity.faction.building_dict.pop(entity.id)
+
+
+def reblit_tile(tile: SLTile, screen):
+    # Reblits a tile and anything on it
+    # Used mainly for unhighligting a tile or if any changes occur to a tile
+    # Parameters: tile - SLTile, the tile being reblitted
+    #             screen - the screen of the game
+
+    screen.blit(tile.pygame_surface, tile.top_left_corner)
+    if (tile.owner != None):
+        blit_borders(tile, tile.owner.color, screen)
+    if (tile.occupant != None):
+        screen.blit(tile.occupant.pygame_surface, tile.top_left_corner)
+        blit_health(tile.occupant, screen)
