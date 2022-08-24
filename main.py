@@ -222,9 +222,6 @@ def main():
                                                                     else:
                                                                     # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
                                                                         movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
-                                                                        for claimed in (game_functions.find_empty_neighbors(tile, tile_grid) + [tile]):
-                                                                            if (claimed.owner == faction_list[faction_turn]):
-                                                                                game_functions.blit_borders(claimed, claimed.owner.color, screen)
                                                                         highlighted_tile = None
                                                                     break
                                             else:
