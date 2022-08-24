@@ -188,19 +188,15 @@ def main():
                                                             recruiting = None
 
                                                 else:
-                                                    if (buildbuilding_button.active == True):
-                                                        # Should be deactivate button function
-                                                        buildbuilding_button.active = False
-                                                        screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
-                                                    if (buildunit_button.active == True):
-                                                        buildunit_button.active = False
-                                                        screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
-                                                        for tile in build_loc_tiles:
-                                                                screen.blit(tile.pygame_surface, tile.top_left_corner)
-                                                                game_functions.blit_borders(tile, tile.owner.color, screen)
-                                                        build_loc_tiles = []
                                                     if (tile_grid[i][j] == highlighted_tile):
-                                                        screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
+                                                        if (buildbuilding_button.active == True):
+                                                            # Should be deactivate button function
+                                                            buildbuilding_button.active = False
+                                                            screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
+                                                        if (buildunit_button.active == True):
+                                                            buildunit_button.active = False
+                                                            screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
+                                                            screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                                         if (highlighted_tile.occupant != None):
                                                             screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
                                                             game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
