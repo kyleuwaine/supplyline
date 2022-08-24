@@ -29,7 +29,7 @@ class SLTile:
         self.owner = None
         self.map_setting_str = map_setting_str
 
-    def change_type(self, new_type, map_setting_str):
+    def change_type(self, new_type):
         # Changes the tile type of a tile
         # Parameters: self - the tile being changed
         #             new_type - the new tile type
@@ -38,12 +38,12 @@ class SLTile:
         self.type = new_type
 
         if (new_type == SLTile.Type.STANDARD):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_plains.png", map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images\_plains.png", self.map_setting_str)
         elif (new_type == SLTile.Type.BORDER):
-            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", self.map_setting_str)
         elif (new_type == SLTile.Type.MOUNTAINS):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_mountain.png", map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images\_mountain.png", self.map_setting_str)
         elif (new_type == SLTile.Type.HILLS):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_hills.png", map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images\_hills.png", self.map_setting_str)
         elif (new_type == SLTile.Type.JUNGLE):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", self.map_setting_str)

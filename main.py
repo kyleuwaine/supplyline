@@ -104,7 +104,7 @@ def main():
                                 screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
                                 screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
                                 game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
-                                game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                game_functions.blit_health(highlighted_tile.occupant, screen)
                                 highlighted_tile = None
                                 buildbuilding_button.active = False
                                 screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
@@ -121,7 +121,7 @@ def main():
                                 # there should really be an unhighlight tile function....
                                 screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                 screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                game_functions.blit_health(highlighted_tile.occupant, screen)
                                 #if (highlighted_tile.owner != None):
                                 game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                 highlighted_tile = None
@@ -175,12 +175,12 @@ def main():
                                                                     game_functions.blit_borders(tile, tile.owner.color, screen)
                                                             build_loc_tiles = []
                                                             if (recruiting == "Tank"):
-                                                                tile_grid[i][j].occupant = SLBrigade("Tank", faction_list[0], tile_grid[i][j], faction_list[0].brigade_counter)
+                                                                tile_grid[i][j].occupant = SLBrigade("Tank", faction_list[0], tile_grid[i][j], faction_list[0].brigade_id_counter)
                                                                 tile_grid[i][j].owner = faction_list[0]
-                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_counter: tile_grid[1][1].occupant})
-                                                                faction_list[0].brigade_counter += 1
+                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[1][1].occupant})
+                                                                faction_list[0].brigade_id_counter += 1
                                                                 screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                                                game_functions.blit_health(tile_grid[i][j].occupant, screen, map_setting_str)
+                                                                game_functions.blit_health(tile_grid[i][j].occupant, screen)
                                                             elif (recruiting == "Infantry"):
                                                                 #recruit infantry
                                                                 #todo
@@ -196,10 +196,11 @@ def main():
                                                         if (buildunit_button.active == True):
                                                             buildunit_button.active = False
                                                             screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
-                                                            screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
+
+                                                        screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                                         if (highlighted_tile.occupant != None):
                                                             screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                                            game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                                            game_functions.blit_health(highlighted_tile.occupant, screen)
                                                         if (highlighted_tile.owner != None):
                                                             game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                         highlighted_tile = None
@@ -245,7 +246,7 @@ def main():
                                                             # there should really, REALLY be an unhighlight tile function....
                                                             screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
                                                             screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                                            game_functions.blit_health(highlighted_tile.occupant, screen, map_setting_str)
+                                                            game_functions.blit_health(highlighted_tile.occupant, screen)
                                                             if (highlighted_tile.owner != None):
                                                                 game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
                                                             highlighted_tile = None
