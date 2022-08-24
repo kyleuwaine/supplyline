@@ -22,7 +22,7 @@ def create_init_brigades(faction_list: list, tile_grid: list, screen):
     tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2], faction_list[1].brigade_id_counter)
     tile_grid[2][2].owner = faction_list[1]
     game_functions.blit_borders(tile_grid[2][2], tile_grid[2][2].owner.color, screen)
-    faction_list[1].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[2][2].occupant})
+    faction_list[1].brigade_dict.update({faction_list[1].brigade_id_counter: tile_grid[2][2].occupant})
     faction_list[1].brigade_id_counter += 1
     screen.blit(tile_grid[2][2].occupant.pygame_surface, tile_grid[2][2].top_left_corner)
     game_functions.blit_health(tile_grid[2][2].occupant, screen)
@@ -106,7 +106,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map
                     break
                 else:
                     is_skip_last_hex = True
-            if (is_offset): 
+            if (is_offset):
                 if ((j == 0) or (j == tile_grid_width - 2)):
                     tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j), map_setting_str)
                 elif ((i == 0) or (i == tile_grid_height - 1)):
@@ -143,7 +143,7 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     #             screen_height - the height of the game screen
     #             map_setting_str - a string containing info about the map size
     # Returns initialized items and lists, which will be used throughout the game
-    
+
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Supply Line")
     clock = pygame.time.Clock()
