@@ -19,6 +19,11 @@ def find_valid_rec_locs(this_tile, grid):
     return valid_locs
 
 def blit_borders(tile: SLTile, color, screen):
+    # Blits borders on a tile
+    # Parameters: tile - SLTile, the tile whose borders are being blitted
+    #             color - the color of the border
+    #             screen - the screen of the game
+    
     #c_red = pygame.Color("red")
     #c_blue = pygame.Color("blue")
     if (color == pygame.Color("red")):
@@ -29,6 +34,10 @@ def blit_borders(tile: SLTile, color, screen):
 
 
 def advance_turn(faction_turn: int, num_of_players: int):
+    # Advances the turn of the game and gives control to the next faction
+    # Parameters: faction_turn - int, an int which represents which faction is currently active
+    #             num_of_players - int, the amount of players in the game
+
     faction_turn += 1
     faction_turn = faction_turn % num_of_players
     return faction_turn

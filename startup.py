@@ -7,6 +7,11 @@ from SLAI import SLAI
 from SLButton import SLButton
 
 def create_init_brigades(faction_list: list, tile_grid: list, screen):
+    # Creates the starting brigades for factions in the game
+    # Parameters: faction_list - list, the list of factions in the game
+    #             tile_grid - list, the grid which contains the tiles of the game
+    #             screen - the screen of the game
+
     tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1], faction_list[0].brigade_id_counter)
     tile_grid[1][1].owner = faction_list[0]
     game_functions.blit_borders(tile_grid[1][1], tile_grid[1][1].owner.color, screen)
@@ -30,12 +35,27 @@ def create_init_brigades(faction_list: list, tile_grid: list, screen):
     game_functions.blit_health(tile_grid[1][2].occupant, screen)
 
 def create_factions(num_of_factions: int, faction_color_list):
+    # Creates the factions of a game
+    # Parameters: num_of_factions - int, the number of factions in the game
+    #             faction_color_list - a list containing the possible colors for factions
+    # Returns a list of the factions in the game
+
     faction_list = []
     for i in range(num_of_factions):
         faction_list.append(SLFaction(None, i, faction_color_list[i], {}))
     return faction_list
 
 def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, grid_width, grid_height, vertical_offset):
+    # Find the topleft pixel coordinate of the map
+    # Parameters: screen_width - the width of the game screen
+    #             screen_height - the height of the game screen
+    #             hex_sprite_width - the width of the sprites used for tiles
+    #             hex_sprite_height - the height of the sprites used for tiles
+    #             grid_width - the width of the map (in terms of tiles)
+    #             grid_height - the height of the map (in terms of tiles)
+    #             vertical_offset - the offset of the map from the edge of the screen
+    # Returns the top left corner of the map
+
     assert grid_width % 2 != 0, "expected odd grid width"
     assert grid_height % 2 != 0, "expected even grid height"
     assert grid_height == grid_width, "expected grid height and grid width to be equal"
@@ -45,6 +65,14 @@ def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_heigh
     return top
 
 def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map_setting_str):
+    # Prepares the map of the game
+    # Parameters: screen - the screen of the game
+    #             screen_width - the width of the screen of the game
+    #             screen_height - the height of the screen of the game
+    #             full_screen_mask_input - a mask of the whole game screen
+    #             map_setting_str - a string which contains info about the map (the size)
+    # Returns the grid containing the tiles of the game and the grid's size
+
     hex_sprite_width = 120
     hex_sprite_height = 140
     if (map_setting_str == "big_tiles_debug_map"):
@@ -78,7 +106,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map
                     break
                 else:
                     is_skip_last_hex = True
-            if (is_offset):
+            if (is_offset): 
                 if ((j == 0) or (j == tile_grid_width - 2)):
                     tile_grid[i][j] = SLTile((current_x + offset, y), full_screen_mask_input.copy(), SLTile.Type.BORDER, (i, j), map_setting_str)
                 elif ((i == 0) or (i == tile_grid_height - 1)):
@@ -107,6 +135,15 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map
 
 
 def startup(clock, framerate, screen, screen_width, screen_height, map_setting_str):
+    # Performs all initializations for the game
+    # Parameters: clock - the clock of the game
+    #             framerate - the framerate for the game
+    #             screen - the screen of the game
+    #             screen_width - the width of the game screen
+    #             screen_height - the height of the game screen
+    #             map_setting_str - a string containing info about the map size
+    # Returns initialized items and lists, which will be used throughout the game
+    
     screen = pygame.display.set_mode((screen_width, screen_height))
     pygame.display.set_caption("Supply Line")
     clock = pygame.time.Clock()

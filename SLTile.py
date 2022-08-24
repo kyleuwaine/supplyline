@@ -11,11 +11,22 @@ class SLTile:
         JUNGLE = 5
 
     def compute_mask(self, full_screen_mask):
+        # Computes the mask of a tile
+        # Parameters: full_screen_mask - the mask of the whole game screen, onto which the tile's mask is drawn
+        # Returns the mask of the tile
+
         hex_mask = pygame.mask.from_surface(self.pygame_surface)
         full_screen_mask.draw(hex_mask, self.top_left_corner)
         return full_screen_mask
 
     def __init__(self, top_left_corner, full_screen_mask, tile_type, location, map_setting_str):
+        # Initializes the tile object
+        # Parameters: top_left_corner - the top left corner of the texture, from where to render the tile onto the screen
+        #             full_screen_mask - the mask of the full game screen
+        #             tile_type - the type of tile that is being initialized
+        #             location - the location of the tile on the map (a grid), stored as a tuple of indices
+        #             map_setting_str - a string which contains info about the map
+        
         if (tile_type == SLTile.Type.STANDARD):
             self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
         elif (tile_type == SLTile.Type.BORDER):
