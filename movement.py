@@ -3,6 +3,8 @@ from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLFaction import SLFaction
 import game_functions
+import base_game_functions
+import combat
 
 # Contains all game functions related to movement of units
 
@@ -46,3 +48,94 @@ def attempt_claim(claimed: SLTile, faction: SLFaction, screen, grid):
         if (tile.owner == None):
             tile.owner = faction
             game_functions.reblit_tile(tile, screen)
+
+def find_valid_moves(origin: SLTile, show_moves: bool, grid, screen):
+    # Finds the valid tiles that an entity can move to.
+    # Highlights the valid tiles to move to if show_moves == True
+    # Parameters: origin - SLTile, the tile which contains the entity
+    #             grid - the grid containing the tiles of the map
+    #             screen - the screen of the game
+    #             show_moves - bool, indicates whether to highlight the valid moves or not
+    # Returns a list containing the valid tiles
+
+    valid_tiles = []
+    jumps = []
+
+    if (not origin.occupant.is_building):
+        for tile in game_functions.find_neighbors(origin, grid):
+            if (tile.occupant == None):
+                valid_tiles.append(tile)
+            else:
+                if (tile.occupant.is_building == False):
+                    valid_tiles.append(tile)
+                else:
+                    if (tile.owner != origin.owner):
+                        valid_tiles.append(tile)
+                    elif (tile.owner == origin.owner):
+                        for jump in game_functions.find_neighbors(tile, grid):
+                            jumps.append(jump)
+        for jump in jumps:
+            if (jump not in valid_tiles and jump != origin):
+                if (jump.occupant == None):
+                    valid_tiles.append(jump)
+                else:
+                    if (jump.occupant.is_building == False):
+                        valid_tiles.append(jump)
+                    else:
+                        if (jump.owner != origin.owner):
+                            valid_tiles.append(jump)
+    
+    if (show_moves):
+        for tile in valid_tiles:
+            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", tile.map_setting_str)), tile.top_left_corner)
+    
+    return valid_tiles
+
+def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
+    # Attempts to move a brigade from the origin tile to the destination tile.
+    # If there are no occupants in the destination, the brigade will simply move to the destination.
+    # Otherwise: If the occupant at the destination is of the same faction, they will swap.
+    #            If the occupant at the destination is of another faction, a battle will start.
+    # Parameters: origin - SLTile, the tile containing the moving brigade
+    #             dest - SLTile, the tile being moved to
+    #             valid_moves - a list containing the valid tiles that can be moved to
+    #             grid - the grid containing the tiles of the map
+    #             screen - the screen of the game
+    # Returns True if the brigade is moved
+
+    moved = False
+
+    if (dest in valid_moves):
+        if (dest.occupant != None):
+        # checks if there is an occupant on the selected tile
+            if (dest.occupant.faction == origin.occupant.faction):
+            # if the selected tile's occupant is of the same faction as the player, it will swap the two occupants
+                swap_occupants(origin, dest, screen)
+                moved = True
+            else:
+            # if the selected tile's occupant is of a different faction, a battle will ensue
+                attacker = origin.occupant
+                defender = dest.occupant
+                result = combat.battle(attacker, defender, grid, screen)
+                if (result == 1):
+                # defender died
+                    game_functions.remove_entity(defender)
+                elif (result == 2):
+                # attacker died
+                    game_functions.remove_entity(attacker)
+                elif (result == 3):
+                # both died
+                    game_functions.remove_entity(attacker)
+                    game_functions.remove_entity(defender)
+                moved = True
+        else:
+        # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
+            move_occupant(origin, dest, screen, grid)
+            moved = True
+
+    if (moved):
+        for tile in valid_moves:
+            game_functions.reblit_tile(tile, screen)
+    
+    return moved
+        

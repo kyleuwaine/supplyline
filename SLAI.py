@@ -23,25 +23,9 @@ class SLAI:
         for id in self.faction.brigade_dict:
             brigade = self.faction.brigade_dict[id]
             original_location = brigade.location
-            possible_dests = game_functions.find_neighbors(original_location, self.map)
+            possible_dests = movement.find_valid_moves(original_location, False, self.map, self.screen)
             selected_dest = possible_dests[randrange(0, len(possible_dests))]
-            if (selected_dest.occupant == None):
-                movement.move_occupant(brigade.location, selected_dest, self.screen, self.map)
-                #movement.attempt_claim(selected_dest, self.faction, self.map)
-            else:
-                if (selected_dest.occupant.faction == self.faction):
-                    origin = brigade.location
-                    movement.swap_occupants(brigade.location, selected_dest, self.screen)
-                else:
-                    defender = selected_dest.occupant
-                    result = combat.battle(brigade, defender, self.map, self.screen)
-                    if (result == 1):
-                        eliminated_brigades.append(defender)
-                    elif (result == 2):
-                        eliminated_brigades.append(brigade)
-                    elif (result == 3):
-                        eliminated_brigades.append(defender)
-                        eliminated_brigades.append(brigade)
+            movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
 
         for brigade in eliminated_brigades:
             game_functions.remove_entity(brigade)

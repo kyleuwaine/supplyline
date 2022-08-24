@@ -79,9 +79,6 @@ def battle_brigade(attacker: SLBrigade, defender: SLBrigade, grid, screen):
 
     if (attacker_alive and not defender_alive):
         movement.move_occupant(attacker.location, defender.location, screen, grid)
-        game_functions.blit_borders(defender.location, defender.location.owner.color, screen)
-        for tile in (game_functions.find_empty_neighbors(defender.location, grid)):
-            game_functions.blit_borders(tile, tile.owner.color, screen)
         return 1
     elif (attacker_alive and defender_alive):
         return 0

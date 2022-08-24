@@ -79,6 +79,7 @@ def main():
     highlighted_tile = None
     recruiting = None
     build_loc_tiles = []
+    valid_moves = []
 
     while True:
         # For now, faction_turn == 0 is the player's turn, faction_turn == 1 is
@@ -135,6 +136,7 @@ def main():
                                                                     if (tile_grid[i][j].occupant.is_building == False):
                                                                         highlighted_tile = tile_grid[i][j]
                                                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                                        valid_moves = movement.find_valid_moves(highlighted_tile, True, tile_grid, screen)
                                                                     elif (tile_grid[i][j].occupant.is_building == True):
                                                                         if (tile_grid[i][j].occupant.type == SLBuilding.Type.CAPITAL or tile_grid[i][j].occupant.type == SLBuilding.Type.BARRACKS):
                                                                             below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
@@ -187,43 +189,16 @@ def main():
                                                             screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
 
                                                         game_functions.reblit_tile(highlighted_tile, screen)
+                                                        for tile in valid_moves:
+                                                            game_functions.reblit_tile(tile, screen)
+                                                        valid_moves = []
                                                         highlighted_tile = None
                                                     elif (highlighted_tile.occupant != None):
                                                     # checks if there is an occupant on the highlighted tile
-                                                        if (type(highlighted_tile.occupant) == SLBrigade):
-                                                            neighbors = game_functions.find_neighbors(highlighted_tile, tile_grid)
-                                                            for tile in neighbors:
-                                                                if (tile_grid[i][j] == tile):
-                                                                # checks if the clicked tile is in the surrounding tiles of the highlighted tile
-                                                                    if (tile.occupant != None):
-                                                                    # checks if there is an occupant on the selected tile
-                                                                        if (tile.occupant.faction == highlighted_tile.occupant.faction):
-                                                                        # if the selected tile's occupant is of the same faction as the player, it will swap the two occupants
-                                                                            movement.swap_occupants(highlighted_tile, tile, screen)
-                                                                            #game_functions.blit_borders(tile, tile.owner.color, screen)
-                                                                            #game_functions.blit_borders(highlighted_tile, tile.owner.color, screen)
-                                                                            highlighted_tile = None
-                                                                        else:
-                                                                        # if the selected tile's occupant is of a different faction, a battle will ensue
-                                                                            attacker = highlighted_tile.occupant
-                                                                            defender = tile.occupant
-                                                                            result = combat.battle(attacker, defender, tile_grid, screen)
-                                                                            if (result == 1):
-                                                                            # defender died
-                                                                                game_functions.remove_entity(defender)
-                                                                            elif (result == 2):
-                                                                            # attacker died
-                                                                                game_functions.remove_entity(attacker)
-                                                                            elif (result == 3):
-                                                                            # both died
-                                                                                game_functions.remove_entity(attacker)
-                                                                                game_functions.remove_entity(defender)
-                                                                            highlighted_tile = None
-                                                                    else:
-                                                                    # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
-                                                                        movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
-                                                                        highlighted_tile = None
-                                                                    break
+                                                        moved = movement.attempt_move(highlighted_tile, tile_grid[i][j], valid_moves, tile_grid, screen)
+                                                        if (moved):
+                                                            highlighted_tile = None
+                                                            valid_moves = []
                                             else:
                                                 pass
                                         except IndexError:
