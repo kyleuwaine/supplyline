@@ -6,28 +6,28 @@ from SLTile import SLTile
 from SLAI import SLAI
 from SLButton import SLButton
 
-def create_init_brigades(faction_list: list, tile_grid: list, screen, map_setting_str):
+def create_init_brigades(faction_list: list, tile_grid: list, screen):
     tile_grid[1][1].occupant = SLBrigade("Tank", faction_list[0], tile_grid[1][1], faction_list[0].brigade_counter)
     tile_grid[1][1].owner = faction_list[0]
     game_functions.blit_borders(tile_grid[1][1], tile_grid[1][1].owner.color, screen)
     faction_list[0].brigade_dict.update({0: tile_grid[1][1].occupant})
     faction_list[0].brigade_counter += 1
     screen.blit(tile_grid[1][1].occupant.pygame_surface, tile_grid[1][1].top_left_corner)
-    game_functions.blit_health(tile_grid[1][1].occupant, screen, map_setting_str)
+    game_functions.blit_health(tile_grid[1][1].occupant, screen)
     tile_grid[2][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[2][2], faction_list[1].brigade_counter)
     tile_grid[2][2].owner = faction_list[1]
     game_functions.blit_borders(tile_grid[2][2], tile_grid[2][2].owner.color, screen)
     faction_list[1].brigade_dict.update({0: tile_grid[2][2].occupant})
     faction_list[1].brigade_counter += 1
     screen.blit(tile_grid[2][2].occupant.pygame_surface, tile_grid[2][2].top_left_corner)
-    game_functions.blit_health(tile_grid[2][2].occupant, screen, map_setting_str)
+    game_functions.blit_health(tile_grid[2][2].occupant, screen)
     tile_grid[1][2].occupant = SLBrigade("Tank", faction_list[1], tile_grid[1][2], faction_list[1].brigade_counter)
     tile_grid[1][2].owner = faction_list[1]
     game_functions.blit_borders(tile_grid[1][2], tile_grid[1][2].owner.color, screen)
     faction_list[1].brigade_dict.update({1: tile_grid[1][2].occupant})
     faction_list[1].brigade_counter += 1
     screen.blit(tile_grid[1][2].occupant.pygame_surface, tile_grid[1][2].top_left_corner)
-    game_functions.blit_health(tile_grid[1][2].occupant, screen, map_setting_str)
+    game_functions.blit_health(tile_grid[1][2].occupant, screen)
 
 def create_factions(num_of_factions: int, faction_color_list):
     faction_list = []
@@ -119,7 +119,7 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     faction_color_list = [pygame.Color("red"), pygame.Color("blue")]
     faction_list = create_factions(num_of_factions, faction_color_list)
     tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask, map_setting_str)
-    create_init_brigades(faction_list, tile_grid, screen, map_setting_str)
+    create_init_brigades(faction_list, tile_grid, screen)
     opponent = SLAI(faction_list[1], tile_grid, screen)
     endturn_button = SLButton([20, 20], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(endturn_button.pygame_surface, endturn_button.top_left_corner)
