@@ -218,6 +218,7 @@ def main():
                                                                             # both died
                                                                                 game_functions.remove_entity(attacker)
                                                                                 game_functions.remove_entity(defender)
+                                                                            highlighted_tile = None
                                                                     else:
                                                                     # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
                                                                         movement.move_occupant(highlighted_tile, tile, screen, tile_grid)
