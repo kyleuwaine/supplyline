@@ -26,19 +26,13 @@ def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
     #             tile2 - SLTile, the selected tile
     #             screen - the game screen
 
-    screen.blit(tile1.pygame_surface, tile1.top_left_corner)
-    screen.blit(tile2.pygame_surface, tile2.top_left_corner)
     temp = tile2.occupant
     tile2.occupant = tile1.occupant
     tile1.occupant = temp
     tile1.occupant.location = tile1
     tile2.occupant.location = tile2
-    screen.blit(tile1.occupant.pygame_surface, tile1.top_left_corner)
-    game_functions.blit_borders(tile1, tile1.owner.color, screen)
-    game_functions.blit_health(tile1.occupant, screen)
-    screen.blit(tile2.occupant.pygame_surface, tile2.top_left_corner)
-    game_functions.blit_borders(tile2, tile2.owner.color, screen)
-    game_functions.blit_health(tile2.occupant, screen)
+    game_functions.reblit_tile(tile1, screen)
+    game_functions.reblit_tile(tile2, screen)
 
 def attempt_claim(claimed: SLTile, faction: SLFaction, screen, grid):
     # Attempts to claim a tile and any unclaimed tile which also borders it.

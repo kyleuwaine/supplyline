@@ -100,11 +100,7 @@ def main():
                                 highlighted_tile.occupant = SLBuilding(SLBuilding.Type.BARRACKS, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
                                 faction_list[0].building_id_counter += 1
                                 #faction_list[0].brigade_dict.update({faction_list[0].brigade_counter: tile_grid[1][1].occupant})
-                                screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
-                                screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
-                                game_functions.blit_health(highlighted_tile.occupant, screen)
+                                game_functions.reblit_tile(highlighted_tile, screen)
                                 highlighted_tile = None
                                 buildbuilding_button.active = False
                                 screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
@@ -118,12 +114,7 @@ def main():
                                 buildunit_button.active = False
                                 screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
 
-                                # there should really be an unhighlight tile function....
-                                screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
-                                screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                game_functions.blit_health(highlighted_tile.occupant, screen)
-                                #if (highlighted_tile.owner != None):
-                                game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
+                                game_functions.reblit_tile(highlighted_tile, screen)
                                 highlighted_tile = None
                             else:
                                 for i in range(tile_grid_size):
@@ -176,11 +167,9 @@ def main():
                                                             build_loc_tiles = []
                                                             if (recruiting == "Tank"):
                                                                 tile_grid[i][j].occupant = SLBrigade("Tank", faction_list[0], tile_grid[i][j], faction_list[0].brigade_id_counter)
-                                                                tile_grid[i][j].owner = faction_list[0]
                                                                 faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[1][1].occupant})
                                                                 faction_list[0].brigade_id_counter += 1
-                                                                screen.blit(tile_grid[i][j].occupant.pygame_surface, tile_grid[i][j].top_left_corner)
-                                                                game_functions.blit_health(tile_grid[i][j].occupant, screen)
+                                                                game_functions.reblit_tile(tile_grid[i][j], screen)
                                                             elif (recruiting == "Infantry"):
                                                                 #recruit infantry
                                                                 #todo
@@ -197,12 +186,7 @@ def main():
                                                             buildunit_button.active = False
                                                             screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
 
-                                                        screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
-                                                        if (highlighted_tile.occupant != None):
-                                                            screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                                            game_functions.blit_health(highlighted_tile.occupant, screen)
-                                                        if (highlighted_tile.owner != None):
-                                                            game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
+                                                        game_functions.reblit_tile(highlighted_tile, screen)
                                                         highlighted_tile = None
                                                     elif (highlighted_tile.occupant != None):
                                                     # checks if there is an occupant on the highlighted tile
@@ -242,14 +226,6 @@ def main():
                                                                                 game_functions.blit_borders(claimed, claimed.owner.color, screen)
                                                                         highlighted_tile = None
                                                                     break
-                                                        elif (highlighted_tile.occupant.is_building == True):
-                                                            # there should really, REALLY be an unhighlight tile function....
-                                                            screen.blit(highlighted_tile.pygame_surface, highlighted_tile.top_left_corner)
-                                                            screen.blit(highlighted_tile.occupant.pygame_surface, highlighted_tile.top_left_corner)
-                                                            game_functions.blit_health(highlighted_tile.occupant, screen)
-                                                            if (highlighted_tile.owner != None):
-                                                                game_functions.blit_borders(highlighted_tile, highlighted_tile.owner.color, screen)
-                                                            highlighted_tile = None
                                             else:
                                                 pass
                                         except IndexError:
