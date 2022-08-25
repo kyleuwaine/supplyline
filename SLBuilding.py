@@ -19,6 +19,16 @@ class SLBuilding:
         FARM = 4
         OILWELL = 5
 
+
+    class Resource(Enum):
+        # Represents the type of resource produced at the building.
+
+        NONE = 0
+        METALS = 1
+        FOOD = 2
+        FUEL = 3
+
+
     def __init__(self, building_type, faction: SLFaction, location: SLTile, id):
         # Creates a new building
         # Parameters: self - the building object
@@ -34,36 +44,48 @@ class SLBuilding:
                 self.sprite = base_game_functions.get_selective_image_str("Images\_capital.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 30
+                self.production = 0
+                self.resource = SLBuilding.Resource.NONE
             case SLBuilding.Type.BARRACKS:
                 self.health = 100
                 self.force_limit = 3
                 self.sprite = base_game_functions.get_selective_image_str("Images\_barracks.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
+                self.production = 0
+                self.resource = SLBuilding.Resource.NONE
             case SLBuilding.Type.MINE:
                 self.health = 100
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
+                self.production = 5
+                self.resource = SLBuilding.Resource.METALS
             case SLBuilding.Type.FORT:
                 self.health = 300
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 20
+                self.production = 0
+                self.resource = SLBuilding.Resource.NONE
             case SLBuilding.Type.FARM:
                 self.health = 100
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
+                self.production = 5
+                self.resource = SLBuilding.Resource.FOOD
             case SLBuilding.Type.OILWELL:
                 self.health = 100
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
+                self.production = 5
+                self.resource = SLBuilding.Resource.FUEL
 
         self.type = building_type
         # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...

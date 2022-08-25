@@ -1,6 +1,8 @@
 import pygame
 
 class SLFaction:
+    # Represents a faction within the game
+
     def __init__(self, new_name: str, new_id: int, new_color: pygame.Color, new_brigade_dict: dict):
         # Intializes a faction
         # Parameters: new_name - str, the name of the faction
@@ -16,6 +18,10 @@ class SLFaction:
         self.building_id_counter = 0
         self.brigade_cap = 3
         self.brigade_counter = 1
+        self.metals = 0
+        self.food = 5
+        self.oil = 0
+
 
     def rec_capability(self):
         # Calculates the recruitment capability of this faction
