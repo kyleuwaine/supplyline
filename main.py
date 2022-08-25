@@ -249,12 +249,15 @@ def main():
                                                     elif (highlighted_tile.occupant != None):
 
                                                         # Attempt to move the occupant on the highlighted tile to the tile that was clicked
-                                                        moved = movement.attempt_move(highlighted_tile, tile_grid[i][j], valid_moves, tile_grid, screen)
+                                                        moved, eliminated = movement.attempt_move(highlighted_tile, tile_grid[i][j], valid_moves, tile_grid, screen)
 
                                                         # Check if move was successful
                                                         if (moved):
                                                             highlighted_tile = None
                                                             valid_moves = []
+                                                            for entity in eliminated:
+                                                                game_functions.remove_entity(entity)
+                                                            eliminated = []
                                             else:
                                                 pass
                                         except IndexError:

@@ -25,7 +25,9 @@ class SLAI:
             original_location = brigade.location
             possible_dests = movement.find_valid_moves(original_location, False, self.map, self.screen)
             selected_dest = possible_dests[randrange(0, len(possible_dests))]
-            movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
+            moved, eliminated = movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
+            for entity in eliminated:
+                eliminated_brigades.append(entity)
 
         for brigade in eliminated_brigades:
             game_functions.remove_entity(brigade)

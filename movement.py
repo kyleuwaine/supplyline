@@ -101,9 +101,10 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
     #             valid_moves - a list containing the valid tiles that can be moved to
     #             grid - the grid containing the tiles of the map
     #             screen - the screen of the game
-    # Returns True if the brigade is moved
+    # Returns True if the brigade is moved, and also a list of any entities which get removed in battle
 
     moved = False
+    eliminated = []
 
     if (dest in valid_moves):
         if (dest.occupant != None):
@@ -119,14 +120,14 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
                 result = combat.battle(attacker, defender, grid, screen)
                 if (result == 1):
                 # defender died
-                    game_functions.remove_entity(defender)
+                    eliminated.append(defender)
                 elif (result == 2):
                 # attacker died
-                    game_functions.remove_entity(attacker)
+                    eliminated.append(attacker)
                 elif (result == 3):
                 # both died
-                    game_functions.remove_entity(attacker)
-                    game_functions.remove_entity(defender)
+                    eliminated.append(attacker)
+                    eliminated.append(defender)
                 moved = True
         else:
         # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
@@ -137,5 +138,5 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
         for tile in valid_moves:
             game_functions.reblit_tile(tile, screen)
     
-    return moved
+    return moved, eliminated
         
