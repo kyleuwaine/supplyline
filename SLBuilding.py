@@ -16,6 +16,8 @@ class SLBuilding:
         BARRACKS = 1
         MINE = 2
         FORT = 3
+        FARM = 4
+        OILWELL = 5
 
     def __init__(self, building_type, faction: SLFaction, location: SLTile, id):
         # Creates a new building
@@ -50,6 +52,18 @@ class SLBuilding:
                 self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 20
+            case SLBuilding.Type.FARM:
+                self.health = 100
+                self.force_limit = 0
+                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
+                self.off_dmg = 0
+                self.def_dmg = 0
+            case SLBuilding.Type.OILWELL:
+                self.health = 100
+                self.force_limit = 0
+                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
+                self.off_dmg = 0
+                self.def_dmg = 0
 
         self.type = building_type
         # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...
