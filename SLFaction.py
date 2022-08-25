@@ -21,6 +21,7 @@ class SLFaction:
         self.metals = 0
         self.food = 5
         self.oil = 0
+        self.capital_loc = None
 
 
     def rec_capability(self):
