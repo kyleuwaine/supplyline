@@ -116,9 +116,9 @@ def remove_entity(entity):
     # Removes an entity from any lists it is present in
     # Parameters: entity - the entity being removed
 
-    if (type(entity) == SLBrigade):
+    if (not entity.is_building):
         entity.faction.brigade_dict.pop(entity.id)
-    elif (type(entity) == SLBuilding):
+    elif (entity.is_building):
         entity.faction.building_dict.pop(entity.id)
 
 
