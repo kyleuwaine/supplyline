@@ -13,9 +13,15 @@ class SLBrigade:
     class BrigadeType(Enum):
         # Represents the archetype of the unit. Different archetypes have
         # different attack, defense, and movement values.
-
         TANK = 0
         INFANTRY = 1
+
+        def __str__(input):
+            if (input == SLBrigade.BrigadeType.TANK):
+                return "Tank"
+            if (input == SLBrigade.BrigadeType.INFANTRY):
+                return "Infantry"
+            return None
 
     def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile, id):
         # Creates a new brigade.
@@ -47,3 +53,6 @@ class SLBrigade:
         self.pygame_surface = pygame.image.load(self.sprite)
         # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...
         self.is_building = False
+
+    def __str__(self):
+        return f"{self.sprite}, {str(self.type)}, {self.health}, {self.faction}, {self.location.location}, {self.id}, {self.is_building}"

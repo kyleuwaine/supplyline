@@ -7,7 +7,7 @@ class SLFaction:
         #             new_id - int, the id of the faction
         #             new_color - pygame.Color, the color of the faction
         #             new_brigade_dict - list, the dict containing the brigades this faction controls
-        
+
         self.name = new_name
         self.id = new_id
         self.color = new_color
@@ -29,5 +29,8 @@ class SLFaction:
 
         if (self.brigade_cap > self.brigade_counter):
             below_cap = True
-        
-        return below_cap, can_recruit_infantry, can_recruit_tank 
+
+        return below_cap, can_recruit_infantry, can_recruit_tank
+
+    def __str__(self):
+        return f"Faction {self.id}"

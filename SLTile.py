@@ -10,6 +10,19 @@ class SLTile:
         HILLS = 4
         JUNGLE = 5
 
+        def __str__(input):
+            if (input == SLTile.Type.STANDARD):
+                return "Standard"
+            if (input == SLTile.Type.BORDER):
+                return "Border"
+            if (input == SLTile.Type.MOUNTAINS):
+                return "Mountains"
+            if (input == SLTile.Type.HILLS):
+                return "Hills"
+            if (input == SLTile.Type.STANDARD):
+                return "Standard"
+            return None
+
     def compute_mask(self, full_screen_mask):
         # Computes the mask of a tile
         # Parameters: full_screen_mask - the mask of the whole game screen, onto which the tile's mask is drawn
@@ -26,7 +39,7 @@ class SLTile:
         #             tile_type - the type of tile that is being initialized
         #             location - the location of the tile on the map (a grid), stored as a tuple of indices
         #             map_setting_str - a string which contains info about the map
-        
+
         if (tile_type == SLTile.Type.STANDARD):
             self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
         elif (tile_type == SLTile.Type.BORDER):
@@ -58,3 +71,6 @@ class SLTile:
             self.sprite = base_game_functions.get_selective_image_str("Images\_hills.png", self.map_setting_str)
         elif (new_type == SLTile.Type.JUNGLE):
             self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", self.map_setting_str)
+
+    def __str__(self):
+        return f"{self.sprite}, {str(self.type)}, {str(self.occupant)}, {self.top_left_corner}, {self.location}, {self.owner}, {self.map_setting_str}"
