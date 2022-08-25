@@ -48,6 +48,9 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
         pygame.display.update()
         clock.tick(framerate)
 
+def export_map(hex_grid):
+    pass
+
 def main():
     """
     Initializes the launcher, then calls menu_screen_loop(). After menu_screen_loop()
@@ -75,7 +78,7 @@ def main():
     screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
 
     screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, clock, framerate)
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
     highlighted_tile = None
     recruiting = None
     build_loc_tiles = []
@@ -99,7 +102,7 @@ def main():
                             # Check if endturn button gets pressed by player
                             if (endturn_button.pygame_mask.get_at(event.pos) == 1):
                                 faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
-                            
+
                             # Check if build building button gets pressed by player
                             if ((buildbuilding_button.pygame_mask.get_at(event.pos) == 1) and (buildbuilding_button.active == True)):
                                 highlighted_tile.occupant = SLBuilding(SLBuilding.Type.BARRACKS, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
@@ -160,7 +163,7 @@ def main():
                                                                         highlighted_tile = tile_grid[i][j]
                                                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
                                                                         valid_moves = movement.find_valid_moves(highlighted_tile, True, tile_grid, screen)
-                                                                    
+
                                                                     # If not then the occupant is a building
                                                                     elif (tile_grid[i][j].occupant.is_building == True):
 
@@ -178,12 +181,12 @@ def main():
                                                                                 if (can_build_tank):
                                                                                     buildunit_button.active = True
                                                                                     screen.blit(buildunit_button.alt_pygame_surface, buildunit_button.top_left_corner)
-                                                                        
+
                                                                         # If it's another type of building then just highlight the tile
                                                                         else:
                                                                             highlighted_tile = tile_grid[i][j]
                                                                             screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
-                                                            
+
                                                             # If there is no occupant, then just highlight the tile
                                                             else:
                                                                 highlighted_tile = tile_grid[i][j]
@@ -212,7 +215,7 @@ def main():
                                                                 faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[1][1].occupant})
                                                                 faction_list[0].brigade_id_counter += 1
                                                                 game_functions.reblit_tile(tile_grid[i][j], screen)
-                                                            
+
                                                             # If recruting contains "Infantry", then build an infantry brigade on selected tile
                                                             elif (recruiting == "Infantry"):
                                                                 #recruit infantry
@@ -244,7 +247,7 @@ def main():
                                                             game_functions.reblit_tile(tile, screen)
                                                         valid_moves = []
                                                         highlighted_tile = None
-                                                    
+
                                                     # Check if there is an occupant on the highlighted tile
                                                     elif (highlighted_tile.occupant != None):
 
