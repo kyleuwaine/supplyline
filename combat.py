@@ -49,13 +49,19 @@ def battle_brigade(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     for tile in game_functions.find_neighbors(defender.location, grid):
     # Searching neighbors of defender to find brigades which support the attacker
         if (tile.occupant != None and tile.occupant != attacker):
-            if (type(tile.occupant) == SLBrigade and tile.owner == attacker.faction):
-                att_sup += 5
+            if (tile.owner == attacker.faction):
+                if (not tile.occupant.is_building):
+                    att_sup += 5
+                elif (tile.occupant.type == SLBuilding.Type.FORT):
+                    att_sup += 5
     for tile in game_functions.find_neighbors(attacker.location, grid):
     # Searching neighbors of attacker to find brigades which support the defender
         if (tile.occupant != None and tile.occupant != defender):
-            if (type(tile.occupant) == SLBrigade and tile.owner == defender.faction):
-                def_sup += 5
+            if (tile.owner == attacker.faction):
+                if (not tile.occupant.is_building):
+                    def_sup += 5
+                elif (tile.occupant.type == SLBuilding.Type.FORT):
+                    def_sup += 5
 
     # Calculating total damage attacker does
     total_att_dmg = attacker.off_dmg + att_sup
@@ -109,13 +115,17 @@ def battle_building(attacker: SLBrigade, defender: SLBuilding, grid, screen):
     for tile in game_functions.find_neighbors(defender.location, grid):
     # Searching neighbors of defender to find brigades which support the attacker
         if (tile.occupant != None and tile.occupant != attacker):
-            if (type(tile.occupant) == SLBrigade and tile.owner == attacker.faction):
-                att_sup += 5
+            if (tile.owner == attacker.faction):
+                if (not tile.occupant.is_building):
+                    att_sup += 5
     for tile in game_functions.find_neighbors(attacker.location, grid):
     # Searching neighbors of attacker to find brigades which support the defender
         if (tile.occupant != None and tile.occupant != defender):
-            if (type(tile.occupant) == SLBrigade and tile.owner == defender.faction):
-                def_sup += 5
+            if (tile.owner == attacker.faction):
+                if (not tile.occupant.is_building):
+                    def_sup += 5
+                elif (tile.occupant.type == SLBuilding.Type.FORT):
+                    def_sup += 5
 
     # Calculating total damage attacker does
     total_att_dmg = attacker.off_dmg + att_sup
