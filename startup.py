@@ -164,5 +164,7 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
     buildunit_button = SLButton([screen_width - 280, 20], full_screen_mask.copy(), "Images\_buildunit_grey.png", "Images\_buildunit_green.png")
     screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
+    exportmap_button = SLButton([screen_width - 280, screen_height - 200], full_screen_mask.copy(), "Images\endturn.png")
+    screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
 
-    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, screen
+    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, screen
