@@ -1,9 +1,24 @@
 import pygame
 import base_game_functions
+import json
+import os
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLBuilding import SLBuilding
 from SLFaction import SLFaction
+
+def export_map(hex_grid, hex_grid_size):
+    hex_str_grid = [[None for x in range(hex_grid_size)] for y in range(hex_grid_size)]
+    for i in range(len(hex_grid)):
+        for j in range(len(hex_grid[i])):
+            print(str(hex_grid[i][j]))
+            hex_str_grid[i][j] = str(hex_grid[i][j])
+
+    if os.path.exists("custom_map.json"):
+        os.remove("custom_map.json")
+    with open("custom_map.json", "w") as output:
+        json.dump(hex_str_grid, output)
+
 
 def find_valid_rec_locs(this_tile, grid):
     # Finds all valid locations for recruitment from this building
@@ -23,7 +38,7 @@ def blit_borders(tile: SLTile, color, screen):
     # Parameters: tile - SLTile, the tile whose borders are being blitted
     #             color - the color of the border
     #             screen - the screen of the game
-    
+
     #c_red = pygame.Color("red")
     #c_blue = pygame.Color("blue")
     if (color == pygame.Color("red")):

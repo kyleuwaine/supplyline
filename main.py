@@ -48,9 +48,6 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
         pygame.display.update()
         clock.tick(framerate)
 
-def export_map(hex_grid):
-    pass
-
 def main():
     """
     Initializes the launcher, then calls menu_screen_loop(). After menu_screen_loop()
@@ -98,6 +95,9 @@ def main():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         if (faction_turn == 0):
+
+                            if (exportmap_button.pygame_mask.get_at(event.pos) == 1):
+                                game_functions.export_map(tile_grid, tile_grid_size)
 
                             # Check if endturn button gets pressed by player
                             if (endturn_button.pygame_mask.get_at(event.pos) == 1):
