@@ -73,4 +73,4 @@ class SLTile:
             self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", self.map_setting_str)
 
     def __str__(self):
-        return f"{self.sprite}, {str(self.type)}, {str(self.occupant)}, {self.top_left_corner}, {self.location}, {self.owner}, {self.map_setting_str}"
+        return f"{str(self.type)}, {str(self.occupant)}, {self.top_left_corner}, {self.location}, {self.owner}, {self.map_setting_str}"
