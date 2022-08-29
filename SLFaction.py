@@ -20,7 +20,7 @@ class SLFaction:
         self.brigade_counter = 1
         self.metals = 0
         self.food = 5
-        self.oil = 0
+        self.fuel = 0
         self.capital_loc = None
 
 
