@@ -86,7 +86,7 @@ def main():
         # the AI turn
         if (faction_turn != 0):
             opponent.AI_turn()
-            faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
+            faction_turn = base_game_functions.advance_turn(faction_turn, num_of_factions)
         else:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -101,7 +101,7 @@ def main():
 
                             # Check if endturn button gets pressed by player
                             if (endturn_button.pygame_mask.get_at(event.pos) == 1):
-                                faction_turn = game_functions.advance_turn(faction_turn, num_of_factions)
+                                faction_turn = base_game_functions.advance_turn(faction_turn, num_of_factions)
 
                             # Check if build building button gets pressed by player
                             if ((buildbuilding_button.pygame_mask.get_at(event.pos) == 1) and (buildbuilding_button.active == True)):
