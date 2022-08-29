@@ -17,6 +17,24 @@ def advance_turn(faction_turn: int, num_of_players: int):
     faction_turn = faction_turn % num_of_players
     return faction_turn
 
+def set_map_settings(map_setting_str: int):
+    if (map_setting_str == "big_tiles_debug_map"):
+        hex_sprite_width = 120
+        hex_sprite_height = 140
+        tile_grid_width = 5
+        tile_grid_height = 5
+        tile_grid_size = 5
+        vertical_offset = 105
+    if (map_setting_str == "small_tiles_std_map"):
+        hex_sprite_width = 85
+        hex_sprite_height = 99
+        tile_grid_width = 15
+        tile_grid_height = 15
+        tile_grid_size = 15
+        vertical_offset = 73
+    return hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height, tile_grid_size, vertical_offset
+
+
 #def selective_blit(screen, base_image_str, top_left_corner):
 #    if (screen.get_size() == (1200, 600)):
 #        screen.blit(pygame.image.load(base_image_str), top_left_corner)

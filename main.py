@@ -80,6 +80,7 @@ def main():
     recruiting = None
     build_loc_tiles = []
     valid_moves = []
+    game_functions.import_map(full_screen_mask)
 
     while True:
         # For now, faction_turn == 0 is the player's turn, faction_turn == 1 is

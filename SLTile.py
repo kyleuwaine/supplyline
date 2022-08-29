@@ -40,18 +40,32 @@ class SLTile:
         #             location - the location of the tile on the map (a grid), stored as a tuple of indices
         #             map_setting_str - a string which contains info about the map
 
-        if (tile_type == SLTile.Type.STANDARD):
-            self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
-        elif (tile_type == SLTile.Type.BORDER):
-            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", map_setting_str)
         self.type = tile_type
         self.occupant = None
         self.top_left_corner = top_left_corner
+        self.location = location
+        self.map_setting_str = map_setting_str
+        if (type(tile_type) is str):
+            if (tile_type == "Standard"):
+                self.change_type(SLTile.Type.STANDARD)
+            elif (tile_type == "Border"):
+                self.change_type(SLTile.Type.STANDARD)
+            elif (tile_type == "Mountains"):
+                self.change_type(SLTile.Type.STANDARD)
+            elif (tile_type == "Hills"):
+                self.change_type(SLTile.Type.STANDARD)
+            elif (tile_type == "Jungle"):
+                self.change_type(SLTile.Type.STANDARD)
+            else:
+                assert(0 == 1)
+        else:
+            if (tile_type == SLTile.Type.STANDARD):
+                self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
+            elif (tile_type == SLTile.Type.BORDER):
+                self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", map_setting_str)
         self.pygame_surface = pygame.image.load(self.sprite)
         self.pygame_mask = self.compute_mask(full_screen_mask)
-        self.location = location
         self.owner = None
-        self.map_setting_str = map_setting_str
 
     def change_type(self, new_type):
         # Changes the tile type of a tile
@@ -73,4 +87,4 @@ class SLTile:
             self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", self.map_setting_str)
 
     def __str__(self):
-        return f"{str(self.type)}, {str(self.occupant)}, {self.top_left_corner}, {self.location}, {self.owner}, {self.map_setting_str}"
+        return f"{str(self.type)}. {self.top_left_corner}. {self.location}. {self.owner}. {self.map_setting_str}. {str(self.occupant)}"

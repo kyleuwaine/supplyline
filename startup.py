@@ -1,5 +1,6 @@
 import pygame
 import game_functions
+import base_game_functions
 from SLFaction import SLFaction
 from SLBrigade import SLBrigade
 from SLTile import SLTile
@@ -73,8 +74,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map
     #             map_setting_str - a string which contains info about the map (the size)
     # Returns the grid containing the tiles of the game and the grid's size
 
-    hex_sprite_width = 120
-    hex_sprite_height = 140
+    """
     if (map_setting_str == "big_tiles_debug_map"):
         hex_sprite_width = 120
         hex_sprite_height = 140
@@ -89,6 +89,8 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map
         tile_grid_height = 15
         tile_grid_size = 15
         vertical_offset = 73
+    """
+    hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height, tile_grid_size, vertical_offset = base_game_functions.set_map_settings(map_setting_str)
     #hex_sprite_width += 1  # Create a black border between the tiles
 
     x, y = find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height, vertical_offset)

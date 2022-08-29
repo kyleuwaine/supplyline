@@ -17,7 +17,29 @@ def export_map(hex_grid, hex_grid_size: int):
     if os.path.exists("custom_map.json"):
         os.remove("custom_map.json")
     with open("custom_map.json", "w") as output:
-        json.dump(hex_str_grid, output)
+        json.dump(hex_str_grid, output, indent = 4)
+
+#wip
+def import_map(full_screen_mask_input):
+    with open("custom_map.json", "r") as input:
+        input_lst = json.load(input)
+    tile_str_lst = []
+    for i in range(len(input_lst)):
+        tile_str_lst.append([])
+        for j in range(len(input_lst[i])):
+            #print(input_lst[i][j])
+            if(input_lst[i][j] != None):
+                tile_str_lst[i].append(input_lst[i][j].split(". "))
+            else:
+                tile_str_lst[i].append(None)
+    map_setting_str = tile_str_lst[0][0][4]
+    hex_sprite_width, hex_sprite_height, tile_grid_width, tile_grid_height, tile_grid_size, vertical_offset = base_game_functions.set_map_settings(map_setting_str)
+    hex_grid = [[0 for x in range(tile_grid_width)] for y in range(tile_grid_height)]
+    for i in range(tile_grid_width):
+        for j in range(tile_grid_height):
+            if (tile_str_lst[i][j] != None):
+                hex_grid[i][j] = SLTile(eval(tile_str_lst[i][j][1]), full_screen_mask_input.copy(), tile_str_lst[i][j][0], eval(tile_str_lst[i][j][2]), map_setting_str)
+    return hex_grid
 
 
 def find_valid_rec_locs(this_tile: SLTile, grid):
