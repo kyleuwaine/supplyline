@@ -38,11 +38,15 @@ class SLBrigade:
                 self.sprite = base_game_functions.get_selective_image_str("Images\ight_arrow.png", location.map_setting_str)
                 self.off_dmg = 20
                 self.def_dmg = 15
+                self.food_consumption = 0
+                self.oil_consumption = 1
             case "Infantry":
                 self.type = SLBrigade.BrigadeType.INFANTRY
                 self.sprite = base_game_functions.get_selective_image_str("Images\_infantry.png", location.map_setting_str)
                 self.off_dmg = 10
                 self.def_dmg = 15
+                self.food_consumption = 1
+                self.oil_consumption = 0
             case _:
                 assert 0 == 1, "Invalid Brigade Type"
         self.health = 100
