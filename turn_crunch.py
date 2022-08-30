@@ -8,13 +8,16 @@ from SLFaction import SLFaction
 class SLRegion:
     # A region is an area of tiles owned by a faction which are all connected
     # Variables: tiles - the tiles which encompass the region
+    #            faction - the faction which owns the region
     #            contains_capital - a bool indicating whether the region contains the faction's capital
 
-    def __init__(self, tiles):
+    def __init__(self, faction, tiles):
         # Initializes the Region
         # Parameters: self - the Region object
+        #             faction - SLFaction, the faction which owns the region
         #             tiles - the tiles contained in the region
 
+        self.faction = faction
         self.tiles = tiles
         self.contains_capital = False
 
@@ -52,7 +55,91 @@ def BFS(origin: SLTile, visited, map):
     return tiles
 
 
-def turn_crunch(faction: SLFaction, map, map_size):
+def calculate_attrition(supply, demand):
+    # Calculates the attrition applied based on the supply and demand
+    # Parameters: supply - the amount of specific resource available
+    #             demand - the amount of specific resource required
+    # Returns the amount of attrition needed to be applied
+
+    if (supply == 0):
+        return 20
+    
+    if (demand // supply == 1):
+        return 5
+    elif (demand // supply == 2):
+        return 10
+    elif (demand // supply == 3):
+        return 15
+    elif (demand // supply == 4):
+        return 20
+    else: 
+        return 20
+    
+
+def apply_generation_and_attrition(region: SLRegion, screen):
+    # Calculates and applies the resources generated in the region
+    # as well as the attrition suffered by brigades within it
+    # Parameters: region: SLRegion, the region being analyzed
+    #             screen: the screen of the game
+
+    faction = region.faction
+
+    infantry = []
+    tanks = []
+
+    available_food = 0
+    available_fuel = 0
+    available_metal = 0
+    food_consumption = 0
+    fuel_consumption = 0
+
+    for tile in region.tiles:
+        if (tile.occupant):
+            if (tile.occupant.is_building):
+                if (tile.occupant.resource == SLBuilding.Resource.FOOD):
+                    available_food += tile.occupant.production
+                elif (tile.occupant.resource == SLBuilding.Resource.FUEL):
+                    available_fuel += tile.occupant.production
+                elif (tile.occupant.resource == SLBuilding.Resource.METALS):
+                    available_metal += tile.occupant.production
+            else:
+                food_consumption += tile.occupant.food_consumption
+                fuel_consumption += tile.occupant.fuel_consumption
+
+                if (tile.occupant.type == SLBrigade.BrigadeType.INFANTRY):
+                    infantry.append(tile.occupant)
+                elif (tile.occupant.type == SLBrigade.BrigadeType.TANK):
+                    tanks.append(tile.occupant)
+    
+    if (region.contains_capital):
+        available_food += faction.food
+        available_fuel += faction.fuel
+        available_metal += faction.metals
+    
+    if (available_food < food_consumption):
+        attrition = calculate_attrition(available_food, food_consumption)
+        for brigade in infantry:
+            brigade.health -= attrition
+
+            if (brigade.health <= 0):
+                brigade.location.occupant = None
+                game_functions.remove_entity(brigade)
+            
+            game_functions.reblit_tile(brigade.location, screen)
+
+    if (available_fuel < fuel_consumption):
+        attrition = calculate_attrition(available_fuel, fuel_consumption)
+        for brigade in tanks:
+            brigade.health -= attrition
+
+            if (brigade.health <= 0):
+                brigade.location.occupant = None
+                game_functions.remove_entity(brigade)
+            
+            game_functions.reblit_tile(brigade.location, screen)
+
+
+def turn_crunch(faction: SLFaction, map, map_size, screen):
     # Enacts the turn crunch:
     #   - Applies any resource generation in the faction
     #   - Applies attrition to affected units owned by the faction
@@ -71,8 +158,10 @@ def turn_crunch(faction: SLFaction, map, map_size):
         for j in range(map_size):
             if (not visited[i][j]):
                 if (map[i][j].owner == faction):
-                    region = SLRegion(BFS(map[i][j], visited))
+                    region = SLRegion(faction, BFS(map[i][j], visited))
                     regions.append(region)
                 else:
                     visited[i][j] = True
     
+    for region in regions:
+        apply_generation_and_attrition(region, screen)
