@@ -20,7 +20,7 @@ def export_map(hex_grid, hex_grid_size: int):
         json.dump(hex_str_grid, output, indent = 4)
 
 #wip
-def import_map(full_screen_mask_input):
+def import_map(full_screen_mask_input, faction_list, screen):
     with open("custom_map.json", "r") as input:
         input_lst = json.load(input)
     tile_str_lst = []
@@ -39,7 +39,26 @@ def import_map(full_screen_mask_input):
         for j in range(tile_grid_height):
             if (tile_str_lst[i][j] != None):
                 hex_grid[i][j] = SLTile(eval(tile_str_lst[i][j][1]), full_screen_mask_input.copy(), tile_str_lst[i][j][0], eval(tile_str_lst[i][j][2]), map_setting_str)
-    return hex_grid
+                if tile_str_lst[i][j][3] == "Faction 0":
+                    hex_grid[i][j].owner = faction_list[0]
+                if tile_str_lst[i][j][3] == "Faction 1":
+                    hex_grid[i][j].owner = faction_list[1]
+                if (tile_str_lst[i][j][5] == "True"):
+                    hex_grid[i][j].occupant = SLBuilding(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], eval(tile_str_lst[i][j][10]))
+                    hex_grid[i][j].occupant.health = eval(tile_str_lst[i][j][7])
+                    # Below is temporary while the faction building id counters are replaced by a global one
+                    faction_list[eval(tile_str_lst[i][j][8][-1])].building_id_counter += 1
+                elif (tile_str_lst[i][j][5] == "False"):
+                    hex_grid[i][j].occupant = SLBrigade(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], eval(tile_str_lst[i][j][10]))
+                    hex_grid[i][j].occupant.health = eval(tile_str_lst[i][j][7])
+                    faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_dict.update({faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_id_counter: hex_grid[i][j].occupant})
+                    # Below is temporary while the faction brigade id counters are replaced by a global one
+                    faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_id_counter += 1
+                reblit_tile(hex_grid[i][j], screen)
+
+            if (tile_str_lst[i][j] == None):
+                hex_grid[i].pop(j)
+    return hex_grid, tile_grid_size
 
 
 def find_valid_rec_locs(this_tile: SLTile, grid):

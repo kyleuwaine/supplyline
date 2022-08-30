@@ -19,6 +19,21 @@ class SLBuilding:
         FARM = 4
         OILWELL = 5
 
+        def __str__(input):
+            if (input == SLBrigade.BrigadeType.CAPITAL):
+                return "Capital"
+            elif (input == SLBrigade.BrigadeType.BARRACKS):
+                return "Barracks"
+            elif (input == SLBrigade.BrigadeType.MINE):
+                return "Mine"
+            elif (input == SLBrigade.BrigadeType.FORT):
+                return "Fort"
+            elif (input == SLBrigade.BrigadeType.FARM):
+                return "Farm"
+            elif (input == SLBrigade.BrigadeType.OILWELL):
+                return "Oilwell"
+            return None
+
 
     class Resource(Enum):
         # Represents the type of resource produced at the building.
@@ -36,6 +51,20 @@ class SLBuilding:
         #             faction - SLFaction, the faction the building belongs to
         #             location - SLTile, the tile where the building is located
         #             id - the key used to access the created building in the faction dictionary
+
+        if (type(building_type) is str):
+            if (building_type == "Capital"):
+                building_type = SLBuilding.Type.CAPITAL
+            elif (building_type == "Barracks"):
+                building_type = SLBuilding.Type.BARRACKS
+            elif (building_type == "Mine"):
+                building_type = SLBuilding.Type.MINE
+            elif (building_type == "Fort"):
+                building_type = SLBuilding.Type.FORT
+            elif (building_type == "Farm"):
+                building_type = SLBuilding.Type.FARM
+            elif (building_type == "Oilwell"):
+                building_type = SLBuilding.Type.OILWELL
 
         match building_type:
             case SLBuilding.Type.CAPITAL:
@@ -94,3 +123,6 @@ class SLBuilding:
         self.location = location
         self.id = id
         self.pygame_surface = pygame.image.load(self.sprite)
+
+    def __str__(self):
+        return f"{self.is_building}. {str(self.type)}. {self.health}. {self.faction}. {self.location.location}. {self.id}"

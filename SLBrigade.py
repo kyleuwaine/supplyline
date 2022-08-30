@@ -59,4 +59,4 @@ class SLBrigade:
         self.is_building = False
 
     def __str__(self):
-        return f"{str(self.type)}. {self.health}. {self.faction}. {self.location.location}. {self.id}. {self.is_building}"
+        return f"{self.is_building}. {str(self.type)}. {self.health}. {self.faction}. {self.location.location}. {self.id}"

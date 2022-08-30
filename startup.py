@@ -157,8 +157,13 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     faction_turn = 0
     faction_color_list = [pygame.Color("red"), pygame.Color("blue")]
     faction_list = create_factions(num_of_factions, faction_color_list)
-    tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask, map_setting_str)
-    create_init_brigades(faction_list, tile_grid, screen)
+    if (map_setting_str[:7] == "custom_"):
+        tile_grid, tile_grid_size = game_functions.import_map(full_screen_mask, faction_list, screen)
+        map_setting_str = map_setting_str[7:]
+        #print(map_setting_str)
+    else:
+        tile_grid, tile_grid_size = prepare_map(screen, screen_width, screen_height, full_screen_mask, map_setting_str)
+        create_init_brigades(faction_list, tile_grid, screen)
     opponent = SLAI(faction_list[1], tile_grid, screen)
     endturn_button = SLButton([20, 20], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(endturn_button.pygame_surface, endturn_button.top_left_corner)
@@ -169,4 +174,4 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     exportmap_button = SLButton([screen_width - 280, screen_height - 200], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
 
-    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, screen
+    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, map_setting_str, screen

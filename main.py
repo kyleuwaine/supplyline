@@ -9,6 +9,7 @@ import game_functions
 import base_game_functions
 import combat
 import movement
+import json
 
 """
 This file contains the main function for the Supplyline program, as well as other
@@ -23,7 +24,7 @@ Date: 8/20/2022
 """
 
 
-def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton, clock, framerate: int):
+def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton, viet_button: SLButton, clock, framerate: int):
     """
     Is the event loop for the launcher.
     """
@@ -38,12 +39,26 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
                     if (small_screen_button.pygame_mask.get_at(event.pos) == 1):
                         small_screen_button.pygame_mask.clear()
                         big_screen_button.pygame_mask.clear()
+                        viet_button.pygame_mask.clear()
                         return 1366, 768, "big_tiles_debug_map"
                         #start_game = True
                     if (big_screen_button.pygame_mask.get_at(event.pos) == 1):
                         small_screen_button.pygame_mask.clear()
                         big_screen_button.pygame_mask.clear()
+                        viet_button.pygame_mask.clear()
                         return 1920, 1080, "small_tiles_std_map"
+                    if (viet_button.pygame_mask.get_at(event.pos) == 1):
+                        small_screen_button.pygame_mask.clear()
+                        big_screen_button.pygame_mask.clear()
+                        viet_button.pygame_mask.clear()
+                        with open("custom_map.json", "r") as input:
+                            input_lst = json.load(input)
+                        tokens = str(input_lst).split(". ")
+                        #print(tokens[4])
+                        if (tokens[4] == "big_tiles_debug_map"):
+                            return 1366, 768, "custom_big_tiles_debug_map"
+                        if (tokens[4] == "small_tiles_std_map"):
+                            return 1920, 1080, "custom_small_tiles_std_map"
 
         pygame.display.update()
         clock.tick(framerate)
@@ -73,14 +88,15 @@ def main():
     screen.blit(start_button.pygame_surface, start_button.top_left_corner)
     other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
+    viet_start_button = SLButton([300, 20], full_screen_mask.copy(), "Images\_viet_cong.png")
+    screen.blit(viet_start_button.pygame_surface,viet_start_button.top_left_corner)
 
-    screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, clock, framerate)
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
+    screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
     highlighted_tile = None
     recruiting = None
     build_loc_tiles = []
     valid_moves = []
-    game_functions.import_map(full_screen_mask)
 
     while True:
         # For now, faction_turn == 0 is the player's turn, faction_turn == 1 is

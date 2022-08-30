@@ -49,13 +49,13 @@ class SLTile:
             if (tile_type == "Standard"):
                 self.change_type(SLTile.Type.STANDARD)
             elif (tile_type == "Border"):
-                self.change_type(SLTile.Type.STANDARD)
+                self.change_type(SLTile.Type.BORDER)
             elif (tile_type == "Mountains"):
-                self.change_type(SLTile.Type.STANDARD)
+                self.change_type(SLTile.Type.MOUNTAINS)
             elif (tile_type == "Hills"):
-                self.change_type(SLTile.Type.STANDARD)
+                self.change_type(SLTile.Type.HILLS)
             elif (tile_type == "Jungle"):
-                self.change_type(SLTile.Type.STANDARD)
+                self.change_type(SLTile.Type.JUNGLE)
             else:
                 assert(0 == 1)
         else:
