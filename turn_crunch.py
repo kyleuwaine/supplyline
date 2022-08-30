@@ -118,6 +118,7 @@ def apply_generation_and_attrition(region: SLRegion, screen):
     
     if (available_food < food_consumption):
         attrition = calculate_attrition(available_food, food_consumption)
+        available_food = 0
         for brigade in infantry:
             brigade.health -= attrition
 
@@ -129,6 +130,7 @@ def apply_generation_and_attrition(region: SLRegion, screen):
 
     if (available_fuel < fuel_consumption):
         attrition = calculate_attrition(available_fuel, fuel_consumption)
+        available_fuel = 0
         for brigade in tanks:
             brigade.health -= attrition
 
@@ -137,6 +139,11 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                 game_functions.remove_entity(brigade)
             
             game_functions.reblit_tile(brigade.location, screen)
+    
+    if (region.contains_capital):
+        faction.food = available_food
+        faction.fuel = available_fuel
+        faction.metals = available_metal
 
 
 def turn_crunch(faction: SLFaction, map, map_size, screen):
