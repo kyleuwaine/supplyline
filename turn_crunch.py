@@ -1,3 +1,4 @@
+from threading import currentThread
 import pygame
 import game_functions
 from SLTile import SLTile
@@ -11,7 +12,7 @@ class SLRegion:
     #            faction - the faction which owns the region
     #            contains_capital - a bool indicating whether the region contains the faction's capital
 
-    def __init__(self, faction, tiles):
+    def __init__(self, faction, tiles, contains_capital):
         # Initializes the Region
         # Parameters: self - the Region object
         #             faction - SLFaction, the faction which owns the region
@@ -19,7 +20,7 @@ class SLRegion:
 
         self.faction = faction
         self.tiles = tiles
-        self.contains_capital = False
+        self.contains_capital = contains_capital
 
 
 def BFS(origin: SLTile, visited, map):
@@ -29,6 +30,8 @@ def BFS(origin: SLTile, visited, map):
     #             visited - the grid keeping track of visited tiles
     #             map - the grid which contains the tiles of the game
     # Returns a list of the tiles that were found and of the same faction as origin
+
+    has_capital = False
 
     # the tiles which are found and have to be returned
     tiles = []
@@ -44,6 +47,10 @@ def BFS(origin: SLTile, visited, map):
     while queue:
         current = queue.pop(0)
         tiles.append(current)
+        if (current.occupant):
+            if (current.occupant.is_building):
+                if (current.occupant.type == SLBuilding.Type.CAPITAL):
+                    has_capital = True
 
         for tile in game_functions.find_neighbors(current, map):
             y, x = tile.location
@@ -52,7 +59,7 @@ def BFS(origin: SLTile, visited, map):
                 if (tile.owner == faction):
                     queue.append(tile)
     
-    return tiles
+    return tiles, has_capital
 
 
 def calculate_attrition(supply, demand):
@@ -127,6 +134,8 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                 game_functions.remove_entity(brigade)
             
             game_functions.reblit_tile(brigade.location, screen)
+    else:
+        available_food -= food_consumption
 
     if (available_fuel < fuel_consumption):
         attrition = calculate_attrition(available_fuel, fuel_consumption)
@@ -139,6 +148,8 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                 game_functions.remove_entity(brigade)
             
             game_functions.reblit_tile(brigade.location, screen)
+    else:
+        available_fuel -= fuel_consumption
     
     if (region.contains_capital):
         faction.food = available_food
@@ -155,20 +166,25 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     #             map_size - the size of the map
 
     # visited 2D array keeps track of whether tile was visited or not
-    visited = [[False] * map_size for i in range(map_size)]
+    visited = [[False] * map_size for _ in range(map_size)]
 
     # regions array keeps track of regions owned by the faction
     # a region being defined as an area of tiles owned by a faction which are all connected
     regions = []
 
     for i in range(map_size):
-        for j in range(map_size):
+        offset = 1
+        for j in range(map_size - offset):
             if (not visited[i][j]):
                 if (map[i][j].owner == faction):
-                    region = SLRegion(faction, BFS(map[i][j], visited))
+                    region = SLRegion(faction, BFS(map[i][j], visited, map))
                     regions.append(region)
                 else:
                     visited[i][j] = True
+        if (offset == 1):
+            offset = 0
+        elif (offset == 0):
+            offset = 1
     
     for region in regions:
         apply_generation_and_attrition(region, screen)
