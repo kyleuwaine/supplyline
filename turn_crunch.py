@@ -155,7 +155,7 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     #             map_size - the size of the map
 
     # visited 2D array keeps track of whether tile was visited or not
-    visited = [[False] * map_size] * map_size 
+    visited = [[False] * map_size for i in range(map_size)]
 
     # regions array keeps track of regions owned by the faction
     # a region being defined as an area of tiles owned by a faction which are all connected
