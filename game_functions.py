@@ -175,7 +175,7 @@ def remove_entity(entity):
     if (not entity.is_building):
         entity.faction.brigade_dict.pop(entity.id)
     elif (entity.is_building):
-        entity.faction.building_dict.pop(entity.id)
+        pass
 
 
 def reblit_tile(tile: SLTile, screen):
