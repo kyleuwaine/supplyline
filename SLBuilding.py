@@ -20,17 +20,17 @@ class SLBuilding:
         OILWELL = 5
 
         def __str__(input):
-            if (input == SLBrigade.BrigadeType.CAPITAL):
+            if (input == SLBuilding.Type.CAPITAL):
                 return "Capital"
-            elif (input == SLBrigade.BrigadeType.BARRACKS):
+            elif (input == SLBuilding.Type.BARRACKS):
                 return "Barracks"
-            elif (input == SLBrigade.BrigadeType.MINE):
+            elif (input == SLBuilding.Type.MINE):
                 return "Mine"
-            elif (input == SLBrigade.BrigadeType.FORT):
+            elif (input == SLBuilding.Type.FORT):
                 return "Fort"
-            elif (input == SLBrigade.BrigadeType.FARM):
+            elif (input == SLBuilding.Type.FARM):
                 return "Farm"
-            elif (input == SLBrigade.BrigadeType.OILWELL):
+            elif (input == SLBuilding.Type.OILWELL):
                 return "Oilwell"
             return None
 
@@ -110,7 +110,7 @@ class SLBuilding:
             case SLBuilding.Type.OILWELL:
                 self.health = 100
                 self.force_limit = 0
-                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_oilwell.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
                 self.production = 5
