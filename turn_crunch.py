@@ -159,20 +159,25 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     #             map_size - the size of the map
 
     # visited 2D array keeps track of whether tile was visited or not
-    visited = [[False] * map_size for i in range(map_size)]
+    visited = [[False] * map_size for _ in range(map_size)]
 
     # regions array keeps track of regions owned by the faction
     # a region being defined as an area of tiles owned by a faction which are all connected
     regions = []
 
     for i in range(map_size):
-        for j in range(map_size):
+        offset = 1
+        for j in range(map_size - offset):
             if (not visited[i][j]):
                 if (map[i][j].owner == faction):
-                    region = SLRegion(faction, BFS(map[i][j], visited))
+                    region = SLRegion(faction, BFS(map[i][j], visited, map))
                     regions.append(region)
                 else:
                     visited[i][j] = True
+        if (offset == 1):
+            offset = 0
+        elif (offset == 0):
+            offset = 1
     
     for region in regions:
         apply_generation_and_attrition(region, screen)
