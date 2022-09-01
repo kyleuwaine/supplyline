@@ -127,6 +127,8 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                 game_functions.remove_entity(brigade)
             
             game_functions.reblit_tile(brigade.location, screen)
+    else:
+        available_food -= food_consumption
 
     if (available_fuel < fuel_consumption):
         attrition = calculate_attrition(available_fuel, fuel_consumption)
@@ -139,6 +141,8 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                 game_functions.remove_entity(brigade)
             
             game_functions.reblit_tile(brigade.location, screen)
+    else:
+        available_fuel -= fuel_consumption
     
     if (region.contains_capital):
         faction.food = available_food
