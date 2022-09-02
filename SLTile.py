@@ -61,8 +61,10 @@ class SLTile:
         else:
             if (tile_type == SLTile.Type.STANDARD):
                 self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
+                self.defense = 0
             elif (tile_type == SLTile.Type.BORDER):
                 self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", map_setting_str)
+                self.defense = 0
         self.pygame_surface = pygame.image.load(self.sprite)
         self.pygame_mask = self.compute_mask(full_screen_mask)
         self.owner = None
@@ -77,14 +79,19 @@ class SLTile:
 
         if (new_type == SLTile.Type.STANDARD):
             self.sprite = base_game_functions.get_selective_image_str("Images\_plains.png", self.map_setting_str)
+            self.defense = 0
         elif (new_type == SLTile.Type.BORDER):
             self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", self.map_setting_str)
+            self.defense = 0
         elif (new_type == SLTile.Type.MOUNTAINS):
             self.sprite = base_game_functions.get_selective_image_str("Images\_mountain.png", self.map_setting_str)
+            self.defense = 10
         elif (new_type == SLTile.Type.HILLS):
             self.sprite = base_game_functions.get_selective_image_str("Images\_hills.png", self.map_setting_str)
+            self.defense = 5
         elif (new_type == SLTile.Type.JUNGLE):
             self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", self.map_setting_str)
+            self.defense = 5
 
     def __str__(self):
         return f"{str(self.type)}. {self.top_left_corner}. {self.location}. {self.owner}. {self.map_setting_str}. {str(self.occupant)}"

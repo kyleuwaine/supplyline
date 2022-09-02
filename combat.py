@@ -66,7 +66,7 @@ def battle_brigade(attacker: SLBrigade, defender: SLBrigade, grid, screen):
     # Calculating total damage attacker does
     total_att_dmg = attacker.off_dmg + att_sup
     # Calculating total damage defender does
-    total_def_dmg = defender.def_dmg + def_sup
+    total_def_dmg = defender.def_dmg + def_sup + defender.location.defense
 
     # Dealing damage to brigades
     attacker.health = attacker.health - total_def_dmg
@@ -130,7 +130,7 @@ def battle_building(attacker: SLBrigade, defender: SLBuilding, grid, screen):
     # Calculating total damage attacker does
     total_att_dmg = attacker.off_dmg + att_sup
     # Calculating total damage defender does
-    total_def_dmg = defender.def_dmg + def_sup
+    total_def_dmg = defender.def_dmg + def_sup + defender.location.defense
 
     # Dealing damage to brigades
     attacker.health = attacker.health - total_def_dmg
