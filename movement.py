@@ -58,11 +58,16 @@ def find_valid_moves(origin: SLTile, show_moves: bool, grid, screen):
     #             show_moves - bool, indicates whether to highlight the valid moves or not
     # Returns a list containing the valid tiles
 
+    if (origin.occupant.moves <= 0):
+        return []
+
     valid_tiles = []
     jumps = []
 
     if (not origin.occupant.is_building):
         for tile in game_functions.find_neighbors(origin, grid):
+            if (origin.occupant.type == SLBrigade.BrigadeType.TANK and tile.type == SLTile.Type.MOUNTAINS):
+                pass
             if (tile.occupant == None):
                 valid_tiles.append(tile)
             else:
@@ -75,6 +80,8 @@ def find_valid_moves(origin: SLTile, show_moves: bool, grid, screen):
                         for jump in game_functions.find_neighbors(tile, grid):
                             jumps.append(jump)
         for jump in jumps:
+            if (origin.occupant.type == SLBrigade.BrigadeType.TANK and jump.type == SLTile.Type.MOUNTAINS):
+                pass
             if (jump not in valid_tiles and jump != origin):
                 if (jump.occupant == None):
                     valid_tiles.append(jump)
@@ -107,6 +114,10 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
     eliminated = []
 
     if (dest in valid_moves):
+        if (dest.type == SLTile.Type.MOUNTAINS or dest.type == SLTile.Type.JUNGLE):
+            origin.occupant.moves = 0
+        else:
+            origin.occupant.moves -= 1
         if (dest.occupant != None):
         # checks if there is an occupant on the selected tile
             if (dest.occupant.faction == origin.occupant.faction):
@@ -140,3 +151,8 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
     
     return moved, eliminated
         
+def reset_moves(brigade: SLBrigade):
+    # Resets the available moves of a brigade back to the max amount at the end of a turn
+    # Parameters: brigade - SLBrigade, the brigade being reset
+
+    brigade.moves = brigade.max_moves

@@ -1,6 +1,7 @@
 from threading import currentThread
 import pygame
 import game_functions
+import movement
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLBuilding import SLBuilding
@@ -161,6 +162,7 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     # Enacts the turn crunch:
     #   - Applies any resource generation in the faction
     #   - Applies attrition to affected units owned by the faction
+    #   - Resets the available moves of brigades owned by the faction back to max
     # Parameters: faction - SLFaction, the faction whose turn is being crunched
     #             map - the grid which contains the tiles of the game
     #             map_size - the size of the map
@@ -177,7 +179,8 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
         for j in range(map_size - offset):
             if (not visited[i][j]):
                 if (map[i][j].owner == faction):
-                    region = SLRegion(faction, BFS(map[i][j], visited, map))
+                    tiles, has_capital = BFS(map[i][j], visited, map)
+                    region = SLRegion(faction, tiles, has_capital)
                     regions.append(region)
                 else:
                     visited[i][j] = True
@@ -185,6 +188,9 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
             offset = 0
         elif (offset == 0):
             offset = 1
+    
+    for id in faction.brigade_dict:
+        movement.reset_moves(faction.brigade_dict[id])
     
     for region in regions:
         apply_generation_and_attrition(region, screen)
