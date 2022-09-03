@@ -102,7 +102,7 @@ class SLBuilding:
             case SLBuilding.Type.FARM:
                 self.health = 100
                 self.force_limit = 0
-                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_farm.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
                 self.production = 5
