@@ -94,7 +94,7 @@ class SLBuilding:
             case SLBuilding.Type.FORT:
                 self.health = 300
                 self.force_limit = 0
-                self.sprite = base_game_functions.get_selective_image_str("Images\_mine.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_fort.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 20
                 self.production = 0
