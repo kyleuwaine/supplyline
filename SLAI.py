@@ -2,6 +2,7 @@ import game_functions
 import SLFaction
 import combat
 import movement
+from turn_crunch import turn_crunch
 from random import randrange
 
 class SLAI:
@@ -22,12 +23,15 @@ class SLAI:
 
         for id in self.faction.brigade_dict:
             brigade = self.faction.brigade_dict[id]
-            original_location = brigade.location
-            possible_dests = movement.find_valid_moves(original_location, False, self.map, self.screen)
-            selected_dest = possible_dests[randrange(0, len(possible_dests))]
-            moved, eliminated = movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
-            for entity in eliminated:
-                eliminated_brigades.append(entity)
+            while (brigade.moves > 0):
+                original_location = brigade.location
+                possible_dests = movement.find_valid_moves(original_location, False, self.map, self.screen)
+                selected_dest = possible_dests[randrange(0, len(possible_dests))]
+                moved, eliminated = movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
+                for entity in eliminated:
+                    eliminated_brigades.append(entity)
 
         for brigade in eliminated_brigades:
             game_functions.remove_entity(brigade)
+
+        turn_crunch(self.faction, self.map, len(self.map), self.screen)
