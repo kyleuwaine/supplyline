@@ -168,6 +168,23 @@ def blit_health(entity, screen):
     health_surface = font.render(str(entity.health), None, entity.faction.color)
     screen.blit(health_surface, (x, y))
 
+def blit_resource_counts(faction, screen):
+    # Blits the resources of the player faction to the sidebar
+    # Parameters: faction - the player's faction
+    #             screen - the screen of the game
+
+    pygame.draw.rect(screen, "white", pygame.Rect(140, 200, 20, 400))
+    #screen.blit(pygame.image.load("Images\_metal_icon.png"), (0, 200))
+    #screen.blit(pygame.image.load("Images\_wheat_icon.png"), (0, 320))
+    #screen.blit(pygame.image.load("Images\_oil_icon.png"), (0, 440))
+    font = pygame.font.SysFont("arial", 30)
+    metals_surface = font.render(str(faction.metals), None, pygame.Color("black"))
+    food_surface = font.render(str(faction.food), None, pygame.Color("black"))
+    fuel_surface = font.render(str(faction.fuel), None, pygame.Color("black"))
+    screen.blit(metals_surface, (140, 270))
+    screen.blit(food_surface, (140, 390))
+    screen.blit(fuel_surface, (140, 510))
+
 def remove_entity(entity):
     # Removes an entity from any lists it is present in
     # Parameters: entity - the entity being removed

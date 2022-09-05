@@ -173,5 +173,10 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
     exportmap_button = SLButton([screen_width - 280, screen_height - 200], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
+    pygame.draw.rect(screen, "white", pygame.Rect(20, 200, 140, 400))
+    screen.blit(pygame.image.load("Images\_metal_icon.png"), (0, 200))
+    screen.blit(pygame.image.load("Images\_wheat_icon.png"), (0, 320))
+    screen.blit(pygame.image.load("Images\_oil_icon.png"), (0, 440))
+    game_functions.blit_resource_counts(faction_list[0], screen)
 
     return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, map_setting_str, screen

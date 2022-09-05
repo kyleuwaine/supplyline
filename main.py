@@ -113,6 +113,7 @@ def main():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:
                         if (faction_turn == 0):
+                            game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
                             if (exportmap_button.pygame_mask.get_at(event.pos) == 1):
                                 game_functions.export_map(tile_grid, tile_grid_size)
@@ -131,6 +132,8 @@ def main():
                                 highlighted_tile = None
                                 buildbuilding_button.active = False
                                 screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
+                                faction_list[faction_turn].metals -= 5
+                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
                             # Check if build unit button gets pressed by player
                             if ((buildunit_button.pygame_mask.get_at(event.pos) == 1) and (buildunit_button.active == True)):
@@ -234,11 +237,15 @@ def main():
                                                                 faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[1][1].occupant})
                                                                 faction_list[0].brigade_id_counter += 1
                                                                 game_functions.reblit_tile(tile_grid[i][j], screen)
+                                                                faction_list[faction_turn].metals -= 5
+                                                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
                                                             # If recruting contains "Infantry", then build an infantry brigade on selected tile
                                                             elif (recruiting == "Infantry"):
                                                                 #recruit infantry
                                                                 #todo
+                                                                #faction_list[faction_turn].metals -= 5
+                                                                #game_functions.blit_resource_counts(faction_list[faction_turn], screen)
                                                                 pass
 
                                                             recruiting = None
