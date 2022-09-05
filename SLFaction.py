@@ -18,7 +18,7 @@ class SLFaction:
         self.building_id_counter = 0
         self.brigade_cap = 3
         self.brigade_counter = 1
-        self.metals = 0
+        self.metals = 5
         self.food = 5
         self.fuel = 0
         self.capital_loc = None

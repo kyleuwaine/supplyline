@@ -216,9 +216,10 @@ def main():
 
                                                                 # If they highlight a tile owned by them, player may be trying to build a building, so activate the build building button
                                                                 if (highlighted_tile.owner == faction_list[faction_turn]):
-                                                                    buildbuilding_button.active = True
-                                                                    screen.blit(buildbuilding_button.alt_pygame_surface, buildbuilding_button.top_left_corner)
-                                                                    pass
+                                                                    # But only if they have the metals...
+                                                                    if (faction_list[faction_turn].metals >= 5):
+                                                                        buildbuilding_button.active = True
+                                                                        screen.blit(buildbuilding_button.alt_pygame_surface, buildbuilding_button.top_left_corner)
 
                                                     # If recruiting is not empty, then player is selecting a tile to build a unit on
                                                     else:
