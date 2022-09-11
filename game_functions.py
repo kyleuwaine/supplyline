@@ -151,7 +151,7 @@ def find_empty_neighbors(origin: SLTile, grid):
 
 def blit_health(entity, screen):
     # Blits the health of an entity onto the tile
-    # Parameters: brigade - the entity whose health is being blitted
+    # Parameters: entity - the entity whose health is being blitted
     #             screen - the screen of the game
 
     map_setting_str = entity.location.map_setting_str
@@ -167,6 +167,25 @@ def blit_health(entity, screen):
         y += 10
     health_surface = font.render(str(entity.health), None, entity.faction.color)
     screen.blit(health_surface, (x, y))
+
+def blit_moves(entity, screen):
+    # Blits the available moves of a brigade
+    # Parameters: brigade - the entity whose moves are being blitted
+    #             screen - the screen of the game
+
+    map_setting_str = entity.location.map_setting_str
+    if (map_setting_str == "big_tiles_debug_map"):
+        font = pygame.font.SysFont("arial", 30)
+        x, y = entity.location.top_left_corner
+        x += 52
+        y += 100
+    if (map_setting_str == "small_tiles_std_map"):
+        font = pygame.font.SysFont("arial", 20)
+        x, y = entity.location.top_left_corner
+        x += 37
+        y += 70
+    move_surface = font.render(str(entity.moves), None, entity.faction.color)
+    screen.blit(move_surface, (x, y))
 
 def blit_resource_counts(faction, screen):
     # Blits the resources of the player faction to the sidebar
@@ -207,3 +226,5 @@ def reblit_tile(tile: SLTile, screen):
     if (tile.occupant != None):
         screen.blit(tile.occupant.pygame_surface, tile.top_left_corner)
         blit_health(tile.occupant, screen)
+        if (not tile.occupant.is_building):
+            blit_moves(tile.occupant, screen)
