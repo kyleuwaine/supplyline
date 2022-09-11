@@ -140,7 +140,8 @@ def battle_building(attacker: SLBrigade, defender: SLBuilding, grid, screen):
         attacker.location.occupant = None
         attacker_alive = False
     if (defender.health <= 0):
-        defender.location.occupant = None
+        if (not defender.production > 0):
+            defender.location.occupant = None
         defender_alive = False
 
     # Reblitting tiles to show change in brigade healths and if any brigades died
@@ -148,14 +149,24 @@ def battle_building(attacker: SLBrigade, defender: SLBuilding, grid, screen):
     game_functions.reblit_tile(defender.location, screen)
 
     if (attacker_alive and not defender_alive):
-        movement.move_occupant(attacker.location, defender.location, screen, grid)
-        game_functions.blit_borders(defender.location, defender.location.owner.color, screen)
-        for tile in (game_functions.find_empty_neighbors(defender.location, grid)):
-            game_functions.blit_borders(tile, tile.owner.color, screen)
-        return 1
+        if (not defender.production > 0):
+            movement.move_occupant(attacker.location, defender.location, screen, grid)
+            return 1
+        else: 
+            defender.faction = attacker.faction
+            defender.location.owner = attacker.faction
+            game_functions.reblit_tile(defender.location, screen)
+            for tile in game_functions.find_empty_neighbors(defender.location, grid):
+                if (tile.owner == None):
+                    tile.owner = attacker.faction
+                    game_functions.reblit_tile(tile, screen)
+            return 0
     elif (attacker_alive and defender_alive):
         return 0
     elif (not attacker_alive and defender_alive):
         return 2
     elif (not attacker_alive and not defender_alive):
-        return 3
+        if (not defender.production > 0):
+            return 3
+        else:
+            return 2
