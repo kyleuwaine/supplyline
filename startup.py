@@ -161,10 +161,10 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     opponent = SLAI(faction_list[1], tile_grid, screen)
     endturn_button = SLButton([20, 20], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(endturn_button.pygame_surface, endturn_button.top_left_corner)
-    buildbuilding_button = SLButton([screen_width - 140, 20], full_screen_mask.copy(), "Images\_buildbuilding_grey.png", "Images\_buildbuilding_green.png")
-    screen.blit(buildbuilding_button.pygame_surface, buildbuilding_button.top_left_corner)
-    buildunit_button = SLButton([screen_width - 280, 20], full_screen_mask.copy(), "Images\_buildunit_grey.png", "Images\_buildunit_green.png")
-    screen.blit(buildunit_button.pygame_surface, buildunit_button.top_left_corner)
+    buildbarracks_button = SLButton([screen_width - 140, 20], full_screen_mask.copy(), "Images\_buildbarracks_grey.png", "Images\_buildbarracks_blue.png")
+    screen.blit(buildbarracks_button.pygame_surface, buildbarracks_button.top_left_corner)
+    buildtank_button = SLButton([screen_width - 280, 20], full_screen_mask.copy(), "Images\_buildtank_grey.png", "Images\_buildtank_green.png")
+    screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
     exportmap_button = SLButton([screen_width - 280, screen_height - 200], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
     pygame.draw.rect(screen, "white", pygame.Rect(20, 200, 140, 400))
@@ -173,4 +173,4 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     screen.blit(pygame.image.load("Images\_oil_icon.png"), (0, 440))
     game_functions.blit_resource_counts(faction_list[0], screen)
 
-    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbuilding_button, buildunit_button, exportmap_button, map_setting_str, screen
+    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildtank_button, exportmap_button, map_setting_str, screen
