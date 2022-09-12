@@ -93,7 +93,7 @@ def main():
     screen.blit(viet_start_button.pygame_surface,viet_start_button.top_left_corner)
 
     screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
     highlighted_tile = None
     recruiting = None
     build_loc_tiles = []
@@ -153,7 +153,7 @@ def main():
                                 faction_list[faction_turn].metals -= 5
                                 game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
-                            # Check if build unit button gets pressed by player
+                            # Check if build tank button gets pressed by player
                             if ((buildtank_button.pygame_mask.get_at(event.pos) == 1) and (buildtank_button.active == True)):
                                 recruiting = "Tank"
                                 valid_rec_locs = game_functions.find_valid_rec_locs(highlighted_tile, tile_grid)
@@ -163,9 +163,30 @@ def main():
                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
                                 buildtank_button.active = False
                                 screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
+                                # So the player can't build a tank then immediately build infantry, which will break because the barracks will be deactivated during this
+                                buildinfantry_button.active = False
+                                screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
 
                                 game_functions.reblit_tile(highlighted_tile, screen)
                                 highlighted_tile = None
+
+                            # Check if build infantry button gets pressed by player
+                            if ((buildinfantry_button.pygame_mask.get_at(event.pos) == 1) and (buildinfantry_button.active == True)):
+                                recruiting = "Infantry"
+                                valid_rec_locs = game_functions.find_valid_rec_locs(highlighted_tile, tile_grid)
+                                if (valid_rec_locs != []):
+                                    build_loc_tiles = valid_rec_locs
+                                    for tile in build_loc_tiles:
+                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
+                                buildinfantry_button.active = False
+                                screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
+                                # So the player can't build infantry then immediately build a tank, which will break because the barracks will be deactivated during this
+                                buildtank_button.active = False
+                                screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
+
+                                game_functions.reblit_tile(highlighted_tile, screen)
+                                highlighted_tile = None
+
 
                             # If no UI buttons are pressed then check which tile on the map got pressed
                             else:
@@ -180,14 +201,22 @@ def main():
                                                     # If recruiting is empty, then the player is selecting a tile to highlight
                                                     if (recruiting == None):
 
-                                                        # If the build unit button is active, this means the player selected a tile containing a barracks previously but didn't press the build button.
-                                                        # In this case, the button is deactivated
+                                                        # If either build unit buttons are active, this means the player selected a tile containing a barracks previously but didn't press the build button.
+                                                        # In this case, the buttons are deactivated
                                                         if (buildtank_button.active == True):
                                                             buildtank_button.active = False
                                                             screen.blit(buildbarracks_button.pygame_surface, buildbarracks_button.top_left_corner)
                                                             for tile in build_loc_tiles:
                                                                     screen.blit(tile.pygame_surface, tile.top_left_corner)
                                                                     game_functions.blit_borders(tile, tile.owner.color, screen)
+
+                                                        if (buildinfantry_button.active == True):
+                                                            buildinfantry_button.active = False
+                                                            screen.blit(buildbarracks_button.pygame_surface, buildbarracks_button.top_left_corner)
+                                                            for tile in build_loc_tiles:
+                                                                    screen.blit(tile.pygame_surface, tile.top_left_corner)
+                                                                    game_functions.blit_borders(tile, tile.owner.color, screen)
+
 
                                                         # Check if the tile pressed is within the map borders
                                                         if (tile_grid[i][j].type != SLTile.Type.BORDER):
@@ -216,8 +245,8 @@ def main():
                                                                                 highlighted_tile = tile_grid[i][j]
                                                                                 screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), highlighted_tile.top_left_corner)
                                                                                 if (can_build_infantry):
-                                                                                    buildtank_button.active = True
-                                                                                    screen.blit(buildtank_button.alt_pygame_surface, buildtank_button.top_left_corner)
+                                                                                    buildinfantry_button.active = True
+                                                                                    screen.blit(buildinfantry_button.alt_pygame_surface, buildinfantry_button.top_left_corner)
                                                                                 if (can_build_tank):
                                                                                     buildtank_button.active = True
                                                                                     screen.blit(buildtank_button.alt_pygame_surface, buildtank_button.top_left_corner)
@@ -255,7 +284,7 @@ def main():
                                                             # If recruting contains "Tank", then build a tank brigade on selected tile
                                                             if (recruiting == "Tank"):
                                                                 tile_grid[i][j].occupant = SLBrigade("Tank", faction_list[0], tile_grid[i][j], faction_list[0].brigade_id_counter)
-                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[1][1].occupant})
+                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[i][j].occupant})
                                                                 faction_list[0].brigade_id_counter += 1
                                                                 game_functions.reblit_tile(tile_grid[i][j], screen)
                                                                 faction_list[faction_turn].metals -= 5
@@ -263,10 +292,12 @@ def main():
 
                                                             # If recruting contains "Infantry", then build an infantry brigade on selected tile
                                                             elif (recruiting == "Infantry"):
-                                                                #recruit infantry
-                                                                #todo
-                                                                #faction_list[faction_turn].metals -= 5
-                                                                #game_functions.blit_resource_counts(faction_list[faction_turn], screen)
+                                                                tile_grid[i][j].occupant = SLBrigade("Infantry", faction_list[0], tile_grid[i][j], faction_list[0].brigade_id_counter)
+                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[i][j].occupant})
+                                                                faction_list[0].brigade_id_counter += 1
+                                                                game_functions.reblit_tile(tile_grid[i][j], screen)
+                                                                faction_list[faction_turn].metals -= 5
+                                                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
                                                                 pass
 
                                                             recruiting = None
@@ -289,10 +320,15 @@ def main():
                                                             buildfort_button.active = False
                                                             screen.blit(buildfort_button.pygame_surface, buildfort_button.top_left_corner)
 
-                                                        # If the build brigade button is active, deactivate it
+                                                        # If the build tank button is active, deactivate it
                                                         if (buildtank_button.active == True):
                                                             buildtank_button.active = False
                                                             screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
+
+                                                        # If the build infantry button is active, deactivate it
+                                                        if (buildinfantry_button.active == True):
+                                                            buildinfantry_button.active = False
+                                                            screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
 
                                                         # Unhighlight any highlighted tiles
                                                         game_functions.reblit_tile(highlighted_tile, screen)

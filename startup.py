@@ -167,6 +167,8 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     screen.blit(buildfort_button.pygame_surface, buildfort_button.top_left_corner)
     buildtank_button = SLButton([screen_width - 280, 20], full_screen_mask.copy(), "Images\_buildtank_grey.png", "Images\_buildtank_green.png")
     screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
+    buildinfantry_button = SLButton([screen_width - 280, 130], full_screen_mask.copy(), "Images\_buildinfantry_grey.png", "Images\_buildinfantry_green.png")
+    screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
     exportmap_button = SLButton([screen_width - 280, screen_height - 200], full_screen_mask.copy(), "Images\endturn.png")
     screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
     pygame.draw.rect(screen, "white", pygame.Rect(20, 200, 140, 400))
@@ -175,4 +177,4 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     screen.blit(pygame.image.load("Images\_oil_icon.png"), (0, 440))
     game_functions.blit_resource_counts(faction_list[0], screen)
 
-    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, exportmap_button, map_setting_str, screen
+    return tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, exportmap_button, map_setting_str, screen
