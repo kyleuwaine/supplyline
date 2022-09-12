@@ -155,37 +155,39 @@ def main():
 
                             # Check if build tank button gets pressed by player
                             if ((buildtank_button.pygame_mask.get_at(event.pos) == 1) and (buildtank_button.active == True)):
-                                recruiting = "Tank"
                                 valid_rec_locs = game_functions.find_valid_rec_locs(highlighted_tile, tile_grid)
                                 if (valid_rec_locs != []):
+                                    # Note: recuiting is set in here so that if there are no valid locations the player isn't stuck, since recuiting being set disables some things
+                                    # It would be helpful in the future to have a "cancel recuiting" button to avoid this and related situations
+                                    recruiting = "Tank"
                                     build_loc_tiles = valid_rec_locs
                                     for tile in build_loc_tiles:
                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
-                                buildtank_button.active = False
-                                screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
-                                # So the player can't build a tank then immediately build infantry, which will break because the barracks will be deactivated during this
-                                buildinfantry_button.active = False
-                                screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
+                                    buildtank_button.active = False
+                                    screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
+                                    # So the player can't build a tank then immediately build infantry, which will break because the barracks will be deactivated during this
+                                    buildinfantry_button.active = False
+                                    screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
 
-                                game_functions.reblit_tile(highlighted_tile, screen)
-                                highlighted_tile = None
+                                    game_functions.reblit_tile(highlighted_tile, screen)
+                                    highlighted_tile = None
 
                             # Check if build infantry button gets pressed by player
                             if ((buildinfantry_button.pygame_mask.get_at(event.pos) == 1) and (buildinfantry_button.active == True)):
-                                recruiting = "Infantry"
                                 valid_rec_locs = game_functions.find_valid_rec_locs(highlighted_tile, tile_grid)
                                 if (valid_rec_locs != []):
+                                    recruiting = "Infantry"
                                     build_loc_tiles = valid_rec_locs
                                     for tile in build_loc_tiles:
                                         screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
-                                buildinfantry_button.active = False
-                                screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
-                                # So the player can't build infantry then immediately build a tank, which will break because the barracks will be deactivated during this
-                                buildtank_button.active = False
-                                screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
+                                    buildinfantry_button.active = False
+                                    screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
+                                    # So the player can't build infantry then immediately build a tank, which will break because the barracks will be deactivated during this
+                                    buildtank_button.active = False
+                                    screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
 
-                                game_functions.reblit_tile(highlighted_tile, screen)
-                                highlighted_tile = None
+                                    game_functions.reblit_tile(highlighted_tile, screen)
+                                    highlighted_tile = None
 
 
                             # If no UI buttons are pressed then check which tile on the map got pressed
