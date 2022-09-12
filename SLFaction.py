@@ -22,6 +22,7 @@ class SLFaction:
         self.food = 5
         self.fuel = 0
         self.capital_loc = None
+        self.is_defeated = False
 
 
     def rec_capability(self):

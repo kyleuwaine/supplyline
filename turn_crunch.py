@@ -59,7 +59,7 @@ def BFS(origin: SLTile, visited, map):
                 visited[y][x] = True
                 if (tile.owner == faction):
                     queue.append(tile)
-    
+
     return tiles, has_capital
 
 
@@ -71,7 +71,7 @@ def calculate_attrition(supply, demand):
 
     if (supply == 0):
         return 20
-    
+
     if (demand // supply == 1):
         return 5
     elif (demand // supply == 2):
@@ -80,9 +80,9 @@ def calculate_attrition(supply, demand):
         return 15
     elif (demand // supply == 4):
         return 20
-    else: 
+    else:
         return 20
-    
+
 
 def apply_generation_and_attrition(region: SLRegion, screen):
     # Calculates and applies the resources generated in the region
@@ -118,12 +118,12 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                     infantry.append(tile.occupant)
                 elif (tile.occupant.type == SLBrigade.BrigadeType.TANK):
                     tanks.append(tile.occupant)
-    
+
     if (region.contains_capital):
         available_food += faction.food
         available_fuel += faction.fuel
         available_metal += faction.metals
-    
+
     if (available_food < food_consumption):
         attrition = calculate_attrition(available_food, food_consumption)
         available_food = 0
@@ -133,7 +133,7 @@ def apply_generation_and_attrition(region: SLRegion, screen):
             if (brigade.health <= 0):
                 brigade.location.occupant = None
                 game_functions.remove_entity(brigade)
-            
+
             game_functions.reblit_tile(brigade.location, screen)
     else:
         available_food -= food_consumption
@@ -147,22 +147,37 @@ def apply_generation_and_attrition(region: SLRegion, screen):
             if (brigade.health <= 0):
                 brigade.location.occupant = None
                 game_functions.remove_entity(brigade)
-            
+
             game_functions.reblit_tile(brigade.location, screen)
     else:
         available_fuel -= fuel_consumption
-    
+
     if (region.contains_capital):
         faction.food = available_food
         faction.fuel = available_fuel
         faction.metals = available_metal
 
+def has_capital_check(faction: SLFaction, map, map_size):
+    offset = 1
+    for i in range(map_size):
+        for j in range(map_size - offset):
+                if (map[i][j].occupant != None):
+                    if (map[i][j].occupant.faction.id == faction.id):
+                        if (map[i][j].occupant.is_building == True):
+                            if (map[i][j].occupant.type == SLBuilding.Type.CAPITAL):
+                                return True
+        if (offset == 1):
+            offset = 0
+        elif (offset == 0):
+            offset = 1
+    return False
 
 def turn_crunch(faction: SLFaction, map, map_size, screen):
     # Enacts the turn crunch:
     #   - Applies any resource generation in the faction
     #   - Applies attrition to affected units owned by the faction
     #   - Resets the available moves of brigades owned by the faction back to max
+    #   - Checks if the faction has no capital(s). If so, sets defeat flag
     # Parameters: faction - SLFaction, the faction whose turn is being crunched
     #             map - the grid which contains the tiles of the game
     #             map_size - the size of the map
@@ -174,8 +189,8 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     # a region being defined as an area of tiles owned by a faction which are all connected
     regions = []
 
+    offset = 1
     for i in range(map_size):
-        offset = 1
         for j in range(map_size - offset):
             if (not visited[i][j]):
                 if (map[i][j].owner == faction):
@@ -188,9 +203,12 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
             offset = 0
         elif (offset == 0):
             offset = 1
-    
+
     for id in faction.brigade_dict:
         movement.reset_moves(faction.brigade_dict[id])
-    
+
     for region in regions:
         apply_generation_and_attrition(region, screen)
+
+    if (has_capital_check(faction, map, map_size) == False):
+        faction.is_defeated = True

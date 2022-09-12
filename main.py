@@ -21,7 +21,7 @@ indicating an appropriate option. After the game is started, main() acts as the
 event loop for the Supplyline program.
 
 Author: Kyle Uwaine and Victor Nault
-Date: 8/20/2022
+Date: 9/11/2022
 """
 
 
@@ -62,7 +62,33 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
                             return 1920, 1080, "custom_small_tiles_std_map"
 
         pygame.display.update()
+        clock.tick(1)
+
+def player_defeat(screen_width, screen_height, screen):
+    pygame.draw.rect(screen, "white", pygame.Rect(0, 0, screen_width, screen_height))
+    font = pygame.font.SysFont("arial", 100)
+    defeat_surface = font.render("Lose...", None, pygame.Color("black"))
+    screen.blit(defeat_surface, (0, 0))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        pygame.display.update()
         clock.tick(framerate)
+
+def player_victory(screen_width, screen_height, clock, screen):
+    pygame.draw.rect(screen, "white", pygame.Rect(0, 0, screen_width, screen_height))
+    font = pygame.font.SysFont("arial", 100)
+    victory_surface = font.render("Win!", None, pygame.Color("black"))
+    screen.blit(victory_surface, (0, 0))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        pygame.display.update()
+        clock.tick(1)
 
 def main():
     """
@@ -105,6 +131,11 @@ def main():
         if (faction_turn != 0):
             opponent.AI_turn()
             faction_turn = base_game_functions.advance_turn(faction_turn, num_of_factions)
+        if (faction_list[0].is_defeated == True):
+            player_defeat(screen_width, screen_height, clock, screen)
+        # Change this if more than two factions are ever implemented
+        if (faction_list[1].is_defeated == True):
+            player_victory(screen_width, screen_height, clock, screen)
         else:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
