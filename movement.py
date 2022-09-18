@@ -67,7 +67,7 @@ def find_valid_moves(origin: SLTile, show_moves: bool, grid, screen):
     if (not origin.occupant.is_building):
         for tile in game_functions.find_neighbors(origin, grid):
             if (origin.occupant.type == SLBrigade.BrigadeType.TANK and tile.type == SLTile.Type.MOUNTAINS):
-                pass
+                continue
             if (tile.occupant == None):
                 valid_tiles.append(tile)
             else:
@@ -81,7 +81,7 @@ def find_valid_moves(origin: SLTile, show_moves: bool, grid, screen):
                             jumps.append(jump)
         for jump in jumps:
             if (origin.occupant.type == SLBrigade.BrigadeType.TANK and jump.type == SLTile.Type.MOUNTAINS):
-                pass
+                continue
             if (jump not in valid_tiles and jump != origin):
                 if (jump.occupant == None):
                     valid_tiles.append(jump)
