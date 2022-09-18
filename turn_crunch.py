@@ -157,20 +157,6 @@ def apply_generation_and_attrition(region: SLRegion, screen):
         faction.fuel = available_fuel
         faction.metals = available_metal
 
-def has_capital_check(faction: SLFaction, map, map_size):
-    offset = 1
-    for i in range(map_size):
-        for j in range(map_size - offset):
-                if (map[i][j].occupant != None):
-                    if (map[i][j].occupant.faction.id == faction.id):
-                        if (map[i][j].occupant.is_building == True):
-                            if (map[i][j].occupant.type == SLBuilding.Type.CAPITAL):
-                                return True
-        if (offset == 1):
-            offset = 0
-        elif (offset == 0):
-            offset = 1
-    return False
 
 def turn_crunch(faction: SLFaction, map, map_size, screen):
     # Enacts the turn crunch:
@@ -207,8 +193,9 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     for id in faction.brigade_dict:
         movement.reset_moves(faction.brigade_dict[id])
 
+    faction.is_defeated = True
+
     for region in regions:
         apply_generation_and_attrition(region, screen)
-
-    if (has_capital_check(faction, map, map_size) == False):
-        faction.is_defeated = True
+        if (region.contains_capital):
+            faction.is_defeated = False
