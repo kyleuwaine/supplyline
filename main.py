@@ -60,11 +60,13 @@ def menu_screen_loop(small_screen_button: SLButton, big_screen_button: SLButton,
                             return 1366, 768, "custom_big_tiles_debug_map"
                         if (tokens[4] == "small_tiles_std_map"):
                             return 1920, 1080, "custom_small_tiles_std_map"
+                        if (tokens[4] == "big_tiles_std_map"):
+                            return 1366, 768, "custom_big_tiles_std_map"
 
         pygame.display.update()
         clock.tick(1)
 
-def player_defeat(screen_width, screen_height, screen):
+def player_defeat(screen_width, screen_height, clock, screen):
     pygame.draw.rect(screen, "white", pygame.Rect(0, 0, screen_width, screen_height))
     font = pygame.font.SysFont("arial", 100)
     defeat_surface = font.render("Lose...", None, pygame.Color("black"))
@@ -75,7 +77,7 @@ def player_defeat(screen_width, screen_height, screen):
                 pygame.quit()
                 exit()
         pygame.display.update()
-        clock.tick(framerate)
+        clock.tick(10)
 
 def player_victory(screen_width, screen_height, clock, screen):
     pygame.draw.rect(screen, "white", pygame.Rect(0, 0, screen_width, screen_height))
@@ -88,7 +90,7 @@ def player_victory(screen_width, screen_height, clock, screen):
                 pygame.quit()
                 exit()
         pygame.display.update()
-        clock.tick(1)
+        clock.tick(10)
 
 def main():
     """

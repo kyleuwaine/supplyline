@@ -155,12 +155,12 @@ def blit_health(entity, screen):
     #             screen - the screen of the game
 
     map_setting_str = entity.location.map_setting_str
-    if (map_setting_str == "big_tiles_debug_map"):
+    if (map_setting_str[0:3] == "big"):
         font = pygame.font.SysFont("arial", 30)
         x, y = entity.location.top_left_corner
         x += 35
         y += 12
-    if (map_setting_str == "small_tiles_std_map"):
+    if (map_setting_str[0:5] == "small"):
         font = pygame.font.SysFont("arial", 20)
         x, y = entity.location.top_left_corner
         x += 25
@@ -174,12 +174,12 @@ def blit_moves(entity, screen):
     #             screen - the screen of the game
 
     map_setting_str = entity.location.map_setting_str
-    if (map_setting_str == "big_tiles_debug_map"):
+    if (map_setting_str[0:3] == "big"):
         font = pygame.font.SysFont("arial", 30)
         x, y = entity.location.top_left_corner
         x += 52
         y += 100
-    if (map_setting_str == "small_tiles_std_map"):
+    if (map_setting_str[0:5] == "small"):
         font = pygame.font.SysFont("arial", 20)
         x, y = entity.location.top_left_corner
         x += 37
