@@ -192,7 +192,7 @@ def blit_resource_counts(faction, screen):
     # Parameters: faction - the player's faction
     #             screen - the screen of the game
 
-    pygame.draw.rect(screen, "white", pygame.Rect(140, 200, 20, 400))
+    pygame.draw.rect(screen, "white", pygame.Rect(140, 200, 80, 400))
     #screen.blit(pygame.image.load("Images\_metal_icon.png"), (0, 200))
     #screen.blit(pygame.image.load("Images\_wheat_icon.png"), (0, 320))
     #screen.blit(pygame.image.load("Images\_oil_icon.png"), (0, 440))
