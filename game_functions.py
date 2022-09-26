@@ -7,6 +7,48 @@ from SLBrigade import SLBrigade
 from SLBuilding import SLBuilding
 from SLFaction import SLFaction
 
+#needs testing
+def create_map_state_dict(hex_grid, hex_grid_size, faction_list):
+    #hex_feats_grid = [[None for x in range(hex_grid_size)] for y in range(hex_grid_size)]
+    map_state_dict = {}
+    for faction in faction_list:
+        if faction.metals > 15:
+            map_state_dict[f"Faction {faction.id} Metals"] = f">15"
+        elif faction.metals > 4:
+            map_state_dict[f"Faction {faction.id} Metals"] = f"5-15"
+        else:
+            map_state_dict[f"Faction {faction.id} Metals"] = f"<5"
+
+        if faction.food > 15:
+            map_state_dict[f"Faction {faction.id} Food"] = f">15"
+        elif faction.food > 4:
+            map_state_dict[f"Faction {faction.id} Food"] = f"5-15"
+        else:
+            map_state_dict[f"Faction {faction.id} Food"] = f"<5"
+
+        if faction.fuel > 15:
+            map_state_dict[f"Faction {faction.id} Fuel"] = f">15"
+        elif faction.fuel > 4:
+            map_state_dict[f"Faction {faction.id} Fuel"] = f"5-15"
+        else:
+            map_state_dict[f"Faction {faction.id} Fuel"] = f"<5"
+
+        if (faction.brigade_cap - faction.brigade_counter) == 0:
+            map_state_dict[f"Faction {faction.id} Builds"] = f"==0"
+        elif (faction.brigade_cap - faction.brigade_counter) < 4:
+            map_state_dict[f"Faction {faction.id} Builds"] = f"1-3"
+        else:
+            map_state_dict[f"Faction {faction.id} Builds"] = f">3"
+
+    for i in range(len(hex_grid)):
+        for j in range(len(hex_grid[i])):
+            if (hex_grid[i][j].owner) == None:
+                map_state_dict[f"{i},{j}"] = f"None. {hex_grid[i][j].occupant}."
+            else:
+                map_state_dict[f"{i},{j}"] = f"{hex_grid[i][j].owner.id}. {hex_grid[i][j].occupant}."
+
+    return map_state_dict
+
 def export_map(hex_grid, hex_grid_size: int):
     hex_str_grid = [[None for x in range(hex_grid_size)] for y in range(hex_grid_size)]
     for i in range(len(hex_grid)):
