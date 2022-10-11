@@ -113,11 +113,11 @@ def main():
     full_screen_mask.invert()
 
     pygame.draw.rect(screen, "darkolivegreen4", pygame.Rect(0, 0, screen_width, screen_height))
-    start_button = SLButton([20, 20], full_screen_mask.copy(), "Images\endturn.png")
+    start_button = SLButton([20, 20], full_screen_mask.copy(), "Images/_endturn.png")
     screen.blit(start_button.pygame_surface, start_button.top_left_corner)
-    other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images\endturn.png")
+    other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images/_endturn.png")
     screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
-    viet_start_button = SLButton([300, 20], full_screen_mask.copy(), "Images\_viet_cong.png")
+    viet_start_button = SLButton([300, 20], full_screen_mask.copy(), "Images/_custommap.png")
     screen.blit(viet_start_button.pygame_surface,viet_start_button.top_left_corner)
 
     screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
@@ -195,7 +195,7 @@ def main():
                                     recruiting = "Tank"
                                     build_loc_tiles = valid_rec_locs
                                     for tile in build_loc_tiles:
-                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
+                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_purple_hex.png", map_setting_str)), tile.top_left_corner)
                                     buildtank_button.active = False
                                     screen.blit(buildtank_button.pygame_surface, buildtank_button.top_left_corner)
                                     # So the player can't build a tank then immediately build infantry, which will break because the barracks will be deactivated during this
@@ -212,7 +212,7 @@ def main():
                                     recruiting = "Infantry"
                                     build_loc_tiles = valid_rec_locs
                                     for tile in build_loc_tiles:
-                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", map_setting_str)), tile.top_left_corner)
+                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_purple_hex.png", map_setting_str)), tile.top_left_corner)
                                     buildinfantry_button.active = False
                                     screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
                                     # So the player can't build infantry then immediately build a tank, which will break because the barracks will be deactivated during this
@@ -265,7 +265,7 @@ def main():
                                                                     # If the occupant is a brigade, then the tile is highlighted and the possible moves for the brigade are shown
                                                                     if (tile_grid[i][j].occupant.is_building == False):
                                                                         highlighted_tile = tile_grid[i][j]
-                                                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
                                                                         valid_moves = movement.find_valid_moves(highlighted_tile, True, tile_grid, screen)
 
                                                                     # If not then the occupant is a building
@@ -278,7 +278,7 @@ def main():
                                                                             below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
                                                                             if (below_cap and (can_build_infantry or can_build_tank)):
                                                                                 highlighted_tile = tile_grid[i][j]
-                                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), highlighted_tile.top_left_corner)
+                                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), highlighted_tile.top_left_corner)
                                                                                 if (can_build_infantry):
                                                                                     buildinfantry_button.active = True
                                                                                     screen.blit(buildinfantry_button.alt_pygame_surface, buildinfantry_button.top_left_corner)
@@ -289,12 +289,12 @@ def main():
                                                                         # If it's another type of building then just highlight the tile
                                                                         else:
                                                                             highlighted_tile = tile_grid[i][j]
-                                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
 
                                                             # If there is no occupant, then just highlight the tile
                                                             else:
                                                                 highlighted_tile = tile_grid[i][j]
-                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
+                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
 
                                                                 # If they highlight a tile owned by them, player may be trying to build a building, so activate the build buildings buttons
                                                                 if (highlighted_tile.owner == faction_list[faction_turn]):

@@ -94,7 +94,7 @@ def find_valid_moves(origin: SLTile, show_moves: bool, grid, screen):
     
     if (show_moves):
         for tile in valid_tiles:
-            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images\_purple_hex.png", tile.map_setting_str)), tile.top_left_corner)
+            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_purple_hex.png", tile.map_setting_str)), tile.top_left_corner)
     
     return valid_tiles
 

@@ -125,9 +125,9 @@ def blit_borders(tile: SLTile, color, screen):
     #c_red = pygame.Color("red")
     #c_blue = pygame.Color("blue")
     if (color == pygame.Color("red")):
-        border_image = base_game_functions.get_selective_image_str("Images\ed_hex_borders.png", tile.map_setting_str)
+        border_image = base_game_functions.get_selective_image_str("Images/_red_hex_borders.png", tile.map_setting_str)
     elif (color == pygame.Color("blue")):
-        border_image = base_game_functions.get_selective_image_str("Images\eblue_hex_borders.png", tile.map_setting_str)
+        border_image = base_game_functions.get_selective_image_str("Images/_blue_hex_borders.png", tile.map_setting_str)
     screen.blit(pygame.image.load(border_image), tile.top_left_corner)
 
 
@@ -235,9 +235,9 @@ def blit_resource_counts(faction, screen):
     #             screen - the screen of the game
 
     pygame.draw.rect(screen, "white", pygame.Rect(140, 200, 80, 400))
-    #screen.blit(pygame.image.load("Images\_metal_icon.png"), (0, 200))
-    #screen.blit(pygame.image.load("Images\_wheat_icon.png"), (0, 320))
-    #screen.blit(pygame.image.load("Images\_oil_icon.png"), (0, 440))
+    #screen.blit(pygame.image.load("Images/_metal_icon.png"), (0, 200))
+    #screen.blit(pygame.image.load("Images/_wheat_icon.png"), (0, 320))
+    #screen.blit(pygame.image.load("Images/_oil_icon.png"), (0, 440))
     font = pygame.font.SysFont("arial", 30)
     metals_surface = font.render(str(faction.metals), None, pygame.Color("black"))
     food_surface = font.render(str(faction.food), None, pygame.Color("black"))

@@ -35,7 +35,7 @@ class SLBrigade:
         match brigade_type:
             case "Tank":
                 self.type = SLBrigade.BrigadeType.TANK
-                self.sprite = base_game_functions.get_selective_image_str("Images\ight_arrow.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images/_tank.png", location.map_setting_str)
                 self.off_dmg = 20
                 self.def_dmg = 15
                 self.food_consumption = 0
@@ -44,7 +44,7 @@ class SLBrigade:
                 self.max_moves = 2
             case "Infantry":
                 self.type = SLBrigade.BrigadeType.INFANTRY
-                self.sprite = base_game_functions.get_selective_image_str("Images\_infantry.png", location.map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images/_infantry.png", location.map_setting_str)
                 self.off_dmg = 10
                 self.def_dmg = 15
                 self.food_consumption = 1

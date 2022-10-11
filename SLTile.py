@@ -19,8 +19,8 @@ class SLTile:
                 return "Mountains"
             if (input == SLTile.Type.HILLS):
                 return "Hills"
-            if (input == SLTile.Type.STANDARD):
-                return "Standard"
+            if (input == SLTile.Type.JUNGLE):
+                return "Jungle"
             return None
 
     def compute_mask(self, full_screen_mask):
@@ -60,10 +60,10 @@ class SLTile:
                 assert(0 == 1)
         else:
             if (tile_type == SLTile.Type.STANDARD):
-                self.sprite = base_game_functions.get_selective_image_str("Images\grass_05.png", map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images/_standard.png", map_setting_str)
                 self.defense = 0
             elif (tile_type == SLTile.Type.BORDER):
-                self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", map_setting_str)
+                self.sprite = base_game_functions.get_selective_image_str("Images\_border.png", map_setting_str)
                 self.defense = 0
         self.pygame_surface = pygame.image.load(self.sprite)
         self.pygame_mask = self.compute_mask(full_screen_mask)
@@ -78,19 +78,19 @@ class SLTile:
         self.type = new_type
 
         if (new_type == SLTile.Type.STANDARD):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_plains.png", self.map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images/_plains.png", self.map_setting_str)
             self.defense = 0
         elif (new_type == SLTile.Type.BORDER):
-            self.sprite = base_game_functions.get_selective_image_str("Images\dirt_06.png", self.map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images/_border.png", self.map_setting_str)
             self.defense = 0
         elif (new_type == SLTile.Type.MOUNTAINS):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_mountain.png", self.map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images/_mountain.png", self.map_setting_str)
             self.defense = 10
         elif (new_type == SLTile.Type.HILLS):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_hills.png", self.map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images/_hills.png", self.map_setting_str)
             self.defense = 5
         elif (new_type == SLTile.Type.JUNGLE):
-            self.sprite = base_game_functions.get_selective_image_str("Images\_jungle.png", self.map_setting_str)
+            self.sprite = base_game_functions.get_selective_image_str("Images/_jungle.png", self.map_setting_str)
             self.defense = 5
 
     def __str__(self):
