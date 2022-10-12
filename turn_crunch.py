@@ -191,7 +191,7 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
             offset = 1
 
     for id in faction.brigade_dict:
-        movement.reset_moves(faction.brigade_dict[id])
+        movement.reset_moves(faction.brigade_dict[id], screen)
 
     faction.is_defeated = True
 

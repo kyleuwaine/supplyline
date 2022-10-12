@@ -151,8 +151,11 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
     
     return moved, eliminated
         
-def reset_moves(brigade: SLBrigade):
+def reset_moves(brigade: SLBrigade, screen):
     # Resets the available moves of a brigade back to the max amount at the end of a turn
+    # Also reblits the brigade's tile so the information is also updated visually
     # Parameters: brigade - SLBrigade, the brigade being reset
 
     brigade.moves = brigade.max_moves
+    game_functions.reblit_tile(brigade.location, screen)
+    
