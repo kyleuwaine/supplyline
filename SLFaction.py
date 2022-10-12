@@ -1,3 +1,12 @@
+"""
+This file contains the class SLFaction, which holds all of the variables pertaining to a specific faction,
+as well as the non-static function rec_capability(), which calculates if a specific factions should be able
+to build additional tank and infantry brigades or not.
+
+Author: Kyle Uwaine and Victor Nault
+Date: 10/12/22
+"""
+
 import pygame
 
 class SLFaction:
