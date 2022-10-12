@@ -32,8 +32,12 @@ class SLFaction:
         #          can_recruit_tank - True if faction has enough resources to recruit tanks
 
         below_cap = False
-        can_recruit_infantry = True
-        can_recruit_tank = True
+        if (self.metals >= 5):
+            can_recruit_infantry = True
+            can_recruit_tank = True
+        else:
+            can_recruit_infantry = False
+            can_recruit_tank = False
 
         if (self.brigade_cap > self.brigade_counter):
             below_cap = True
