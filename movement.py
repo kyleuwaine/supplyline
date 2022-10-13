@@ -17,6 +17,9 @@ def move_occupant(origin: SLTile, dest: SLTile, screen, grid):
     dest.occupant = origin.occupant
     origin.occupant = None
     dest.occupant.location = dest
+    # Jungles take health from brigades when they enter
+    if (dest.type == SLTile.Type.JUNGLE):
+        apply_movement_damage(dest, 5)
     game_functions.reblit_tile(origin, screen)
     attempt_claim(dest, origin.owner, screen, grid)
 
@@ -31,8 +34,19 @@ def swap_occupants(tile1: SLTile, tile2: SLTile, screen):
     tile1.occupant = temp
     tile1.occupant.location = tile1
     tile2.occupant.location = tile2
+    # Jungles take health from brigades when they enter
+    if (tile1.type == SLTile.Type.JUNGLE):
+        apply_movement_damage(tile1, 5)
+    if (tile2.type == SLTile.Type.JUNGLE):
+        apply_movement_damage(tile2, 5)
     game_functions.reblit_tile(tile1, screen)
     game_functions.reblit_tile(tile2, screen)
+
+def apply_movement_damage(brigade_tile, damage):
+    brigade_tile.occupant.health -= damage
+    if (brigade_tile.occupant.health <= 0):
+        game_functions.remove_entity(brigade_tile.occupant)
+        brigade_tile.occupant = None
 
 def attempt_claim(claimed: SLTile, faction: SLFaction, screen, grid):
     # Attempts to claim a tile and any unclaimed tile which also borders it.
