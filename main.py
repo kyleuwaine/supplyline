@@ -159,8 +159,8 @@ def main():
                             # Check if build barracks button gets pressed by player
                             if ((buildbarracks_button.pygame_mask.get_at(event.pos) == 1) and (buildbarracks_button.active == True)):
                                 highlighted_tile.occupant = SLBuilding(SLBuilding.Type.BARRACKS, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
+                                faction_list[0].building_dict.update({faction_list[0].building_id_counter: highlighted_tile.occupant})
                                 faction_list[0].building_id_counter += 1
-                                #faction_list[0].brigade_dict.update({faction_list[0].brigade_counter: tile_grid[1][1].occupant})
                                 game_functions.reblit_tile(highlighted_tile, screen)
                                 highlighted_tile = None
                                 buildbarracks_button.active = False
@@ -174,8 +174,8 @@ def main():
                             # Check if build fort button gets pressed by player
                             if ((buildfort_button.pygame_mask.get_at(event.pos) == 1) and (buildfort_button.active == True)):
                                 highlighted_tile.occupant = SLBuilding(SLBuilding.Type.FORT, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
+                                faction_list[0].building_dict.update({faction_list[0].building_id_counter: highlighted_tile.occupant})
                                 faction_list[0].building_id_counter += 1
-                                #faction_list[0].brigade_dict.update({faction_list[0].brigade_counter: tile_grid[1][1].occupant})
                                 game_functions.reblit_tile(highlighted_tile, screen)
                                 highlighted_tile = None
                                 buildfort_button.active = False

@@ -1,7 +1,6 @@
 import pygame
 from SLTile import SLTile
 from SLBrigade import SLBrigade
-from SLFaction import SLFaction
 import game_functions
 import movement
 from SLBuilding import SLBuilding

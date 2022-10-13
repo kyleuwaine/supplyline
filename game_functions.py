@@ -86,15 +86,18 @@ def import_map(full_screen_mask_input, faction_list, screen):
                 if tile_str_lst[i][j][3] == "Faction 1":
                     hex_grid[i][j].owner = faction_list[1]
                 if (tile_str_lst[i][j][5] == "True"):
-                    hex_grid[i][j].occupant = SLBuilding(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], eval(tile_str_lst[i][j][10]))
+                    #hex_grid[i][j].occupant = SLBuilding(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], eval(tile_str_lst[i][j][10]))
+                    # Easier and more efficient to just give it a new id than to handle existing ids
+                    hex_grid[i][j].occupant = SLBuilding(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], faction_list[eval(tile_str_lst[i][j][8][-1])].building_id_counter)
                     hex_grid[i][j].occupant.health = eval(tile_str_lst[i][j][7])
-                    # Below is temporary while the faction building id counters are replaced by a global one
+                    faction_list[eval(tile_str_lst[i][j][8][-1])].building_dict.update({faction_list[eval(tile_str_lst[i][j][8][-1])].building_id_counter: hex_grid[i][j].occupant})
                     faction_list[eval(tile_str_lst[i][j][8][-1])].building_id_counter += 1
                 elif (tile_str_lst[i][j][5] == "False"):
-                    hex_grid[i][j].occupant = SLBrigade(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], eval(tile_str_lst[i][j][10]))
+                    #hex_grid[i][j].occupant = SLBrigade(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], eval(tile_str_lst[i][j][10]))
+                    # Easier and more efficient to just give it a new id than to handle existing ids
+                    hex_grid[i][j].occupant = SLBrigade(tile_str_lst[i][j][6], faction_list[eval(tile_str_lst[i][j][8][-1])], hex_grid[i][j], faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_id_counter)
                     hex_grid[i][j].occupant.health = eval(tile_str_lst[i][j][7])
                     faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_dict.update({faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_id_counter: hex_grid[i][j].occupant})
-                    # Below is temporary while the faction brigade id counters are replaced by a global one
                     faction_list[eval(tile_str_lst[i][j][8][-1])].brigade_id_counter += 1
                 reblit_tile(hex_grid[i][j], screen)
 
@@ -129,16 +132,6 @@ def blit_borders(tile: SLTile, color, screen):
     elif (color == pygame.Color("blue")):
         border_image = base_game_functions.get_selective_image_str("Images/_blue_hex_borders.png", tile.map_setting_str)
     screen.blit(pygame.image.load(border_image), tile.top_left_corner)
-
-
-def advance_turn(faction_turn: int, num_of_players: int):
-    # Advances the turn of the game and gives control to the next faction
-    # Parameters: faction_turn - int, an int which represents which faction is currently active
-    #             num_of_players - int, the amount of players in the game
-
-    faction_turn += 1
-    faction_turn = faction_turn % num_of_players
-    return faction_turn
 
 def find_neighbors(origin: SLTile, grid):
     # Finds and returns a list of all valid neighbor tiles (not borders) around the tile passed in
@@ -229,7 +222,7 @@ def blit_moves(entity, screen):
     move_surface = font.render(str(entity.moves), None, entity.faction.color)
     screen.blit(move_surface, (x, y))
 
-def blit_resource_counts(faction, screen):
+def blit_resource_counts(faction: SLFaction, screen):
     # Blits the resources of the player faction to the sidebar
     # Parameters: faction - the player's faction
     #             screen - the screen of the game
@@ -253,7 +246,7 @@ def remove_entity(entity):
     if (not entity.is_building):
         entity.faction.brigade_dict.pop(entity.id)
     elif (entity.is_building):
-        pass
+        entity.faction.building_dict.pop(entity.id)
 
 
 def reblit_tile(tile: SLTile, screen):

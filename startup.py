@@ -37,7 +37,7 @@ def create_factions(num_of_factions: int, faction_color_list):
 
     faction_list = []
     for i in range(num_of_factions):
-        faction_list.append(SLFaction(None, i, faction_color_list[i], {}))
+        faction_list.append(SLFaction(None, i, faction_color_list[i], {}, {}))
     return faction_list
 
 def find_topleft(screen_width, screen_height, hex_sprite_width, hex_sprite_height, grid_width, grid_height, vertical_offset):

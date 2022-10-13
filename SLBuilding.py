@@ -44,7 +44,7 @@ class SLBuilding:
         FUEL = 3
 
 
-    def __init__(self, building_type, faction: SLFaction, location: SLTile, id):
+    def __init__(self, building_type, faction: SLFaction, location: SLTile, id: int):
         # Creates a new building
         # Parameters: self - the building object
         #             building_type - the type of building

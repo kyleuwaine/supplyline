@@ -23,7 +23,7 @@ class SLBrigade:
                 return "Infantry"
             return None
 
-    def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile, id):
+    def __init__(self, brigade_type: str, faction: SLFaction, location: SLTile, id: int):
         # Creates a new brigade.
         # Parameters: brigade_type - String, will be used to assign the
         #             correct enum for the brigade type

@@ -12,7 +12,7 @@ import pygame
 class SLFaction:
     # Represents a faction within the game
 
-    def __init__(self, new_name: str, new_id: int, new_color: pygame.Color, new_brigade_dict: dict):
+    def __init__(self, new_name: str, new_id: int, new_color: pygame.Color, new_brigade_dict: dict, new_building_dict: dict):
         # Intializes a faction
         # Parameters: new_name - str, the name of the faction
         #             new_id - int, the id of the faction
@@ -23,6 +23,7 @@ class SLFaction:
         self.id = new_id
         self.color = new_color
         self.brigade_dict = new_brigade_dict
+        self.building_dict = new_building_dict
         self.brigade_id_counter = 0
         self.building_id_counter = 0
         self.brigade_cap = 3
