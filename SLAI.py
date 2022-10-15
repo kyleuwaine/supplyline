@@ -63,7 +63,6 @@ class SLAI:
                     elif(tile.occupant.is_building == True):
                         if (rand_int < 10):
                             if(self.faction.metals >= 5):
-                                print(tile.occupant.type == (SLBuilding.Type.BARRACKS or SLBuilding.Type.CAPITAL))
                                 if(tile.occupant.type == (SLBuilding.Type.BARRACKS or SLBuilding.Type.CAPITAL)):
                                     valid_rec_locs = game_functions.find_valid_rec_locs(tile, self.map)
                                     if (valid_rec_locs != []):
@@ -73,13 +72,13 @@ class SLAI:
                                             self.faction.brigade_dict.update({self.faction.brigade_id_counter: tile.occupant})
                                             self.faction.brigade_id_counter += 1
                                             game_functions.reblit_tile(tile, self.screen)
-                                            self.faction.metals -= 5 
+                                            self.faction.metals -= 5
                                         else:
                                             tile.occupant = SLBrigade("Infantry", self.faction, tile, self.faction.brigade_id_counter)
                                             self.faction.brigade_dict.update({self.faction.brigade_id_counter: tile.occupant})
                                             self.faction.brigade_id_counter += 1
                                             game_functions.reblit_tile(tile, self.screen)
-                                            self.faction.metals -= 5 				
+                                            self.faction.metals -= 5
                     else:
                         if (rand_int < 5):
                             continue
@@ -97,6 +96,5 @@ class SLAI:
                                 break
                         for brigade in eliminated_brigades:
                             game_functions.remove_entity(brigade)
-                
+
             turn_crunch(self.faction, self.map, len(self.map), self.screen)
-                            
