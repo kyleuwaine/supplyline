@@ -68,16 +68,16 @@ class SLAI:
                                     if (valid_rec_locs != []):
                                         selected_loc = valid_rec_locs[randrange(len(valid_rec_locs))]
                                         if (rand_int < 5):
-                                            tile.occupant = SLBrigade("Tank", self.faction, tile, self.faction.brigade_id_counter)
-                                            self.faction.brigade_dict.update({self.faction.brigade_id_counter: tile.occupant})
+                                            selected_loc.occupant = SLBrigade("Tank", self.faction, selected_loc, self.faction.brigade_id_counter)
+                                            self.faction.brigade_dict.update({self.faction.brigade_id_counter: selected_loc.occupant})
                                             self.faction.brigade_id_counter += 1
-                                            game_functions.reblit_tile(tile, self.screen)
+                                            game_functions.reblit_tile(selected_loc, self.screen)
                                             self.faction.metals -= 5
                                         else:
-                                            tile.occupant = SLBrigade("Infantry", self.faction, tile, self.faction.brigade_id_counter)
-                                            self.faction.brigade_dict.update({self.faction.brigade_id_counter: tile.occupant})
+                                            selected_loc.occupant = SLBrigade("Infantry", self.faction, selected_loc, self.faction.brigade_id_counter)
+                                            self.faction.brigade_dict.update({self.faction.brigade_id_counter: selected_loc.occupant})
                                             self.faction.brigade_id_counter += 1
-                                            game_functions.reblit_tile(tile, self.screen)
+                                            game_functions.reblit_tile(selected_loc, self.screen)
                                             self.faction.metals -= 5
                     else:
                         if (rand_int < 5):
@@ -86,6 +86,7 @@ class SLAI:
                         moving_brigade = tile.occupant
                         while (moving_brigade.moves > 0):
                             original_location = moving_brigade.location
+                            print(original_location.location)
                             possible_dests = movement.find_valid_moves(original_location, False, self.map, None)
                             if (possible_dests != []):
                                 selected_dest = possible_dests[randrange(0, len(possible_dests))]
