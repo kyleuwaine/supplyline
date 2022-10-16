@@ -121,7 +121,9 @@ def main():
     screen.blit(viet_start_button.pygame_surface,viet_start_button.top_left_corner)
 
     screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str)
+    # Set below to true to enable the export map button
+    export_map_bool = False
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str, export_map_bool)
     highlighted_tile = None
     recruiting = None
     build_loc_tiles = []
@@ -148,8 +150,9 @@ def main():
                         if (faction_turn == 0):
                             game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
-                            if (exportmap_button.pygame_mask.get_at(event.pos) == 1):
-                                game_functions.export_map(tile_grid, tile_grid_size)
+                            if (export_map_bool == True):
+                                if (exportmap_button.pygame_mask.get_at(event.pos) == 1):
+                                    game_functions.export_map(tile_grid, tile_grid_size)
 
                             # Check if endturn button gets pressed by player
                             if (endturn_button.pygame_mask.get_at(event.pos) == 1):

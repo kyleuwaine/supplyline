@@ -130,7 +130,7 @@ def prepare_map(screen, screen_width, screen_height, full_screen_mask_input, map
     return tile_grid, tile_grid_size
 
 
-def startup(clock, framerate, screen, screen_width, screen_height, map_setting_str):
+def startup(clock, framerate, screen, screen_width, screen_height, map_setting_str, export_map_bool):
     # Performs all initializations for the game
     # Parameters: clock - the clock of the game
     #             framerate - the framerate for the game
@@ -170,7 +170,8 @@ def startup(clock, framerate, screen, screen_width, screen_height, map_setting_s
     buildinfantry_button = SLButton([screen_width - 280, 130], full_screen_mask.copy(), "Images/_buildinfantry_grey.png", "Images/_buildinfantry_green.png")
     screen.blit(buildinfantry_button.pygame_surface, buildinfantry_button.top_left_corner)
     exportmap_button = SLButton([screen_width - 280, screen_height - 200], full_screen_mask.copy(), "Images/_endturn.png")
-    screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
+    if (export_map_bool == True):
+        screen.blit(exportmap_button.pygame_surface, exportmap_button.top_left_corner)
     pygame.draw.rect(screen, "white", pygame.Rect(20, 200, 200, 400))
     screen.blit(pygame.image.load("Images/_metal_icon.png"), (0, 200))
     screen.blit(pygame.image.load("Images/_wheat_icon.png"), (0, 320))
