@@ -84,13 +84,14 @@ class SLAI:
                             continue
                         eliminated_brigades = []
                         moving_brigade = tile.occupant
-                        while (moving_brigade.moves > 0):
+                        while ((moving_brigade.moves > 0) and (moving_brigade.health > 0)):
                             original_location = moving_brigade.location
-                            print(original_location.location)
                             possible_dests = movement.find_valid_moves(original_location, False, self.map, None)
                             if (possible_dests != []):
                                 selected_dest = possible_dests[randrange(0, len(possible_dests))]
+                                #print("!", moving_brigade.location.location, original_location.location)
                                 moved, eliminated = movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
+                                #print("*", moved, moving_brigade.location.location, selected_dest.location)
                                 for entity in eliminated:
                                     eliminated_brigades.append(entity)
                             else:

@@ -140,10 +140,12 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
         # checks if there is an occupant on the selected tile
             if (dest.occupant.faction == origin.occupant.faction):
             # if the selected tile's occupant is of the same faction as the player, it will swap the two occupants
+                #print("Swapped", origin.owner.id, "*", origin.occupant.id, "!", dest.owner.id, "*", dest.occupant.id, dest.occupant.is_building)
                 swap_occupants(origin, dest, screen)
                 moved = True
             else:
             # if the selected tile's occupant is of a different faction, a battle will ensue
+                #print("Battle", origin.owner.id, "*", origin.occupant.id, "!",dest.owner.id, "*", dest.occupant.id, dest.occupant.is_building)
                 attacker = origin.occupant
                 defender = dest.occupant
                 result = combat.battle(attacker, defender, grid, screen)
@@ -160,6 +162,7 @@ def attempt_move(origin: SLTile, dest: SLTile, valid_moves, grid, screen):
                 moved = True
         else:
         # if there is no occupant on the selected tile, the highlighted tile's occupant will move to the selected tile
+            #print("Move", origin.owner.id, "*", origin.occupant.id)
             move_occupant(origin, dest, screen, grid)
             moved = True
 

@@ -136,6 +136,7 @@ def battle_building(attacker: SLBrigade, defender: SLBuilding, grid, screen):
     defender.health = defender.health - total_att_dmg
 
     if (attacker.health <= 0):
+        #print("Building attacker died")
         attacker.location.occupant = None
         attacker_alive = False
     if (defender.health <= 0):
