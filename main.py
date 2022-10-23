@@ -123,7 +123,7 @@ def main():
     screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
     # Set below to true to enable the export map button
     export_map_bool = False
-    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str, export_map_bool)
+    tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, destroyunit_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str, export_map_bool)
     highlighted_tile = None
     recruiting = None
     build_loc_tiles = []
@@ -225,6 +225,15 @@ def main():
                                     game_functions.reblit_tile(highlighted_tile, screen)
                                     highlighted_tile = None
 
+                            # Check if destroy unit button gets pressed by player
+                            if ((destroyunit_button.pygame_mask.get_at(event.pos) == 1) and (destroyunit_button.active == True)):
+                                game_functions.remove_entity(highlighted_tile.occupant)
+                                highlighted_tile.occupant = None
+                                destroyunit_button.active = False
+                                screen.blit(destroyunit_button.pygame_surface, destroyunit_button.top_left_corner)
+                                
+                                game_functions.reblit_tile(highlighted_tile, screen)
+                                highlighted_tile = None
 
                             # If no UI buttons are pressed then check which tile on the map got pressed
                             else:
@@ -256,52 +265,46 @@ def main():
                                                                     game_functions.blit_borders(tile, tile.owner.color, screen)
 
 
-                                                        # Check if the tile pressed is within the map borders
-                                                        if (tile_grid[i][j].type != SLTile.Type.BORDER):
+                                                        # Check if the tile is owned by the player
+                                                        if (tile_grid[i][j].owner == faction_list[faction_turn]):
+                                                            
+                                                            # Then highlight it no matter what
+                                                            highlighted_tile = tile_grid[i][j]
+                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
 
                                                             # Check if the tile pressed has an occupant
                                                             if (tile_grid[i][j].occupant != None):
 
-                                                                # Check if the occupant is of the same faction as player
-                                                                if (tile_grid[i][j].occupant.faction == faction_list[faction_turn]):
+                                                                # If the occupant is a brigade, then the possible moves for the brigade are shown
+                                                                if (tile_grid[i][j].occupant.is_building == False):
+                                                                    valid_moves = movement.find_valid_moves(highlighted_tile, True, tile_grid, screen)
+                                                                    # Also enable unit destruction
+                                                                    destroyunit_button.active = True
+                                                                    screen.blit(destroyunit_button.alt_pygame_surface, destroyunit_button.top_left_corner)
 
-                                                                    # If the occupant is a brigade, then the tile is highlighted and the possible moves for the brigade are shown
-                                                                    if (tile_grid[i][j].occupant.is_building == False):
-                                                                        highlighted_tile = tile_grid[i][j]
-                                                                        screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
-                                                                        valid_moves = movement.find_valid_moves(highlighted_tile, True, tile_grid, screen)
+                                                                # If not then the occupant is a building
+                                                                elif (tile_grid[i][j].occupant.is_building == True):
 
-                                                                    # If not then the occupant is a building
-                                                                    elif (tile_grid[i][j].occupant.is_building == True):
+                                                                    # If the building is not a production building, then enable unit destruction
+                                                                    if (tile_grid[i][j].occupant.production <= 0):
+                                                                        destroyunit_button.active = True
+                                                                        screen.blit(destroyunit_button.alt_pygame_surface, destroyunit_button.top_left_corner)
 
-                                                                        # If the building is the Capital or a barracks, then the player may be trying to recruit a brigade
-                                                                        if (tile_grid[i][j].occupant.type == SLBuilding.Type.CAPITAL or tile_grid[i][j].occupant.type == SLBuilding.Type.BARRACKS):
+                                                                    # If the building is the Capital or a barracks, then the player may be trying to recruit a brigade
+                                                                    if (tile_grid[i][j].occupant.type == SLBuilding.Type.CAPITAL or tile_grid[i][j].occupant.type == SLBuilding.Type.BARRACKS):
 
-                                                                            # Check the capability of the faction to recruit brigades (based on force limit and available resources)
-                                                                            below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
-                                                                            if (below_cap and (can_build_infantry or can_build_tank)):
-                                                                                highlighted_tile = tile_grid[i][j]
-                                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), highlighted_tile.top_left_corner)
-                                                                                if (can_build_infantry):
-                                                                                    buildinfantry_button.active = True
-                                                                                    screen.blit(buildinfantry_button.alt_pygame_surface, buildinfantry_button.top_left_corner)
-                                                                                if (can_build_tank):
-                                                                                    buildtank_button.active = True
-                                                                                    screen.blit(buildtank_button.alt_pygame_surface, buildtank_button.top_left_corner)
+                                                                        # Check the capability of the faction to recruit brigades (based on force limit and available resources)
+                                                                        below_cap, can_build_infantry, can_build_tank = faction_list[faction_turn].rec_capability()
+                                                                        if (below_cap and (can_build_infantry or can_build_tank)):
+                                                                            if (can_build_infantry):
+                                                                                buildinfantry_button.active = True
+                                                                                screen.blit(buildinfantry_button.alt_pygame_surface, buildinfantry_button.top_left_corner)
+                                                                            if (can_build_tank):
+                                                                                buildtank_button.active = True
+                                                                                screen.blit(buildtank_button.alt_pygame_surface, buildtank_button.top_left_corner)
 
-                                                                        # If it's another type of building then just highlight the tile
-                                                                        else:
-                                                                            highlighted_tile = tile_grid[i][j]
-                                                                            screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
-
-                                                            # If there is no occupant, then just highlight the tile
+                                                            # If there is no occupant, and the player faction has enough metal to build a building, enable the buttons
                                                             else:
-                                                                highlighted_tile = tile_grid[i][j]
-                                                                screen.blit(pygame.image.load(base_game_functions.get_selective_image_str("Images/_yellow_hex.png", map_setting_str)), tile_grid[i][j].top_left_corner)
-
-                                                                # If they highlight a tile owned by them, player may be trying to build a building, so activate the build buildings buttons
-                                                                if (highlighted_tile.owner == faction_list[faction_turn]):
-                                                                    # But only if they have the metals...
                                                                     if (faction_list[faction_turn].metals >= 5):
                                                                         buildbarracks_button.active = True
                                                                         screen.blit(buildbarracks_button.alt_pygame_surface, buildbarracks_button.top_left_corner)
@@ -346,6 +349,12 @@ def main():
                                                     # If the tile selected is the highlighted tile, unhighlight it
                                                     if (tile_grid[i][j] == highlighted_tile):
 
+                                                        # If the destroy unit button is active, deactivate it
+                                                        if (destroyunit_button.active == True):
+                                                            # Should be deactivate button function
+                                                            destroyunit_button.active = False
+                                                            screen.blit(destroyunit_button.pygame_surface, destroyunit_button.top_left_corner)
+
                                                         # If the build barracks button is active, deactivate it
                                                         if (buildbarracks_button.active == True):
                                                             # Should be deactivate button function
@@ -388,6 +397,14 @@ def main():
                                                             for entity in eliminated:
                                                                 game_functions.remove_entity(entity)
                                                             eliminated = []
+
+                                                            # Also deactivate the destroy unit button
+                                                            if (destroyunit_button.active == True):
+                                                                # Should be deactivate button function
+                                                                destroyunit_button.active = False
+                                                                screen.blit(destroyunit_button.pygame_surface, destroyunit_button.top_left_corner)
+
+
                                             else:
                                                 pass
                                         except IndexError:
