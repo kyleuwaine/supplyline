@@ -298,3 +298,15 @@ def build_building(building_type, tile: SLTile, faction: SLFaction, screen, is_p
     faction.metals -= tile.occupant.cost
     if is_player:
         blit_resource_counts(faction, screen)
+
+def destroy_unit(tile: SLTile, screen):
+    """
+    Removes the brigade or building on a tile, removes it from its faction dictionary, and reblits the tile
+    Parameters: tile - Occupied tile
+                screen - pygame screen
+    """
+    if (tile.occupant.is_building == True):
+        assert (tile.occupant.production == 0), "production buildings cannot be destroyed"
+    remove_entity(tile.occupant)
+    tile.occupant = None                     
+    reblit_tile(tile, screen)

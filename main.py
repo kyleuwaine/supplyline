@@ -217,12 +217,9 @@ def main():
 
                             # Check if destroy unit button gets pressed by player
                             if ((destroyunit_button.pygame_mask.get_at(event.pos) == 1) and (destroyunit_button.active == True)):
-                                game_functions.remove_entity(highlighted_tile.occupant)
-                                highlighted_tile.occupant = None
+                                game_functions.destroy_unit(highlighted_tile, screen)
                                 destroyunit_button.active = False
                                 screen.blit(destroyunit_button.pygame_surface, destroyunit_button.top_left_corner)
-                                
-                                game_functions.reblit_tile(highlighted_tile, screen)
                                 highlighted_tile = None
 
                             # If no UI buttons are pressed then check which tile on the map got pressed

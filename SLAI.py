@@ -53,6 +53,8 @@ class SLAI:
                                 elif (rand_int < 7):
                                     game_functions.build_building(SLBuilding.Type.FORT, tile, self.faction, self.screen, False)
                     elif(tile.occupant.is_building == True):
+                        if ((rand_int > 97) and (tile.occupant.production == 0) and (tile.occupant.type != SLBuilding.Type.CAPITAL)):
+                            game_functions.destroy_unit(tile, self.screen)
                         if (rand_int < 10):
                             if(self.faction.metals >= 5):
                                 if(tile.occupant.type == (SLBuilding.Type.BARRACKS or SLBuilding.Type.CAPITAL)):
@@ -64,6 +66,9 @@ class SLAI:
                                         else:
                                             game_functions.build_brigade("Infantry", selected_loc, self.faction, self.screen, False)
                     else:
+                        if (rand_int > 97):
+                            game_functions.destroy_unit(tile, self.screen)
+                            continue
                         if (rand_int < 5):
                             continue
                         eliminated_brigades = []
