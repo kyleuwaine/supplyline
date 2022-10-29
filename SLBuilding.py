@@ -74,6 +74,7 @@ class SLBuilding:
                 self.def_dmg = 30
                 self.production = 0
                 self.resource = SLBuilding.Resource.NONE
+                self.cost = None
             case SLBuilding.Type.BARRACKS:
                 self.health = 100
                 self.force_limit = 3
@@ -82,6 +83,7 @@ class SLBuilding:
                 self.def_dmg = 0
                 self.production = 0
                 self.resource = SLBuilding.Resource.NONE
+                self.cost = 5
             case SLBuilding.Type.MINE:
                 self.health = 100
                 self.force_limit = 0
@@ -90,6 +92,7 @@ class SLBuilding:
                 self.def_dmg = 0
                 self.production = 5
                 self.resource = SLBuilding.Resource.METALS
+                self.cost = None
             case SLBuilding.Type.FORT:
                 self.health = 300
                 self.force_limit = 0
@@ -98,6 +101,7 @@ class SLBuilding:
                 self.def_dmg = 20
                 self.production = 0
                 self.resource = SLBuilding.Resource.NONE
+                self.cost = 5
             case SLBuilding.Type.FARM:
                 self.health = 100
                 self.force_limit = 0
@@ -106,6 +110,7 @@ class SLBuilding:
                 self.def_dmg = 0
                 self.production = 5
                 self.resource = SLBuilding.Resource.FOOD
+                self.cost = None
             case SLBuilding.Type.OILWELL:
                 self.health = 100
                 self.force_limit = 0
@@ -114,6 +119,7 @@ class SLBuilding:
                 self.def_dmg = 0
                 self.production = 5
                 self.resource = SLBuilding.Resource.FUEL
+                self.cost = None
 
         self.type = building_type
         # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...

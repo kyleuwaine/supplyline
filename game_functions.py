@@ -263,3 +263,38 @@ def reblit_tile(tile: SLTile, screen):
         blit_health(tile.occupant, screen)
         if (not tile.occupant.is_building):
             blit_moves(tile.occupant, screen)
+
+
+def build_brigade(brigade_type: str, tile: SLTile, faction: SLFaction, screen, is_player: bool):
+    """
+    Builds a new unit
+    Parameters: brigade_type - The type of the new brigade
+                tile - empty tile that the brigade will occupy
+                faction - faction that will own the brigade
+                screen - pygame screen
+                is_player - boolean indicating if the ui should be updated
+    """
+    tile.occupant = SLBrigade(brigade_type, faction, tile, faction.brigade_id_counter)
+    faction.brigade_dict.update({faction.brigade_id_counter: tile.occupant})
+    faction.brigade_id_counter += 1
+    reblit_tile(tile, screen)
+    faction.metals -= tile.occupant.cost
+    if is_player:
+        blit_resource_counts(faction, screen)
+
+def build_building(building_type, tile: SLTile, faction: SLFaction, screen, is_player: bool):
+    """
+    Builds a new building
+    Parameters: building_type - The type of the new building, of type enum specified in SLBuilding
+                tile - empty tile that the building will occupy
+                faction - faction that will own the building
+                screen - pygame screen
+                is_player - boolean indicating if the ui should be updated
+    """
+    tile.occupant = SLBuilding(building_type, faction, tile, faction.building_id_counter)
+    faction.building_dict.update({faction.building_id_counter: tile.occupant})
+    faction.building_id_counter += 1
+    reblit_tile(tile, screen)
+    faction.metals -= tile.occupant.cost
+    if is_player:
+        blit_resource_counts(faction, screen)

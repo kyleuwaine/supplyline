@@ -161,33 +161,23 @@ def main():
 
                             # Check if build barracks button gets pressed by player
                             if ((buildbarracks_button.pygame_mask.get_at(event.pos) == 1) and (buildbarracks_button.active == True)):
-                                highlighted_tile.occupant = SLBuilding(SLBuilding.Type.BARRACKS, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
-                                faction_list[0].building_dict.update({faction_list[0].building_id_counter: highlighted_tile.occupant})
-                                faction_list[0].building_id_counter += 1
-                                game_functions.reblit_tile(highlighted_tile, screen)
+                                game_functions.build_building(SLBuilding.Type.BARRACKS, highlighted_tile, faction_list[0], screen, True)
                                 highlighted_tile = None
                                 buildbarracks_button.active = False
                                 screen.blit(buildbarracks_button.pygame_surface, buildbarracks_button.top_left_corner)
                                 # Also deactivate the fort build button in case the player tries to build a fort right after building a barracks
                                 buildfort_button.active = False
                                 screen.blit(buildfort_button.pygame_surface, buildfort_button.top_left_corner)
-                                faction_list[faction_turn].metals -= 5
-                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
                             # Check if build fort button gets pressed by player
                             if ((buildfort_button.pygame_mask.get_at(event.pos) == 1) and (buildfort_button.active == True)):
-                                highlighted_tile.occupant = SLBuilding(SLBuilding.Type.FORT, faction_list[0], highlighted_tile, faction_list[0].building_id_counter)
-                                faction_list[0].building_dict.update({faction_list[0].building_id_counter: highlighted_tile.occupant})
-                                faction_list[0].building_id_counter += 1
-                                game_functions.reblit_tile(highlighted_tile, screen)
+                                game_functions.build_building(SLBuilding.Type.FORT, highlighted_tile, faction_list[0], screen, True)
                                 highlighted_tile = None
                                 buildfort_button.active = False
                                 screen.blit(buildfort_button.pygame_surface, buildfort_button.top_left_corner)
                                 # Also deactivate the barracks build button in case the player tries to build a barracks right after building a fort
                                 buildbarracks_button.active = False
                                 screen.blit(buildbarracks_button.pygame_surface, buildbarracks_button.top_left_corner)
-                                faction_list[faction_turn].metals -= 5
-                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
 
                             # Check if build tank button gets pressed by player
                             if ((buildtank_button.pygame_mask.get_at(event.pos) == 1) and (buildtank_button.active == True)):
@@ -321,26 +311,9 @@ def main():
                                                                 screen.blit(tile.pygame_surface, tile.top_left_corner)
                                                                 game_functions.blit_borders(tile, tile.owner.color, screen)
                                                             build_loc_tiles = []
-
-                                                            # If recruting contains "Tank", then build a tank brigade on selected tile
-                                                            if (recruiting == "Tank"):
-                                                                tile_grid[i][j].occupant = SLBrigade("Tank", faction_list[0], tile_grid[i][j], faction_list[0].brigade_id_counter)
-                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[i][j].occupant})
-                                                                faction_list[0].brigade_id_counter += 1
-                                                                game_functions.reblit_tile(tile_grid[i][j], screen)
-                                                                faction_list[faction_turn].metals -= 5
-                                                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
-
-                                                            # If recruting contains "Infantry", then build an infantry brigade on selected tile
-                                                            elif (recruiting == "Infantry"):
-                                                                tile_grid[i][j].occupant = SLBrigade("Infantry", faction_list[0], tile_grid[i][j], faction_list[0].brigade_id_counter)
-                                                                faction_list[0].brigade_dict.update({faction_list[0].brigade_id_counter: tile_grid[i][j].occupant})
-                                                                faction_list[0].brigade_id_counter += 1
-                                                                game_functions.reblit_tile(tile_grid[i][j], screen)
-                                                                faction_list[faction_turn].metals -= 5
-                                                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
-                                                                pass
-
+                                                            
+                                                            # Build a brigade on selected tile of the type specified by recruiting, then reset recruiting
+                                                            game_functions.build_brigade(recruiting, tile_grid[i][j], faction_list[0], screen, True)
                                                             recruiting = None
 
                                                 # A tile is already highlighted

@@ -49,17 +49,9 @@ class SLAI:
                     if (tile.occupant == None):
                         if (self.faction.metals >= 5):
                                 if (rand_int < 3):
-                                    tile.occupant = SLBuilding(SLBuilding.Type.BARRACKS, self.faction, tile, self.faction.building_id_counter)
-                                    self.faction.building_dict.update({self.faction.building_id_counter: tile.occupant})
-                                    self.faction.building_id_counter += 1
-                                    game_functions.reblit_tile(tile, self.screen)
-                                    self.faction.metals -= 5
+                                    game_functions.build_building(SLBuilding.Type.BARRACKS, tile, self.faction, self.screen, False)
                                 elif (rand_int < 7):
-                                    tile.occupant = SLBuilding(SLBuilding.Type.FORT, self.faction, tile, self.faction.building_id_counter)
-                                    self.faction.building_dict.update({self.faction.building_id_counter: tile.occupant})
-                                    self.faction.building_id_counter += 1
-                                    game_functions.reblit_tile(tile, self.screen)
-                                    self.faction.metals -= 5
+                                    game_functions.build_building(SLBuilding.Type.FORT, tile, self.faction, self.screen, False)
                     elif(tile.occupant.is_building == True):
                         if (rand_int < 10):
                             if(self.faction.metals >= 5):
@@ -68,17 +60,9 @@ class SLAI:
                                     if (valid_rec_locs != []):
                                         selected_loc = valid_rec_locs[randrange(len(valid_rec_locs))]
                                         if (rand_int < 5):
-                                            selected_loc.occupant = SLBrigade("Tank", self.faction, selected_loc, self.faction.brigade_id_counter)
-                                            self.faction.brigade_dict.update({self.faction.brigade_id_counter: selected_loc.occupant})
-                                            self.faction.brigade_id_counter += 1
-                                            game_functions.reblit_tile(selected_loc, self.screen)
-                                            self.faction.metals -= 5
+                                            game_functions.build_brigade("Tank", selected_loc, self.faction, self.screen, False)
                                         else:
-                                            selected_loc.occupant = SLBrigade("Infantry", self.faction, selected_loc, self.faction.brigade_id_counter)
-                                            self.faction.brigade_dict.update({self.faction.brigade_id_counter: selected_loc.occupant})
-                                            self.faction.brigade_id_counter += 1
-                                            game_functions.reblit_tile(selected_loc, self.screen)
-                                            self.faction.metals -= 5
+                                            game_functions.build_brigade("Infantry", selected_loc, self.faction, self.screen, False)
                     else:
                         if (rand_int < 5):
                             continue
@@ -89,9 +73,7 @@ class SLAI:
                             possible_dests = movement.find_valid_moves(original_location, False, self.map, None)
                             if (possible_dests != []):
                                 selected_dest = possible_dests[randrange(0, len(possible_dests))]
-                                #print("!", moving_brigade.location.location, original_location.location)
                                 moved, eliminated = movement.attempt_move(original_location, selected_dest, possible_dests, self.map, self.screen)
-                                #print("*", moved, moving_brigade.location.location, selected_dest.location)
                                 for entity in eliminated:
                                     eliminated_brigades.append(entity)
                             else:

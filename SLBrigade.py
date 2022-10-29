@@ -42,6 +42,7 @@ class SLBrigade:
                 self.fuel_consumption = 1
                 self.moves = 2
                 self.max_moves = 2
+                self.cost = 5
             case "Infantry":
                 self.type = SLBrigade.BrigadeType.INFANTRY
                 self.sprite = base_game_functions.get_selective_image_str("Images/_infantry.png", location.map_setting_str)
@@ -51,6 +52,7 @@ class SLBrigade:
                 self.fuel_consumption = 0
                 self.moves = 1
                 self.max_moves = 1
+                self.cost = 5
             case _:
                 assert 0 == 1, "Invalid Brigade Type"
         self.health = 100
