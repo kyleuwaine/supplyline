@@ -156,6 +156,14 @@ def main():
 
                             # Check if endturn button gets pressed by player
                             if (endturn_button.pygame_mask.get_at(event.pos) == 1):
+                                # Unselect anything that is
+                                if (highlighted_tile != None):
+                                    game_functions.reblit_tile(highlighted_tile, screen)
+                                    highlighted_tile = None
+                                if (valid_moves != []):
+                                    for tile in valid_moves:
+                                        game_functions.reblit_tile(tile, screen)
+                                    valid_moves = []
                                 turn_crunch(faction_list[faction_turn], tile_grid, tile_grid_size, screen)
                                 faction_turn = base_game_functions.advance_turn(faction_turn, num_of_factions)
 
@@ -221,6 +229,11 @@ def main():
                                 destroyunit_button.active = False
                                 screen.blit(destroyunit_button.pygame_surface, destroyunit_button.top_left_corner)
                                 highlighted_tile = None
+                                # So the movement locations for a unit, if displayed, are no longer
+                                if (valid_moves != []):
+                                    for tile in valid_moves:
+                                        game_functions.reblit_tile(tile, screen)
+                                    valid_moves = []
 
                             # If no UI buttons are pressed then check which tile on the map got pressed
                             else:
