@@ -90,7 +90,7 @@ class SLBuilding:
                 self.sprite = base_game_functions.get_selective_image_str("Images/_mine.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
-                self.production = 5
+                self.production = 1
                 self.resource = SLBuilding.Resource.METALS
                 self.cost = None
             case SLBuilding.Type.FORT:
@@ -108,7 +108,7 @@ class SLBuilding:
                 self.sprite = base_game_functions.get_selective_image_str("Images/_farm.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
-                self.production = 5
+                self.production = 1
                 self.resource = SLBuilding.Resource.FOOD
                 self.cost = None
             case SLBuilding.Type.OILWELL:
@@ -117,7 +117,7 @@ class SLBuilding:
                 self.sprite = base_game_functions.get_selective_image_str("Images/_oilwell.png", location.map_setting_str)
                 self.off_dmg = 0
                 self.def_dmg = 0
-                self.production = 5
+                self.production = 1
                 self.resource = SLBuilding.Resource.FUEL
                 self.cost = None
 
