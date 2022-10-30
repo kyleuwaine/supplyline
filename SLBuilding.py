@@ -67,7 +67,7 @@ class SLBuilding:
 
         match building_type:
             case SLBuilding.Type.CAPITAL:
-                self.health = 50
+                self.max_health = 50
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images/_capital.png", location.map_setting_str)
                 self.off_dmg = 0
@@ -76,7 +76,7 @@ class SLBuilding:
                 self.resource = SLBuilding.Resource.NONE
                 self.cost = None
             case SLBuilding.Type.BARRACKS:
-                self.health = 25
+                self.max_health = 25
                 self.force_limit = 3
                 self.sprite = base_game_functions.get_selective_image_str("Images/_barracks.png", location.map_setting_str)
                 self.off_dmg = 0
@@ -85,7 +85,7 @@ class SLBuilding:
                 self.resource = SLBuilding.Resource.NONE
                 self.cost = 5
             case SLBuilding.Type.MINE:
-                self.health = 50
+                self.max_health = 50
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images/_mine.png", location.map_setting_str)
                 self.off_dmg = 0
@@ -94,7 +94,7 @@ class SLBuilding:
                 self.resource = SLBuilding.Resource.METALS
                 self.cost = None
             case SLBuilding.Type.FORT:
-                self.health = 150
+                self.max_health = 150
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images/_fort.png", location.map_setting_str)
                 self.off_dmg = 0
@@ -103,7 +103,7 @@ class SLBuilding:
                 self.resource = SLBuilding.Resource.NONE
                 self.cost = 5
             case SLBuilding.Type.FARM:
-                self.health = 50
+                self.max_health = 50
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images/_farm.png", location.map_setting_str)
                 self.off_dmg = 0
@@ -112,7 +112,7 @@ class SLBuilding:
                 self.resource = SLBuilding.Resource.FOOD
                 self.cost = None
             case SLBuilding.Type.OILWELL:
-                self.health = 50
+                self.max_health = 50
                 self.force_limit = 0
                 self.sprite = base_game_functions.get_selective_image_str("Images/_oilwell.png", location.map_setting_str)
                 self.off_dmg = 0
@@ -121,6 +121,7 @@ class SLBuilding:
                 self.resource = SLBuilding.Resource.FUEL
                 self.cost = None
 
+        self.health = self.max_health
         self.type = building_type
         # Yes, we do need this, because appearently if (type(tile_grid[i][j].occupant == SLBrigade)) returns true if the occupant is a building...
         self.is_building = True
