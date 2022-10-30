@@ -10,11 +10,11 @@
     ],
     [
         "Border. (263, 104). (1, 0). None. big_tiles_std_map. None",
-        "Standard. (383, 104). (1, 1). Faction 0. big_tiles_std_map. True. Capital. 500. Faction 0. (1, 1). 0",
+        "Standard. (383, 104). (1, 1). Faction 0. big_tiles_std_map. True. Capital. 50. Faction 0. (1, 1). 0",
         "Standard. (503, 104). (1, 2). Faction 0. big_tiles_std_map. None",
-        "Standard. (623, 104). (1, 3). Faction 0. big_tiles_std_map. True. Mine. 100. Faction 0. (1, 3). 0",
+        "Standard. (623, 104). (1, 3). Faction 0. big_tiles_std_map. True. Mine. 50. Faction 0. (1, 3). 0",
         "Standard. (743, 104). (1, 4). Faction 0. big_tiles_std_map. None",
-        "Standard. (863, 104). (1, 5). Faction 0. big_tiles_std_map. True. Farm. 100. Faction 0. (1, 5). 0",
+        "Standard. (863, 104). (1, 5). Faction 0. big_tiles_std_map. True. Farm. 50. Faction 0. (1, 5). 0",
         "Border. (983, 104). (1, 6). None. big_tiles_std_map. None"
     ],
     [
@@ -28,11 +28,11 @@
     ],
     [
         "Border. (263, 314). (3, 0). None. big_tiles_std_map. None",
-        "Jungle. (383, 314). (3, 1). Faction 0. big_tiles_std_map. True. Oilwell. 100. Faction 0. (3, 1). 0",
+        "Jungle. (383, 314). (3, 1). Faction 0. big_tiles_std_map. True. Oilwell. 50. Faction 0. (3, 1). 0",
         "Hills. (503, 314). (3, 2). None. big_tiles_std_map. None",
         "Mountains. (623, 314). (3, 3). None. big_tiles_std_map. None",
         "Hills. (743, 314). (3, 4). None. big_tiles_std_map. None",
-        "Jungle. (863, 314). (3, 5). Faction 1. big_tiles_std_map. True. Oilwell. 100. Faction 1. (3, 5). 0",
+        "Jungle. (863, 314). (3, 5). Faction 1. big_tiles_std_map. True. Oilwell. 50. Faction 1. (3, 5). 0",
         "Border. (983, 314). (3, 6). None. big_tiles_std_map. None"
     ],
     [
@@ -46,11 +46,11 @@
     ],
     [
         "Border. (263, 524). (5, 0). None. big_tiles_std_map. None",
-        "Standard. (383, 524). (5, 1). Faction 1. big_tiles_std_map. True. Farm. 100. Faction 1. (5, 1). 0",
+        "Standard. (383, 524). (5, 1). Faction 1. big_tiles_std_map. True. Farm. 50. Faction 1. (5, 1). 0",
         "Standard. (503, 524). (5, 2). Faction 1. big_tiles_std_map. None",
-        "Standard. (623, 524). (5, 3). Faction 1. big_tiles_std_map. True. Mine. 100. Faction 1. (5, 3). 0",
+        "Standard. (623, 524). (5, 3). Faction 1. big_tiles_std_map. True. Mine. 50. Faction 1. (5, 3). 0",
         "Standard. (743, 524). (5, 4). Faction 1. big_tiles_std_map. None",
-        "Standard. (863, 524). (5, 5). Faction 1. big_tiles_std_map. True. Capital. 500. Faction 1. (5, 5). 0",
+        "Standard. (863, 524). (5, 5). Faction 1. big_tiles_std_map. True. Capital. 50. Faction 1. (5, 5). 0",
         "Border. (983, 524). (5, 6). None. big_tiles_std_map. None"
     ],
     [
