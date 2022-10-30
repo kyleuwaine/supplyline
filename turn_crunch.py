@@ -162,6 +162,7 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
     # Enacts the turn crunch:
     #   - Applies any resource generation in the faction
     #   - Applies attrition to affected units owned by the faction
+    #   - Applies regeneration to production buildings
     #   - Resets the available moves of brigades owned by the faction back to max
     #   - Checks if the faction has no capital(s). If so, sets defeat flag
     # Parameters: faction - SLFaction, the faction whose turn is being crunched
@@ -192,6 +193,13 @@ def turn_crunch(faction: SLFaction, map, map_size, screen):
 
     for id in faction.brigade_dict:
         movement.reset_moves(faction.brigade_dict[id], screen)
+
+    for id in faction.building_dict:
+        if (faction.building_dict[id].production > 0) and (faction.building_dict[id].health < faction.building_dict[id].max_health):
+            faction.building_dict[id].health += 5
+            if (faction.building_dict[id].health > faction.building_dict[id].max_health):
+                faction.building_dict[id].health = max_health
+            game_functions.reblit_tile(faction.building_dict[id].location, screen)
 
     faction.is_defeated = True
 
