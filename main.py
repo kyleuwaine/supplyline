@@ -112,15 +112,23 @@ def main():
     # onto this, and we want only those imposed bits to be on
     full_screen_mask.invert()
 
-    pygame.draw.rect(screen, "darkolivegreen4", pygame.Rect(0, 0, screen_width, screen_height))
-    start_button = SLButton([20, 20], full_screen_mask.copy(), "Images/_endturn.png")
-    screen.blit(start_button.pygame_surface, start_button.top_left_corner)
-    other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images/_endturn.png")
-    screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
-    viet_start_button = SLButton([300, 20], full_screen_mask.copy(), "Images/_custommap.png")
-    screen.blit(viet_start_button.pygame_surface,viet_start_button.top_left_corner)
+    # Set below to true to re-enable the menu screen
+    menu_screen_enabled = False
+    if (menu_screen_enabled == True):
+        pygame.draw.rect(screen, "darkolivegreen4", pygame.Rect(0, 0, screen_width, screen_height))
+        start_button = SLButton([20, 20], full_screen_mask.copy(), "Images/_endturn.png")
+        screen.blit(start_button.pygame_surface, start_button.top_left_corner)
+        other_start_button = SLButton([160, 20], full_screen_mask.copy(), "Images/_endturn.png")
+        screen.blit(other_start_button.pygame_surface, other_start_button.top_left_corner)
+        viet_start_button = SLButton([300, 20], full_screen_mask.copy(), "Images/_custommap.png")
+        screen.blit(viet_start_button.pygame_surface,viet_start_button.top_left_corner)
+        screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
+    else:
+        screen_width = 1366
+        screen_height = 768
+        map_setting_str = "custom_big_tiles_std_map"
 
-    screen_width, screen_height, map_setting_str = menu_screen_loop(start_button, other_start_button, viet_start_button, clock, framerate)
+    
     # Set below to true to enable the export map button
     export_map_bool = False
     tile_grid, tile_grid_size, faction_turn, num_of_factions, faction_list, opponent, endturn_button, buildbarracks_button, buildfort_button, buildtank_button, buildinfantry_button, destroyunit_button, exportmap_button, map_setting_str, screen = startup(clock, framerate, screen, screen_width, screen_height, map_setting_str, export_map_bool)
