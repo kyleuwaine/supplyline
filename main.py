@@ -173,6 +173,7 @@ def main():
                                         game_functions.reblit_tile(tile, screen)
                                     valid_moves = []
                                 turn_crunch(faction_list[faction_turn], tile_grid, tile_grid_size, screen)
+                                game_functions.blit_resource_counts(faction_list[faction_turn], screen)
                                 faction_turn = base_game_functions.advance_turn(faction_turn, num_of_factions)
 
                             # Check if build barracks button gets pressed by player
