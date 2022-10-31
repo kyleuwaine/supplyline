@@ -48,9 +48,12 @@ class SLFaction:
         else:
             can_recruit_infantry = False
             can_recruit_tank = False
-
-        if (self.brigade_cap > self.brigade_counter):
-            below_cap = True
+            
+        # Note: brigade counter isn't actually incremented anywhere else in the code, so this snippet is useless
+        # Fixing it isn't really in scope for the current iteration of the project, so I'm disabling it for now
+        #if (self.brigade_cap > self.brigade_counter):
+            #below_cap = True
+        below_cap = True
 
         return below_cap, can_recruit_infantry, can_recruit_tank
 
