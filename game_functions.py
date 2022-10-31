@@ -378,6 +378,7 @@ def build_brigade(brigade_type: str, tile: SLTile, faction: SLFaction, screen, i
                 is_player - boolean indicating if the ui should be updated
     """
     tile.occupant = SLBrigade(brigade_type, faction, tile, faction.brigade_id_counter)
+    tile.occupant.moves = 0
     faction.brigade_dict.update({faction.brigade_id_counter: tile.occupant})
     faction.brigade_id_counter += 1
     reblit_tile(tile, screen)
