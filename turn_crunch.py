@@ -91,7 +91,8 @@ def apply_generation_and_attrition(region: SLRegion, screen):
     #             screen: the screen of the game
 
     faction = region.faction
-
+    contains_capital_bool = region.contains_capital
+    
     infantry = []
     tanks = []
 
@@ -110,6 +111,14 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                     available_fuel += tile.occupant.production
                 elif (tile.occupant.resource == SLBuilding.Resource.METALS):
                     available_metal += tile.occupant.production
+                elif (tile.occupant.resource == SLBuilding.Resource.NONE):
+                    # Attrition damage for disconnected non-resource buildings
+                    if (not contains_capital_bool):
+                        tile.occupant.health -= 10
+                        if (tile.occupant.health <= 0):
+                            game_functions.remove_entity(tile.occupant)
+                            tile.occupant = None
+                        game_functions.reblit_tile(tile, screen)
             else:
                 food_consumption += tile.occupant.food_consumption
                 fuel_consumption += tile.occupant.fuel_consumption
@@ -119,7 +128,7 @@ def apply_generation_and_attrition(region: SLRegion, screen):
                 elif (tile.occupant.type == SLBrigade.BrigadeType.TANK):
                     tanks.append(tile.occupant)
 
-    if (region.contains_capital):
+    if (contains_capital_bool):
         available_food += faction.food
         available_fuel += faction.fuel
         available_metal += faction.metals
@@ -152,7 +161,7 @@ def apply_generation_and_attrition(region: SLRegion, screen):
     else:
         available_fuel -= fuel_consumption
 
-    if (region.contains_capital):
+    if (contains_capital_bool):
         faction.food = available_food
         faction.fuel = available_fuel
         faction.metals = available_metal
