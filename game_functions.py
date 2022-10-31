@@ -2,14 +2,108 @@ import pygame
 import base_game_functions
 import json
 import os
+import movement
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLBuilding import SLBuilding
 from SLFaction import SLFaction
 
+def record_possible_moves(hex_grid, faction):
+    possible_moves = ["No Move"]
+    for row in hex_grid:
+        for tile in row:
+            if (tile.owner != faction):
+                    continue
+            if (tile.occupant == None):
+                if (faction.metals >= 5):
+                    possible_moves += [f"Build Barracks on {tile.location}", f"Build Fort on {tile.location}"]
+            elif(tile.occupant.is_building == True):
+                if ((tile.occupant.production == 0) and (tile.occupant.type != SLBuilding.Type.CAPITAL)):
+                    possible_moves += [f"Destroy Unit at {tile.location}"]
+                if (faction.metals >= 5):
+                    if(tile.occupant.type == (SLBuilding.Type.BARRACKS or SLBuilding.Type.CAPITAL)):
+                        valid_rec_locs = game_functions.find_valid_rec_locs(tile, hex_grid)
+                        if (valid_rec_locs != []):
+                            selected_loc = valid_rec_locs[randrange(len(valid_rec_locs))]
+                            possible_moves += [f"Build Tank at {selected_loc.location}", f"Build Infantry at {selected_loc.location}"]
+            else:
+                possible_moves += [f"Destroy Unit at {tile.location}"]
+                if (tile.occupant.moves > 0):
+                    possible_dests = movement.find_valid_moves(tile.occupant.location, False, hex_grid, None)
+                    if (possible_dests != []):
+                        for dest in possible_dests:
+                            possible_moves += [f"Move Unit at {tile.location} to {dest.location}"]
+    return possible_moves
+
+def create_map_state_str(hex_grid, hex_grid_size, faction_list):
+    map_state_str = ""
+    for faction in faction_list:
+        if faction.metals > 9:
+            map_state_str += "h"
+        elif faction.metals > 4:
+            map_state_str += "m"
+        else:
+            map_state_str += "l"
+
+        if faction.food > 9:
+            map_state_str += "h"
+        elif faction.food > 4:
+            map_state_str += "m"
+        else:
+            map_state_str += "l"
+
+        if faction.fuel > 9:
+            map_state_str += "h"
+        elif faction.fuel > 4:
+            map_state_str += "m"
+        else:
+            map_state_str += "l"
+
+        if (faction.brigade_cap - faction.brigade_counter) == 0:
+            map_state_str += "h"
+        elif (faction.brigade_cap - faction.brigade_counter) < 4:
+            map_state_str += "m"
+        else:
+            map_state_str += "l"
+
+    for i in range(len(hex_grid)):
+        for j in range(len(hex_grid[i])):
+            if (hex_grid[i][j].owner) == None:
+                map_state_str += "nnnnn"
+            else:
+                map_state_str += "f{hex_grid[i][j].owner.id}"
+                if (hex_grid[i][j].occupant == None):
+                    map_state_str += "nnnn"
+                else:
+                    if(str(hex_grid[i][j].occupant.type) == "Tank"):
+                        map_state_str += f"00{hex_grid[i][j].occupant.moves}"
+                    elif(str(hex_grid[i][j].occupant.type) == "Infantry"):
+                        map_state_str += f"01{hex_grid[i][j].occupant.moves}"
+                    elif(str(hex_grid[i][j].occupant.type) == "Capital"):
+                        map_state_str += "100"
+                    elif(str(hex_grid[i][j].occupant.type) == "Barracks"):
+                        map_state_str += "110"
+                    elif(str(hex_grid[i][j].occupant.type) == "Mine"):
+                        map_state_str += "120"
+                    elif(str(hex_grid[i][j].occupant.type) == "Fort"):
+                        map_state_str += "130"
+                    elif(str(hex_grid[i][j].occupant.type) == "Farm"):
+                        map_state_str += "140"
+                    elif(str(hex_grid[i][j].occupant.type) == "Oilwell"):
+                        map_state_str += "150"
+                    else:
+                        assert 0 == 1, "Occupant type is not handled by create_map_state_str()"
+                    
+                    if (hex_grid[i][j].occupant.health > (2 * (hex_grid[i][j].occupant.max_health // 3))):
+                        map_state_str += "h"
+                    elif (hex_grid[i][j].occupant.health > (hex_grid[i][j].occupant.max_health // 3)):
+                        map_state_str += "m"
+                    else:
+                        map_state_str += "l"
+    return map_state_str
+
 #needs testing
 def create_map_state_dict(hex_grid, hex_grid_size, faction_list):
-    #hex_feats_grid = [[None for x in range(hex_grid_size)] for y in range(hex_grid_size)]
     map_state_dict = {}
     for faction in faction_list:
         if faction.metals > 15:
@@ -43,9 +137,18 @@ def create_map_state_dict(hex_grid, hex_grid_size, faction_list):
     for i in range(len(hex_grid)):
         for j in range(len(hex_grid[i])):
             if (hex_grid[i][j].owner) == None:
-                map_state_dict[f"{i},{j}"] = f"None. {hex_grid[i][j].occupant}."
+                map_state_dict[f"{i},{j}"] = f"None. None. None"
             else:
-                map_state_dict[f"{i},{j}"] = f"{hex_grid[i][j].owner.id}. {hex_grid[i][j].occupant}."
+                if (hex_grid[i][j].occupant == None):
+                    map_state_dict[f"{i},{j}"] = f"{hex_grid[i][j].owner.id}. None. None"
+                else:
+                    if (hex_grid[i][j].occupant.health > (2 * (hex_grid[i][j].occupant.max_health // 3))):
+                        health = ">2/3"
+                    elif (hex_grid[i][j].occupant.health > (hex_grid[i][j].occupant.max_health // 3)):
+                        health = "1/3-2/3"
+                    else:
+                        health = "<1/3"
+                    map_state_dict[f"{i},{j}"] = f"{hex_grid[i][j].owner.id}. {str(hex_grid[i][j].occupant.type)}. {health}"
 
     return map_state_dict
 

@@ -6,6 +6,8 @@ import combat
 import movement
 from turn_crunch import turn_crunch
 from random import randrange
+from random import sample
+#from random import shuffle
 
 class SLAI:
     # Represents an AI opponent
@@ -41,7 +43,14 @@ class SLAI:
     """
 
     def AI_turn(self):
-            for row in self.map:
+            #print(game_functions.record_possible_moves(self.map, self.faction))
+            
+            # randomize the order in which tiles are considered to avoid random moves being more frequent for earlier tiles
+            map_randomized = [0 for x in range(len(self.map))]
+            for index in range(len(self.map)):
+                map_randomized[index] = sample(self.map[index], len(self.map[index]))
+                    
+            for row in map_randomized:
                 for tile in row:
                     if (tile.owner != self.faction):
                             continue
