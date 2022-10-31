@@ -3,13 +3,14 @@ import base_game_functions
 import json
 import os
 import movement
+from random import randrange
 from SLTile import SLTile
 from SLBrigade import SLBrigade
 from SLBuilding import SLBuilding
 from SLFaction import SLFaction
 
-def record_possible_moves(hex_grid, faction):
-    possible_moves = ["No Move"]
+def calc_possible_moves(hex_grid, faction):
+    possible_moves = []
     for row in hex_grid:
         for tile in row:
             if (tile.owner != faction):
@@ -20,12 +21,16 @@ def record_possible_moves(hex_grid, faction):
             elif(tile.occupant.is_building == True):
                 if ((tile.occupant.production == 0) and (tile.occupant.type != SLBuilding.Type.CAPITAL)):
                     possible_moves += [f"Destroy Unit at {tile.location}"]
-                if (faction.metals >= 5):
-                    if(tile.occupant.type == (SLBuilding.Type.BARRACKS or SLBuilding.Type.CAPITAL)):
-                        valid_rec_locs = game_functions.find_valid_rec_locs(tile, hex_grid)
+                below_cap, can_build_infantry, can_build_tank = faction.rec_capability()
+                if ((below_cap == True) and ((can_build_infantry == True) or (can_build_tank == True))):
+                    if((tile.occupant.type == SLBuilding.Type.BARRACKS) or (tile.occupant.type == SLBuilding.Type.CAPITAL)):
+                        valid_rec_locs = find_valid_rec_locs(tile, hex_grid)
                         if (valid_rec_locs != []):
                             selected_loc = valid_rec_locs[randrange(len(valid_rec_locs))]
-                            possible_moves += [f"Build Tank at {selected_loc.location}", f"Build Infantry at {selected_loc.location}"]
+                            if (can_build_infantry == True):
+                                possible_moves += [f"Recruit Infantry at {selected_loc.location}"]
+                            if (can_build_tank == True):
+                                possible_moves += [f"Recruit Tank at {selected_loc.location}"]
             else:
                 possible_moves += [f"Destroy Unit at {tile.location}"]
                 if (tile.occupant.moves > 0):

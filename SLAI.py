@@ -43,8 +43,65 @@ class SLAI:
     """
 
     def AI_turn(self):
-            #print(game_functions.record_possible_moves(self.map, self.faction))
-            
+            #print(game_functions.calc_possible_moves(self.map, self.faction))
+
+            ignored_moves = []
+            while(True):
+                possible_moves = game_functions.calc_possible_moves(self.map, self.faction)
+                for move in ignored_moves:
+                    if (move in possible_moves):
+                        possible_moves.remove(move)
+                if (possible_moves == []):
+                    break
+                else:
+                    # Shuffle the possible moves to prevent alphabetically first moves from being executed more often
+                    possible_moves = sample(possible_moves, len(possible_moves))
+                    rand_int = randrange(100)
+                    #print(possible_moves[0])
+                    if (possible_moves[0][0:7] == "Destroy"):
+                        if (rand_int < 5):
+                            game_functions.destroy_unit(self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])], self.screen)
+                            #print(possible_moves[0])
+                        else:
+                            ignored_moves += [possible_moves[0]]
+                    elif (possible_moves[0][0:5] == "Build"):
+                        if (rand_int < 20):
+                            if (possible_moves[0][6:14] == "Barracks"):
+                                game_functions.build_building(SLBuilding.Type.BARRACKS, self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])], self.faction, self.screen, False)
+                                #print(possible_moves[0])
+                            elif (possible_moves[0][6:10] == "Fort"):
+                                game_functions.build_building(SLBuilding.Type.FORT, self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])], self.faction, self.screen, False)
+                                #print(possible_moves[0])
+                            else:
+                                assert 0 == 1, "Unknown building type in possible move"
+                        else:
+                            ignored_moves += [possible_moves[0]]
+                    elif (possible_moves[0][0:7] == "Recruit"):
+                        if (rand_int < 20):
+                            if (possible_moves[0][8:12] == "Tank"):
+                                game_functions.build_brigade("Tank", self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])], self.faction, self.screen, False)
+                                #print(possible_moves[0])
+                            elif (possible_moves[0][8:16] == "Infantry"):
+                                game_functions.build_brigade("Infantry", self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])], self.faction, self.screen, False)
+                                #print(possible_moves[0])
+                            else:
+                                assert 0 == 1, "Unknown brigade type in possible recruit"
+                        else:
+                            ignored_moves += [possible_moves[0]]
+                    elif (possible_moves[0][0:4] == "Move"):
+                        if (rand_int < 90):
+                            moved, eliminated = movement.attempt_move(self.map[int(possible_moves[0][-15])][int(possible_moves[0][-12])], self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])], [self.map[int(possible_moves[0][-5])][int(possible_moves[0][-2])]], self.map, self.screen)
+                            for entity in eliminated:
+                                game_functions.remove_entity(entity)
+                            #print(possible_moves[0])
+                        else:
+                            ignored_moves += [possible_moves[0]]
+                            
+                            
+                            
+                    
+
+            """
             # randomize the order in which tiles are considered to avoid random moves being more frequent for earlier tiles
             map_randomized = [0 for x in range(len(self.map))]
             for index in range(len(self.map)):
@@ -94,5 +151,6 @@ class SLAI:
                                 break
                         for brigade in eliminated_brigades:
                             game_functions.remove_entity(brigade)
+            """
 
             turn_crunch(self.faction, self.map, len(self.map), self.screen)
